@@ -1,0 +1,42 @@
+<!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+{% assign sum = site.posts | size %}
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">{{ site.data.ui-text[site.locale].menu_label }}</label>
+  <div class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <div>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">{{sum}}</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </div>
+      <ul>
+        <li>
+          <h3 class="nav__sub-title">Markdown</h3>
+          <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+          <ul>
+              <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/md 주소의 글로 링크 연결-->
+              <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+              {% for category in site.categories %}
+                  {% if category[0] == "md" %}
+                      <li><a href="/categories/md" class="">markdown 문법 ({{category[1].size}})</a></li>
+                  {% endif %}
+              {% endfor %}
+          </ul>
+        </li>
+        <li>
+          <h3 class="nav__sub-title">Javascript</h3>
+          <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+          <ul>
+              <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/js 주소의 글로 링크 연결-->
+              <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+              {% for category in site.categories %}
+                  {% if category[0] == "js" %}
+                      <li><a href="/categories/js" class="">모던 자바스크립트 정리 ({{category[1].size}})</a></li>
+                  {% endif %}
+              {% endfor %}
+          </ul>
+        </li>
+      </ul>
+  </div>
+</nav>

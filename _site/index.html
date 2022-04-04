@@ -5,26 +5,26 @@
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
 -->
-<html lang="en" class="no-js">
+<html lang="ko" class="no-js">
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Site Title</title>
-<meta name="description" content="An amazing website.">
+<!-- begin _includes/seo.html --><title>공부해서 남주자</title>
+<meta name="description" content="공부한것을 기록하고 공유하는 블로그입니다.">
 
 
-  <meta name="author" content="Your Name">
+  <meta name="author" content="Hyejic">
   
 
 
 <meta property="og:type" content="website">
-<meta property="og:locale" content="en_US">
-<meta property="og:site_name" content="Site Title">
-<meta property="og:title" content="Site Title">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="공부해서 남주자">
+<meta property="og:title" content="공부해서 남주자">
 <meta property="og:url" content="http://localhost:4000/">
 
 
-  <meta property="og:description" content="An amazing website.">
+  <meta property="og:description" content="공부한것을 기록하고 공유하는 블로그입니다.">
 
 
 
@@ -51,7 +51,7 @@
     "@context": "https://schema.org",
     
       "@type": "Person",
-      "name": "Your Name",
+      "name": "최혜지(Hyeji Choi)",
       "url": "http://localhost:4000/"
     
   }
@@ -67,7 +67,7 @@
 
 
 
-  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Site Title Feed">
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="공부해서 남주자 Feed">
 
 
 <!-- https://t.co/dKP3o1e -->
@@ -87,6 +87,12 @@
     <!-- start custom head snippets -->
 
 <!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
+<link rel="mask-icon" href="/assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
 
 <!-- end custom head snippets -->
 
@@ -113,15 +119,19 @@
       <nav id="site-nav" class="greedy-nav">
         
         <a class="site-title" href="/">
-          Site Title
+          공부해서 남주자
           
         </a>
         <ul class="visible-links"><li class="masthead__menu-item">
-              <a href="https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/">Quick-Start Guide</a>
+              <a href="/">Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
             </li></ul>
         
         <button class="greedy-nav__toggle hidden" type="button">
-          <span class="visually-hidden">Toggle menu</span>
+          <span class="visually-hidden">토글 메뉴</span>
           <div class="navicon"></div>
         </button>
         <ul class="hidden-links hidden"></ul>
@@ -145,40 +155,46 @@
 <div itemscope itemtype="https://schema.org/Person" class="h-card">
 
   
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/logo.png" alt="Hyejic" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
 
   <div class="author__content">
     <h3 class="author__name p-name" itemprop="name">
-      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Your Name</a>
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hyejic</a>
     </h3>
     
       <div class="author__bio p-note" itemprop="description">
-        <p>I am an <strong>amazing</strong> person.</p>
+        <p>프론트엔드 개발자 최혜지입니다.</p>
 
       </div>
     
   </div>
 
   <div class="author__urls-wrapper">
-    <button class="btn btn--inverse">Follow</button>
+    <button class="btn btn--inverse">팔로우</button>
     <ul class="author__urls social-icons">
       
         <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
-          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Somewhere</span>
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Seoul, Korea</span>
         </li>
       
 
       
         
           
-        
+            <li><a href="mailto:hyeji0314@gmail.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
           
         
           
-        
+            <li><a href="https://github.com/Hyejic" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
           
         
           
-        
+            <li><a href="https://www.instagram.com/choiiiiyi/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
           
         
       
@@ -242,6 +258,54 @@
   </div>
 </div>
   
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <div class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <div>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">2</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </div>
+      <ul>
+        <li>
+          <h3 class="nav__sub-title">Markdown</h3>
+          <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+          <ul>
+              <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/md 주소의 글로 링크 연결-->
+              <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+              
+                  
+              
+                  
+                      <li><a href="/categories/md" class="">markdown 문법 (1)</a></li>
+                  
+              
+          </ul>
+        </li>
+        <li>
+          <h3 class="nav__sub-title">Javascript</h3>
+          <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+          <ul>
+              <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/js 주소의 글로 링크 연결-->
+              <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+              
+                  
+                      <li><a href="/categories/js" class="">모던 자바스크립트 정리 (1)</a></li>
+                  
+              
+                  
+              
+          </ul>
+        </li>
+      </ul>
+  </div>
+</nav>
+  
   </div>
 
 
@@ -252,7 +316,7 @@
     
     
 
-<h3 class="archive__subtitle">Recent posts</h3>
+<h3 class="archive__subtitle">최근 포스트</h3>
 
 
 
@@ -268,7 +332,7 @@
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/firstpost/" rel="permalink">github.io 블로그 첫 포스팅입니다
+        <a href="/md/markdown/" rel="permalink">Markdown 기본 문법
 </a>
       
     </h2>
@@ -286,7 +350,47 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          less than 1 minute read
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">마크다운 기본 문법 및 레이아웃 정리
+</p>
+  </article>
+</div>
+
+  
+    
+
+
+
+<div class="list__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/js/firstpost/" rel="permalink">github.io 블로그 첫 포스팅입니다
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
         
       </span>
     
@@ -318,32 +422,28 @@
         <div class="page__footer-follow">
   <ul class="social-icons">
     
-      <li><strong>Follow:</strong></li>
+      <li><strong>팔로우:</strong></li>
     
 
     
       
         
-      
+          <li><a href="https://github.com/Hyejic" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
         
       
         
-      
-        
-      
-        
-      
+          <li><a href="https://www.instagram.com/choiiiiyi/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
         
       
     
 
     
-      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
     
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2022 Your Name. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 최혜지(Hyeji Choi). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>
