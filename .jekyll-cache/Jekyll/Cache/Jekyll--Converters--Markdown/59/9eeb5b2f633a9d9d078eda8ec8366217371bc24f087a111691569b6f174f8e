@@ -1,0 +1,13 @@
+I"C<p><br /></p>
+
+<h2 id="04장-변수">04장 변수</h2>
+<p><code class="language-plaintext highlighter-rouge">변수</code>는 하나의 값을 저장하기 위해 확보한 메모리 공간 자체 또는 그 멤모리 공간을 식별하기 위해 붙인 이름이다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">userId</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">userName</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Lee</span><span class="dl">'</span><span class="p">;</span>
+  <span class="c1">// 객체나 배열 같은 자료구조를 사용하면 여러개의 값을 하나로 그룹화해서 하나의 값처럼 사용할 수 있다.</span>
+  <span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Lee</span><span class="dl">'</span><span class="p">},</span>
+    <span class="p">{</span><span class="na">id</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Kim</span><span class="dl">'</span><span class="p">}</span>
+  <span class="p">]</span>
+</code></pre></div></div>
+:ET

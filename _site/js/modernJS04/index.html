@@ -1,0 +1,668 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>04장 변수 - 공부해서 남주자</title>
+<meta name="description" content="모던 자바스크립트 Deep Dive 04장 변수 내용 정리">
+
+
+  <meta name="author" content="Hyejic">
+  
+  <meta property="article:author" content="Hyejic">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="공부해서 남주자">
+<meta property="og:title" content="04장 변수">
+<meta property="og:url" content="http://localhost:4000/js/modernJS04/">
+
+
+  <meta property="og:description" content="모던 자바스크립트 Deep Dive 04장 변수 내용 정리">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-04-07T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/js/modernJS04/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "최혜지(Hyeji Choi)",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="공부해서 남주자 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
+<link rel="mask-icon" href="/assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          공부해서 남주자
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/logo.png" alt="Hyejic" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hyejic</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>프론트엔드 개발자 최혜지입니다.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Seoul, Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:hyeji0314@gmail.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/Hyejic" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/choiiiiyi/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <div class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <div>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">3</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </div>
+      <ul>
+        <li>
+          <h3 class="nav__sub-title">Markdown</h3>
+          <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+          <ul>
+              <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/md 주소의 글로 링크 연결-->
+              <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+              
+                  
+              
+                  
+                      <li><a href="/categories/md" class="">markdown 문법 (1)</a></li>
+                  
+              
+          </ul>
+        </li>
+        <li>
+          <h3 class="nav__sub-title">Javascript</h3>
+          <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+          <ul>
+              <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/js 주소의 글로 링크 연결-->
+              <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+              
+                  
+                      <li><a href="/categories/js" class="">모던 자바스크립트 정리 (2)</a></li>
+                  
+              
+                  
+              
+          </ul>
+        </li>
+      </ul>
+  </div>
+</nav>
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="04장 변수">
+    <meta itemprop="description" content="모던 자바스크립트 Deep Dive 04장 변수 내용 정리">
+    <meta itemprop="datePublished" content="2022-04-07T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/js/modernJS04/" class="u-url" itemprop="url">04장 변수
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 04장 변수</h4></header>
+              <ul class="toc__menu"><li><a href="#04장-변수">04장 변수</a><ul><li><a href="#41-변수란-무엇인가-왜-필요한가">4.1 변수란 무엇인가? 왜 필요한가?</a><ul><li><a href="#변수란">변수란?</a></li><li><a href="#변수-명칭">변수 명칭</a></li></ul></li><li><a href="#42-식별자">4.2 식별자</a></li><li><a href="#43-변수-선언">4.3 변수 선언</a></li><li><a href="#44-변수-선언의-실행-시점과-변수-호이스팅">4.4 변수 선언의 실행 시점과 변수 호이스팅</a></li><li><a href="#45-값의-할당">4.5 값의 할당</a></li><li><a href="#46-값의-재할당">4.6 값의 재할당</a><ul><li><a href="#변수-값-할당에-따른-메모리-변화">변수 값 할당에 따른 메모리 변화</a></li></ul></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p><br /></p>
+
+<h1 id="04장-변수">04장 변수</h1>
+<h2 id="41-변수란-무엇인가-왜-필요한가">4.1 변수란 무엇인가? 왜 필요한가?</h2>
+<h3 id="변수란">변수란?</h3>
+<p><code class="language-plaintext highlighter-rouge">변수</code>는 하나의 값을 저장하기 위해 확보한 메모리 공간 자체 또는 그 멤모리 공간을 식별하기 위해 붙인 이름이다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">userId</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">userName</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Lee</span><span class="dl">'</span><span class="p">;</span>
+  <span class="c1">// 객체나 배열 같은 자료구조를 사용하면 여러개의 값을 하나로 그룹화해서 하나의 값처럼 사용할 수 있다.</span>
+  <span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="na">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Lee</span><span class="dl">'</span><span class="p">},</span>
+    <span class="p">{</span><span class="na">id</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Kim</span><span class="dl">'</span><span class="p">}</span>
+  <span class="p">]</span>
+</code></pre></div></div>
+<h3 id="변수-명칭">변수 명칭</h3>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">resualt</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">20</span><span class="p">;</span>
+</code></pre></div></div>
+<p>변수 명 -&gt; result<br />
+변수 값 -&gt; 변수에 저장된 값 30<br />
+할당 -&gt; 변수에 값을 저장하는 것<br />
+참초 -&gt; 변수에 저장된 값을 읽어 들이는 것</p>
+
+<h2 id="42-식별자">4.2 식별자</h2>
+<p>변수 이름을 <code class="language-plaintext highlighter-rouge">식별자</code>라고도 한다. <code class="language-plaintext highlighter-rouge">식별자는 값이 아니라 메모리 주소를 기억하고 있다.</code> 식별자로 값을 구별해서 식별한다는 것은 식별자가 기억하고 있는 메모리 주소를 통해 메모리 공간에 저장된 값에 접근할 수 있다는 의미이다. 식별자는 메모리 주소에 붙인 이름이라고 할 수 있다.</p>
+
+<h2 id="43-변수-선언">4.3 변수 선언</h2>
+<p>변수를 선언할 때는 var, let, const 키워드를 사용한다.</p>
+<blockquote>
+  <p>var 키워드는 여러 단점이 있다. 가장 대표적인 것이 블록 레벨 스코프를 지원하지 않고 함수 레벨 스코프를 지원한다는 것이다. 이로 인해 의도치 않게 전역 변수가 선언되어 심각한 부작용이 발생하기도 한다.
+<br />
+자바스크립트 엔진은 변수 선언을 다음과 같은 2단계에 거쳐 수행한다.</p>
+</blockquote>
+
+<ol>
+  <li>변수 선언<br />
+변수의 이름을 등록하고 값을 저장할 메모리 공간 확보.
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="kd">var</span> <span class="nx">score</span><span class="p">;</span> <span class="c1">// 변수 선언</span>
+</code></pre></div>    </div>
+  </li>
+  <li>변수 초기화<br />
+변수 선언 후, 아직 변수에 값을 할당하지 않았지만 자바스크립트 엔진에 의해 <code class="language-plaintext highlighter-rouge">undefined라는 값이 암묵적으로 할당되어 초기화</code> 된다.</li>
+</ol>
+
+<h2 id="44-변수-선언의-실행-시점과-변수-호이스팅">4.4 변수 선언의 실행 시점과 변수 호이스팅</h2>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">80</span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">score</span><span class="p">)</span> <span class="c1">// undefined</span>
+
+  <span class="kd">var</span> <span class="nx">score</span><span class="p">;</span> <span class="c1">// 변수 선언</span>
+</code></pre></div></div>
+<p>console.log(score);가 실행되는 시점에는 아직 score 변수의 선언이 실행되지 않았으므로 참조에러가 발생할 것처럼 보인다. 하지만 참조 에러가 발생하지 않고 undefined가 출력된다.<br />
+그 이유는 <code class="language-plaintext highlighter-rouge">변수 선언</code>이 소스코드가 한 줄씩 순차적으로 실행되는 시점, 즉 <code class="language-plaintext highlighter-rouge">런타임이 아니라 그 이전 단계(소스코드 평가 과정)에서 먼저 실행되기 때문이다.</code><br />
+변수 선언문이 코드의 선두로 끌어 올려진 것처럼 동작하는 자바스크립트 고유의 특징을 <code class="language-plaintext highlighter-rouge">호이스팅</code>이라 한다.</p>
+
+<h2 id="45-값의-할당">4.5 값의 할당</h2>
+<p><code class="language-plaintext highlighter-rouge">변수 선언</code>은 소스코드가 순차적으로 실행되는 시점인 <code class="language-plaintext highlighter-rouge">런타임 이전</code>에 먼저 실행되지만 <code class="language-plaintext highlighter-rouge">변수 값의 할당은</code> 소스코드가 순차적으로 실행되는 시점인 <code class="language-plaintext highlighter-rouge">런타임에 실행</code>된다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">score</span><span class="p">)</span> <span class="c1">// undefined</span>
+
+  <span class="kd">var</span> <span class="nx">score</span><span class="p">;</span> <span class="c1">// 1 변수 선언</span>
+  <span class="nx">score</span> <span class="o">=</span> <span class="mi">80</span><span class="p">;</span> <span class="c1">// 2 값의 할당</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">score</span><span class="p">);</span> <span class="c1">// 80</span>
+</code></pre></div></div>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">score</span><span class="p">)</span> <span class="c1">// undefined</span>
+
+  <span class="nx">score</span> <span class="o">=</span> <span class="mi">80</span><span class="p">;</span> <span class="c1">// 값의 할당</span>
+  <span class="kd">var</span> <span class="nx">score</span><span class="p">;</span> <span class="c1">// 변수 선언</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">score</span><span class="p">);</span> <span class="c1">// 80</span>
+  <span class="c1">// score 변수 선언이 호이스팅되어 undefinde로 초기화 되었고, 런타임 시 순차적인 실행에 의해 80으로 값이 할당되었다.</span>
+</code></pre></div></div>
+
+<h2 id="46-값의-재할당">4.6 값의 재할당</h2>
+<p>재할당은 변수에 저장된 값을 다른 값으로 변경한다. 만약 <code class="language-plaintext highlighter-rouge">값을 재할당할 수 없어서 변수에 저장된 값을 변경할 수 없다면 변수가 아니라 상수라 한다.</code> 상수는 단 한번만 할당할 수 있는 변수다.</p>
+<blockquote>
+  <p>ES6에서 도입된 const 키워드를 사용해 선언한 변수는 재할당이 금지된다. const 키워드를 사용하면 상수를 표현할 수 있다.</p>
+</blockquote>
+
+<h3 id="변수-값-할당에-따른-메모리-변화">변수 값 할당에 따른 메모리 변화</h3>
+<ol>
+  <li>변수 선언시 undefined로 초기화</li>
+  <li>80이라는 값을 할당</li>
+  <li>90으로 값을 재할당</li>
+</ol>
+
+<p>(메모리 그림)</p>
+
+<p>저장되어 있던 이전 값의 메모리 공간을 지우고 새롭게 저장하는 것이 아니라 새로운 메모리 공간을 확보하고 그 공간에 재할당한 값을 저장한다.</p>
+
+<p>그림에서 알 수 있듯이 undefined와 80이 더 이상 필요하지 않다는 것을 의미한다. 이런 불필요한 값들은 가비지 콜렉터에 의해 메모리에서 자동 해제된다.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#javascript" class="page__taxonomy-item p-category" rel="tag">javascript</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#js" class="page__taxonomy-item p-category" rel="tag">js</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-04-07T00:00:00+09:00">April 7, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=04%EC%9E%A5+%EB%B3%80%EC%88%98%20http%3A%2F%2Flocalhost%3A4000%2Fjs%2FmodernJS04%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fjs%2FmodernJS04%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fjs%2FmodernJS04%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/md/markdown/" class="pagination--pager" title="Markdown 기본 문법
+">이전</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/md/markdown/" rel="permalink">Markdown 기본 문법
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">마크다운 기본 문법 및 레이아웃 정리
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/js/firstpost/" rel="permalink">github.io 블로그 첫 포스팅입니다
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Github Blog글을 처음 써보며.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Hyejic" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/choiiiiyi/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 최혜지(Hyeji Choi). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
