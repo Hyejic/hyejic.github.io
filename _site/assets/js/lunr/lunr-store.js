@@ -16,4 +16,10 @@ var store = [{
         "tags": ["javascript"],
         "url": "/js/modernJS04/",
         "teaser": null
+      },{
+        "title": "06장 데이터 타입",
+        "excerpt":"06장 데이터 타입 구분 데이터 티입 설명 원시 타입 숫자 타입(number) 숫자, 정수와 실수 구분 없이 하나의 숫자 타입만 존재 문자열 타입(string) 문자열 불리언 타입(boolean) 논리적 참(true)과 거짓(false) undefined 타입 var 키워드로 선언된 변수에 암묵적으로 할당되는 값 null 타입 값이 없다는 것을 의도적으로 명시할 때 사용하는 값 실벌 타입(symbol) ES6에...","categories": ["js"],
+        "tags": ["javascript"],
+        "url": "/js/modernJS06/",
+        "teaser": null
       }]
