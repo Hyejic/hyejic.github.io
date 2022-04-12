@@ -22,4 +22,10 @@ var store = [{
         "tags": ["javascript"],
         "url": "/js/modernJS06/",
         "teaser": null
+      },{
+        "title": "09장 타입 변환과 단축 평가",
+        "excerpt":"09장 타입 변환과 단축 평가 9.1 타입 변환이란? 개발자가 의도적으로 값의 타입을 변환하는 것을 명시적 타입 변환 또는 타입 캐스팅이라 한다. var x = 10; // 의도적으로 x의 값의 타입을 string으로 변경 var str = x.toString(); console.log(typeof str, str) // string 10 console.log(typeof x, x) // number 10 개발자의 의도와는...","categories": ["js"],
+        "tags": ["javascript"],
+        "url": "/js/modernJS09/",
+        "teaser": null
       }]
