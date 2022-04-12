@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-04-12T20:45:29+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">공부해서 남주자</title><subtitle>공부한것을 기록하고 공유하는 블로그입니다.</subtitle><author><name>Hyejic</name></author><entry><title type="html">09장 타입 변환과 단축 평가</title><link href="http://localhost:4000/js/modernJS09/" rel="alternate" type="text/html" title="09장 타입 변환과 단축 평가" /><published>2022-04-07T00:00:00+09:00</published><updated>2022-04-07T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS09</id><content type="html" xml:base="http://localhost:4000/js/modernJS09/"><![CDATA[<p><br /></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-04-13T00:23:58+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">공부해서 남주자</title><subtitle>공부한것을 기록하고 공유하는 블로그입니다.</subtitle><author><name>Hyejic</name></author><entry><title type="html">09장 타입 변환과 단축 평가</title><link href="http://localhost:4000/js/modernJS09/" rel="alternate" type="text/html" title="09장 타입 변환과 단축 평가" /><published>2022-04-07T00:00:00+09:00</published><updated>2022-04-07T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS09</id><content type="html" xml:base="http://localhost:4000/js/modernJS09/"><![CDATA[<p><br /></p>
 
 <h1 id="09장-타입-변환과-단축-평가">09장 타입 변환과 단축 평가</h1>
 
@@ -226,6 +226,28 @@
   <span class="nx">message</span> <span class="o">=</span> <span class="nx">done</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">미완료</span><span class="dl">'</span><span class="p">;</span>
 
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span> <span class="c1">// 미완료</span>
+</code></pre></div></div>
+
+<h3 id="942-옵셔널-체이닝-연산자">9.4.2 옵셔널 체이닝 연산자</h3>
+<p>ES11에서 도입된 <code class="language-plaintext highlighter-rouge">옵셔널 체이닝 연산자 ?.는 좌항의 피연산자가 null 또는 undefined인 경우 undefined를 반환</code>하고, 그렇지 않으면 우항의 프로퍼티 참조를 이어간다. 객체를 가리키기를 기대하는 변수가 null 또는 undefined가 아닌지 확인하고 프로퍼티를 참조할 때 유용하다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">elem</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">elem</span><span class="p">?.</span><span class="nx">value</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// undefined </span>
+</code></pre></div></div>
+
+<p>좌항 피연산자가 false로 평가되는 Falsy 값이라도 null 또는 undefined가 아니면 우항의 프로퍼티 참조를 이어간다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">length</span> <span class="o">=</span> <span class="nx">str</span><span class="p">?.</span><span class="nx">length</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">length</span><span class="p">);</span> <span class="c1">// 0</span>
+</code></pre></div></div>
+
+<h3 id="943-null-병합-연산자">9.4.3 null 병합 연산자</h3>
+<p>ES11에서 도입된 null 병합 연산자 ??는 좌항의 피연산자가 null 또는 undefined인 경우 우항의 피연산자를 반환하고, 그렇지 않으면 좌항의 피연산자를 반환한다. 변수에 기본값을 설정할 때 유용하다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kc">null</span> <span class="p">??</span> <span class="dl">'</span><span class="s1">default string</span><span class="dl">'</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// "default string"</span>
 </code></pre></div></div>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 09장 타입 변환과 단축 평가 내용 정리]]></summary></entry><entry><title type="html">06장 데이터 타입</title><link href="http://localhost:4000/js/modernJS06/" rel="alternate" type="text/html" title="06장 데이터 타입" /><published>2022-04-06T00:00:00+09:00</published><updated>2022-04-06T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS06</id><content type="html" xml:base="http://localhost:4000/js/modernJS06/"><![CDATA[<p><br /></p>
 
 <h1 id="06장-데이터-타입">06장 데이터 타입</h1>
