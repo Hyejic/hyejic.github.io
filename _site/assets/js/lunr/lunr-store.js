@@ -28,4 +28,10 @@ var store = [{
         "tags": ["javascript"],
         "url": "/js/modernJS09/",
         "teaser": null
+      },{
+        "title": "10장 객체 리터럴",
+        "excerpt":"10장 객체 리터럴 10.1 객체란? 자바스크립트는 객체 기방의 프로그래밍 언어이며, 자바스크립트를 구성하는 거ㅣ “모든 것”이 객체다. 다양한 타입의 값을 하나의 단위로 구성한 복합적인 자료구조다. 객체는 프로퍼티와 메서드로 구성된 집합체다. 프로퍼티 : 객체의 상태를 나타내는 값(data) 메서드 : 프로퍼티상태 데이터를 참조하고 조작할 수 있는 동작(behavior) var counter = { num :...","categories": ["js"],
+        "tags": ["javascript"],
+        "url": "/js/modernJS10/",
+        "teaser": null
       }]
