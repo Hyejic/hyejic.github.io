@@ -40,4 +40,10 @@ var store = [{
         "tags": ["javascript"],
         "url": "/js/modernJS11/",
         "teaser": null
+      },{
+        "title": "12장 함수",
+        "excerpt":"12장 함수 자바스크립트가 제공하는 데이터 타입은 크게 원시타입과 객체 타입으로 구분할 수 있다. 원시 값은 변경 불가능한 값이고 객체는 변경 가능한 값이다. 11.1 원시 값 11.1.1 변경 불가능한 값 원시 값은 변경 불가능한 값, 즉 읽기 전용 값이다. 어떤일이 있어도 불변한다. 원시 값 자체를 변경할 수 없다는 것이지 변수의 값을...","categories": ["js"],
+        "tags": ["javascript"],
+        "url": "/js/modernJS12/",
+        "teaser": null
       }]
