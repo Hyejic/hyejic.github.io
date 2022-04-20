@@ -1,0 +1,27 @@
+I"�<p><br /></p>
+
+<h1 id="13장-스코프">13장 스코프</h1>
+
+<h2 id="131-스코프란">13.1 스코프란?</h2>
+<p>모든 식별자(변수 이름, 함수 이름, 클래스 이름 등)는 자신이 선언된 위치에 의해 다른 코드가 식별자 자신을 참조할 수 있는 유효 범위가 결정된다. 이를 스코프라 한다. 즉, 스코프는 식별자가 유효한 범위를 말한다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">global</span><span class="dl">'</span><span class="p">;</span>
+
+  <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">local</span><span class="dl">'</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">foo</span><span class="p">();</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>위 예제에서 코드의 가장 바깥 영역에 선언된 x 변수는 어디서든 참조할 수 있다. 하지만 foo함수 내부에서 선언된 x 변수는 foo 함수 내부에서만 참조할 수 있고 foo 함수 외부에서는 참조할 수 없다. 이때 두 개의 x 변수는 식별자 이름이 동일하지만 자신이 유효한 범위, 즉 스코프가 다른 별개의 변수다.</p>
+
+<h2 id="132-스코프의-종류">13.2 스코프의 종류</h2>
+<p>스코프는 전역과 지역으로 구분할 수 있다.</p>
+
+<h3 id="1321-전역과-전역-스코프">13.2.1 전역과 전역 스코프</h3>
+<p>전역이란 코드의 가장 바깥 영역을 말한다. 전역에 변수를 선언하면 전역 스코프를 갖는 전역 변수가 되고 어디서든지 참조할 수 있다.</p>
+:ET

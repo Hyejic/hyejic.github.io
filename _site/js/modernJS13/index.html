@@ -1,0 +1,752 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>13장 스코프 - 공부해서 남주자</title>
+<meta name="description" content="모던 자바스크립트 Deep Dive 13장 스코프 내용 정리">
+
+
+  <meta name="author" content="Hyejic">
+  
+  <meta property="article:author" content="Hyejic">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="공부해서 남주자">
+<meta property="og:title" content="13장 스코프">
+<meta property="og:url" content="http://localhost:4000/js/modernJS13/">
+
+
+  <meta property="og:description" content="모던 자바스크립트 Deep Dive 13장 스코프 내용 정리">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-04-20T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/js/modernJS13/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "최혜지(Hyeji Choi)",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="공부해서 남주자 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
+<link rel="mask-icon" href="/assets/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          공부해서 남주자
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/logo.png" alt="Hyejic" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hyejic</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>프론트엔드 개발자 최혜지입니다.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Seoul, Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:hyeji0314@gmail.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/Hyejic" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/choiiiiyi/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <div class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <div>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">9</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </div>
+      <ul>
+        <li>
+          <h3 class="nav__sub-title">Markdown</h3>
+          <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+          <ul>
+              <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/md 주소의 글로 링크 연결-->
+              <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+              
+                  
+              
+                  
+                      <li><a href="/categories/md" class="">markdown 문법 (1)</a></li>
+                  
+              
+          </ul>
+        </li>
+        <li>
+          <h3 class="nav__sub-title">Javascript</h3>
+          <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+          <ul>
+              <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/js 주소의 글로 링크 연결-->
+              <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+              
+                  
+                      <li><a href="/categories/js" class="">모던 자바스크립트 정리 (8)</a></li>
+                  
+              
+                  
+              
+          </ul>
+        </li>
+      </ul>
+  </div>
+</nav>
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="13장 스코프">
+    <meta itemprop="description" content="모던 자바스크립트 Deep Dive 13장 스코프 내용 정리">
+    <meta itemprop="datePublished" content="2022-04-20T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/js/modernJS13/" class="u-url" itemprop="url">13장 스코프
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 13장 스코프</h4></header>
+              <ul class="toc__menu"><li><a href="#13장-스코프">13장 스코프</a><ul><li><a href="#131-스코프란">13.1 스코프란?</a></li><li><a href="#132-스코프의-종류">13.2 스코프의 종류</a><ul><li><a href="#1321-전역과-전역-스코프">13.2.1 전역과 전역 스코프</a></li><li><a href="#1322-지역과-지역-스코프">13.2.2 지역과 지역 스코프</a></li></ul></li><li><a href="#133-스코프-체인">13.3 스코프 체인</a><ul><li><a href="#1331-스코프-체인에-의한-변수-검색">13.3.1 스코프 체인에 의한 변수 검색</a></li><li><a href="#1332-스코프-체인에-의한-함수-검색">13.3.2 스코프 체인에 의한 함수 검색</a></li></ul></li><li><a href="#134-함수-레벨-스코프">13.4 함수 레벨 스코프</a></li><li><a href="#135-렉시컬-스코프">13.5 렉시컬 스코프</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p><br /></p>
+
+<h1 id="13장-스코프">13장 스코프</h1>
+
+<h2 id="131-스코프란">13.1 스코프란?</h2>
+<p>모든 식별자(변수 이름, 함수 이름, 클래스 이름 등)는 자신이 선언된 위치에 의해 다른 코드가 식별자 자신을 참조할 수 있는 유효 범위가 결정된다. 이를 스코프라 한다. 즉, 스코프는 식별자가 유효한 범위를 말한다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">global</span><span class="dl">'</span><span class="p">;</span>
+
+  <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">local</span><span class="dl">'</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">foo</span><span class="p">();</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>위 예제에서 코드의 가장 바깥 영역에 선언된 x 변수는 어디서든 참조할 수 있다. 하지만 foo함수 내부에서 선언된 x 변수는 foo 함수 내부에서만 참조할 수 있고 foo 함수 외부에서는 참조할 수 없다. 이때 두 개의 x 변수는 식별자 이름이 동일하지만 자신이 유효한 범위, 즉 스코프가 다른 별개의 변수다.</p>
+
+<h2 id="132-스코프의-종류">13.2 스코프의 종류</h2>
+<p>스코프는 전역과 지역으로 구분할 수 있다.</p>
+
+<p><img width="506" alt="스크린샷 2022-04-20 오후 11 31 08" src="https://user-images.githubusercontent.com/44577555/164254346-4d8f28f9-6a38-4db3-89dd-da025da9cc4e.png" /></p>
+
+<h3 id="1321-전역과-전역-스코프">13.2.1 전역과 전역 스코프</h3>
+<p>전역이란 코드의 가장 바깥 영역을 말한다. 전역에 변수를 선언하면 전역 스코프를 갖는 전역 변수가 되고 어디서든지 참조할 수 있다.</p>
+
+<h3 id="1322-지역과-지역-스코프">13.2.2 지역과 지역 스코프</h3>
+<p>지역이란 함수 몸체 내부를 말한다. 지역 변수는 자신의 지역 스코프와 하위 지역 스코프에서 유효하다.<br />
+위의 예제(그림 13-2)에서 inner 함수 내부에서 선언된 x 변수 이외에 이름이 같은 전역 변수 x가 존재한다. 이때 inner 함수 내부에서 x 변수를 참조하면 전역 변수 x를 참조하는 것이 아니라 inner 함수 내부의 x 변수를 참조한다. 이는 자바스크립트 엔진이 스코프 체인을 통해 참조할 변수를 검색했기 때문인다.</p>
+
+<h2 id="133-스코프-체인">13.3 스코프 체인</h2>
+<p>함수는 중첩될 수 있으므로 함수의 지역 스코프도 중첩될 수 있다. 이는 스코프가 함수의 중첩에 의해 계층적 구조를 갖는다는 것을 의미한다. 모든 스코프는 하나의 계층적 구조로 연결되며, 모든 지역 스코프의 최상위 스코프는 전역 스코프다. 이렇게 스코프가 계층적으로 연결된 것을 스코프 체인이라 한다. 변수를 참조할 때 자바스크립트 엔진은 스코프 체인을 통해 변수를 참조하는 코드의 스코프에서 시작하여 상위 스코프 방향으로 이동하며 선언된 변수를 검색한다.</p>
+
+<h3 id="1331-스코프-체인에-의한-변수-검색">13.3.1 스코프 체인에 의한 변수 검색</h3>
+<p>자바스크립트 엔진은 스코프 체인을 따라 변수를 참조하는 코드의 스코프에서 시작해서 상위 스코프 방향으로 이동하며 선언된 변수를 검색한다. 상위 스코프에서 유효한 변수는 하위 스코프에서 자유롭게 참조할 수 있지만 하위 스코프에서 유효한 변수를 상위 스코프에서 참조할 수는 없다.</p>
+
+<h3 id="1332-스코프-체인에-의한-함수-검색">13.3.2 스코프 체인에 의한 함수 검색</h3>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">global function foo</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">};</span>
+  
+  <span class="kd">function</span> <span class="nx">bar</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">local function foo</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">};</span>
+    <span class="nx">foo</span><span class="p">();</span>
+  <span class="p">};</span>
+
+  <span class="nx">bar</span><span class="p">();</span> <span class="c1">// local function foo</span>
+</code></pre></div></div>
+<p>함수도 식별자에 할당되기 때문에 스코프를 갖는다. 따라서 스코프를 “변수를 검색할 때 사용하는 규칙”이라고 표현하기보다는 “식별자를 검색하는 규칙”이라고 표현하는 편이 좀 더 적합하다.</p>
+
+<h2 id="134-함수-레벨-스코프">13.4 함수 레벨 스코프</h2>
+<p>지역은 함수 몸체 내부를 말하고 지역은 지역 스코프를 만든다고 했다. 이는 코드 블록이 아닌 함수에 의해서만 지역 스코프가 생성된다는 의미다.<br />
+var 키워드로 선언된 변수는 오로지 함수의 코드 블록(함수 몸체)만을 지역 스코프로 인정한다. 이러한 특성을 함수 레벨 스코프라 한다. 따라서 아래 예제에서 if 문의 코드 블록 내에서 선언된 x 변수는 전역변수다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span> <span class="c1">// 10 -&gt; x 변수 중복 선언으로 인해 값이 재 할당 되었다.</span>
+</code></pre></div></div>
+
+<h2 id="135-렉시컬-스코프">13.5 렉시컬 스코프</h2>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  
+  <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="nx">bar</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="kd">function</span> <span class="nx">bar</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">foo</span><span class="p">();</span> <span class="c1">// ?</span>
+  <span class="nx">bar</span><span class="p">();</span> <span class="c1">// ?</span>
+</code></pre></div></div>
+<p>위 예제의 실행 결과는 bar 함수의 상위 스코프가 무엇인지에 따라 결정된다.</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">함수를 어디서 호출했는지</code>에 따라 함수의 상위 스코프를 결정한다. (동적 스코프)</li>
+  <li><code class="language-plaintext highlighter-rouge">함수를 어디서 정의했는지</code>에 따라 함수의 상위 스코프를 결정한다. (<code class="language-plaintext highlighter-rouge">렉시컬 스코프</code>, 정적 스코프)</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">자바스크립트</code>를 비롯한 대부분읜 프로그래밍 언어는 <code class="language-plaintext highlighter-rouge">렉시컬 스코프를 따른다.</code>
+따라서 함수를 어디서 호출했는지가 아니라 함수를 어디서 정의했는지에 따라 상위 스코프를 결정한다. 함수가 호출된 위치는 상위 스코프 결정에 어떠한 영향도 주지 않는다. 이처럼 함수의 상위 스코프는 함수 정의가 실행될 때 정적으로 결정된다. 함수 정의가 실행되어 생성된 함수 객체는 이렇게 결정된 상위 스코프를 기억한다.<br />
+위 예제의 bar 함수는 전역에서 정의되었고 자신이 정의된 스코프, 즉 전역 스코프를 기억한다. 그리고 bar 함수가 호풀되면 호출된 곳이 어디인지 관계없이 언제나 자신이 기억하고 있는 전역 스코프를 상위 스코프로 사용하기 때문에 전역 변수 x의 값 1을 두 번 출력한다.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#javascript" class="page__taxonomy-item p-category" rel="tag">javascript</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#js" class="page__taxonomy-item p-category" rel="tag">js</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-04-20T00:00:00+09:00">April 20, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=13%EC%9E%A5+%EC%8A%A4%EC%BD%94%ED%94%84%20http%3A%2F%2Flocalhost%3A4000%2Fjs%2FmodernJS13%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fjs%2FmodernJS13%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fjs%2FmodernJS13%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/js/modernJS12/" class="pagination--pager" title="12장 함수
+">이전</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/js/modernJS12/" rel="permalink">12장 함수
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">모던 자바스크립트 Deep Dive 12장 함수 내용 정리
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/js/modernJS11/" rel="permalink">11장 원시 값과 객체의 비교
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">모던 자바스크립트 Deep Dive 11장 원시 값과 객체의 비교 내용 정리
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/js/modernJS10/" rel="permalink">10장 객체 리터럴
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">모던 자바스크립트 Deep Dive 10장 객체 리터럴 내용 정리
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/js/modernJS09/" rel="permalink">09장 타입 변환과 단축 평가
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">모던 자바스크립트 Deep Dive 09장 타입 변환과 단축 평가 내용 정리
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Hyejic" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/choiiiiyi/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 최혜지(Hyeji Choi). Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
