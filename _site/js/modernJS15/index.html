@@ -537,11 +537,41 @@ const 키워드는 재할당을 금지할 뿐 “불변”을 의미하지는 �
 </ul>
 
 <h2 id="변수-키워드-비교">변수 키워드 비교</h2>
-<p>키워드 | 중복선언 | 재할당 | 스코프 | 호이스팅
-–|:–:|:–:|–|–
-var | o | o | 함수의 코드 블록 | 변수 선언문 이전에 참조 가능하고 할당문 이전에 참조하면 undefined 반환.
-let | x | o | 모든 코드 블록(함수, if문, for문, while 문, try/catch문 등) | 호이스팅이 발생하지 않는 것처럼 동작한다.<br />선언단계와 초기화 단계가 분리되어 진행. <br />변수 선언 이전에 참조하면 참조 에러발생
-const | x | x | 모든 코드 블록(함수, if문, for문, while 문, try/catch문 등) | 호이스팅이 발생하지 않는 것처럼 동작한다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:10%" class="text-center">키워드</th>
+      <th style="width:10%" class="text-center">중복선언</th>
+      <th style="width:10%" class="text-center">재할당</th>
+      <th style="width:30%">스코프</th>
+      <th style="width:40%">호이스팅</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="text-center">var</td>
+      <td class="text-center">o</td>
+      <td class="text-center">o</td>
+      <td>함수의 코드 블록</td>
+      <td>변수 선언문 이전에 참조 가능하고 할당문 이전에 참조하면 undefined 반환.</td>
+    </tr>
+    <tr>
+      <td class="text-center">let</td>
+      <td class="text-center">x</td>
+      <td class="text-center">o</td>
+      <td>모든 코드 블록(함수, if문, for문, while 문, try/catch문 등)</td>
+      <td>호이스팅이 발생하지 않는 것처럼 동작한다.<br />선언단계와 초기화 단계가 분리되어 진행. <br />변수 선언 이전에 참조하면 참조 에러발생</td>
+    </tr>
+    <tr>
+      <td class="text-center">const</td>
+      <td class="text-center">x</td>
+      <td class="text-center">x</td>
+      <td>모든 코드 블록(함수, if문, for문, while 문, try/catch문 등)</td>
+      <td>호이스팅이 발생하지 않는 것처럼 동작한다</td>
+    </tr>
+  </tbody>
+</table>
 
         
       </section>

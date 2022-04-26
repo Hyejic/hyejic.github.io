@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-04-26T17:39:33+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">공부해서 남주자</title><subtitle>공부한것을 기록하고 공유하는 블로그입니다.</subtitle><author><name>Hyejic</name></author><entry><title type="html">15장 let, const 키워드와 블록 레벨 스코프</title><link href="http://localhost:4000/js/modernJS15/" rel="alternate" type="text/html" title="15장 let, const 키워드와 블록 레벨 스코프" /><published>2022-04-26T00:00:00+09:00</published><updated>2022-04-26T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS15</id><content type="html" xml:base="http://localhost:4000/js/modernJS15/"><![CDATA[<p><br /></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-04-26T20:19:05+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">공부해서 남주자</title><subtitle>공부한것을 기록하고 공유하는 블로그입니다.</subtitle><author><name>Hyejic</name></author><entry><title type="html">15장 let, const 키워드와 블록 레벨 스코프</title><link href="http://localhost:4000/js/modernJS15/" rel="alternate" type="text/html" title="15장 let, const 키워드와 블록 레벨 스코프" /><published>2022-04-26T00:00:00+09:00</published><updated>2022-04-26T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS15</id><content type="html" xml:base="http://localhost:4000/js/modernJS15/"><![CDATA[<p><br /></p>
 
 <h1 id="15장-let-const-키워드와-블록-레벨-스코프">15장 let, const 키워드와 블록 레벨 스코프</h1>
 
@@ -174,11 +174,41 @@ const 키워드는 재할당을 금지할 뿐 “불변”을 의미하지는 �
 </ul>
 
 <h2 id="변수-키워드-비교">변수 키워드 비교</h2>
-<p>키워드 | 중복선언 | 재할당 | 스코프 | 호이스팅
-–|:–:|:–:|–|–
-var | o | o | 함수의 코드 블록 | 변수 선언문 이전에 참조 가능하고 할당문 이전에 참조하면 undefined 반환.
-let | x | o | 모든 코드 블록(함수, if문, for문, while 문, try/catch문 등) | 호이스팅이 발생하지 않는 것처럼 동작한다.<br />선언단계와 초기화 단계가 분리되어 진행. <br />변수 선언 이전에 참조하면 참조 에러발생
-const | x | x | 모든 코드 블록(함수, if문, for문, while 문, try/catch문 등) | 호이스팅이 발생하지 않는 것처럼 동작한다.</p>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 15장 let, const 키워드와 블록 레벨 스코프 내용 정리]]></summary></entry><entry><title type="html">14장 전역 변수의 문제점</title><link href="http://localhost:4000/js/modernJS14/" rel="alternate" type="text/html" title="14장 전역 변수의 문제점" /><published>2022-04-25T00:00:00+09:00</published><updated>2022-04-25T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS14</id><content type="html" xml:base="http://localhost:4000/js/modernJS14/"><![CDATA[<p><br /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:10%" class="text-center">키워드</th>
+      <th style="width:10%" class="text-center">중복선언</th>
+      <th style="width:10%" class="text-center">재할당</th>
+      <th style="width:30%">스코프</th>
+      <th style="width:40%">호이스팅</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="text-center">var</td>
+      <td class="text-center">o</td>
+      <td class="text-center">o</td>
+      <td>함수의 코드 블록</td>
+      <td>변수 선언문 이전에 참조 가능하고 할당문 이전에 참조하면 undefined 반환.</td>
+    </tr>
+    <tr>
+      <td class="text-center">let</td>
+      <td class="text-center">x</td>
+      <td class="text-center">o</td>
+      <td>모든 코드 블록(함수, if문, for문, while 문, try/catch문 등)</td>
+      <td>호이스팅이 발생하지 않는 것처럼 동작한다.<br />선언단계와 초기화 단계가 분리되어 진행. <br />변수 선언 이전에 참조하면 참조 에러발생</td>
+    </tr>
+    <tr>
+      <td class="text-center">const</td>
+      <td class="text-center">x</td>
+      <td class="text-center">x</td>
+      <td>모든 코드 블록(함수, if문, for문, while 문, try/catch문 등)</td>
+      <td>호이스팅이 발생하지 않는 것처럼 동작한다</td>
+    </tr>
+  </tbody>
+</table>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 15장 let, const 키워드와 블록 레벨 스코프 내용 정리]]></summary></entry><entry><title type="html">14장 전역 변수의 문제점</title><link href="http://localhost:4000/js/modernJS14/" rel="alternate" type="text/html" title="14장 전역 변수의 문제점" /><published>2022-04-25T00:00:00+09:00</published><updated>2022-04-25T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS14</id><content type="html" xml:base="http://localhost:4000/js/modernJS14/"><![CDATA[<p><br /></p>
 
 <h1 id="14장-전역-변수의-문제점">14장 전역 변수의 문제점</h1>
 
@@ -1324,8 +1354,8 @@ score 변수와 copy 변수의 값은 80으로 동일하지만, 각 변수의 �
 <table>
   <thead>
     <tr>
-      <td>단축 평가 표현식</td>
-      <td>평가 결과</td>
+      <th>단축 평가 표현식</th>
+      <th>평가 결과</th>
     </tr>
   </thead>
   <tbody>
@@ -1401,9 +1431,9 @@ score 변수와 copy 변수의 값은 80으로 동일하지만, 각 변수의 �
 <h1 id="06장-데이터-타입">06장 데이터 타입</h1>
 <table>
   <tr>
-    <td>구분</td>
-    <td>데이터 티입</td>
-    <td>설명</td>
+    <th>구분</th>
+    <th>데이터 티입</th>
+    <th>설명</th>
   </tr>
   <tr>
     <td rowspan="6">원시 타입</td>
