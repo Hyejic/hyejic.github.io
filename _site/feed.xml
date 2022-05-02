@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-05-02T18:29:30+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">공부해서 남주자</title><subtitle>공부한것을 기록하고 공유하는 블로그입니다.</subtitle><author><name>Hyejic</name></author><entry><title type="html">16장 프로퍼티 어트리뷰트</title><link href="http://localhost:4000/js/modernJS16/" rel="alternate" type="text/html" title="16장 프로퍼티 어트리뷰트" /><published>2022-05-02T00:00:00+09:00</published><updated>2022-05-02T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS16</id><content type="html" xml:base="http://localhost:4000/js/modernJS16/"><![CDATA[<p><br /></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-05-02T21:28:27+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">공부해서 남주자</title><subtitle>공부한것을 기록하고 공유하는 블로그입니다.</subtitle><author><name>Hyejic</name></author><entry><title type="html">16장 프로퍼티 어트리뷰트</title><link href="http://localhost:4000/js/modernJS16/" rel="alternate" type="text/html" title="16장 프로퍼티 어트리뷰트" /><published>2022-05-02T00:00:00+09:00</published><updated>2022-05-02T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS16</id><content type="html" xml:base="http://localhost:4000/js/modernJS16/"><![CDATA[<p><br /></p>
 
 <h1 id="16장-프로퍼티-어트리뷰트">16장 프로퍼티 어트리뷰트</h1>
 
@@ -273,7 +273,136 @@
   <span class="c1">// {firstName: 'Hyeji', lastName: 'Choi'}</span>
 </code></pre></div></div>
 
-<h2 id="165-객체-변경-방지">16.5 객체 변경 방지</h2>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 16장 프로퍼티 어트리뷰트 내용 정리]]></summary></entry><entry><title type="html">15장 let, const 키워드와 블록 레벨 스코프</title><link href="http://localhost:4000/js/modernJS15/" rel="alternate" type="text/html" title="15장 let, const 키워드와 블록 레벨 스코프" /><published>2022-04-26T00:00:00+09:00</published><updated>2022-04-26T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS15</id><content type="html" xml:base="http://localhost:4000/js/modernJS15/"><![CDATA[<p><br /></p>
+<h2 id="165-객체-변경-방지">16.5 객체 변경 방지</h2>
+<p>자바스크립트는 객체의 변경을 방지하는 다양한 메서드를 제공한다. 객체 변경 방지 메서드들은 객체의 변경을 금지하는 강도가 다르다.
+구분 | 메서드 | 프로퍼티 추가 | 프로퍼티 삭제 | 프로퍼티 값 읽기 | 프로퍼티 값 쓰기 | 프로퍼티 어트리뷰트 재정의
+:–: | :–: | :–: | :–: | :–: | :–: | :–:
+객체 확장 금지 | Object.preventExtensions | X | O | O | O | O
+객체 밀봉 | Object.seal | X | X | O | O | X
+객체 동결 | Object.freeze | X | X | O | X | X</p>
+
+<h3 id="1651-객체-확장-금지">16.5.1 객체 확장 금지</h3>
+<p>Object.preventExtensions 메서드는 객체의 확장을 금지한다. 즉, 확장이 금지된 객체는 프로퍼티 추가가 금지된다.<br />
+Object.isExtensible 메서드로 확장 가능한 객체인지 확인 가능.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span> <span class="p">};</span>
+
+  <span class="c1">// 확장 가능한 객체인지 확인 가능</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isExtensible</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> <span class="c1">// true</span>
+
+  <span class="c1">// person 객체의 확장을 금지 시킴.</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">preventExtensions</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isExtensible</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> <span class="c1">// false -&gt; 확장 금지 상태</span>
+
+  <span class="nx">person</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="c1">// 프로퍼티 추가 금지. 에러 없이 무시된다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Choi"}</span>
+
+  <span class="c1">// 프로퍼티 추가는 금지되지만 삭제는 가능.</span>
+  <span class="k">delete</span> <span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {}</span>
+
+  <span class="c1">// 프로퍼티 정의에 의한 프로퍼티 추가도 금지된다.</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">age</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">value</span><span class="p">:</span> <span class="mi">20</span> <span class="p">});</span>
+  <span class="c1">// TypeError: Cannot define property age, object is not extensible</span>
+</code></pre></div></div>
+
+<h3 id="1652-객체-밀봉">16.5.2 객체 밀봉</h3>
+<p>객체 밀봉이란 프로퍼티 <code class="language-plaintext highlighter-rouge">추가 및 삭제</code>와 프로퍼티 어트리뷰트 <code class="language-plaintext highlighter-rouge">재정의 금지</code>를 의미한다. 밀봉된 객체는 <code class="language-plaintext highlighter-rouge">읽기와 쓰기만 가능</code>하다.<br />
+Object.isSealed 메서드로 밀봉된 객체인지 확인 가능.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span> <span class="p">};</span>
+
+  <span class="c1">// person 객체는 밀봉된 객체가 아니다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isSealed</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> <span class="c1">// false</span>
+
+  <span class="c1">// person 객체를 밀봉</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">seal</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isSealed</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> <span class="c1">// true</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptors</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> 
+  <span class="c1">// name: {value: 'Choi', writable: true, enumerable: true, configurable: false}</span>
+
+  <span class="c1">// 프로퍼티 추가 금지</span>
+  <span class="nx">person</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="c1">// 무시</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Choi"}</span>
+
+  <span class="c1">// 프로퍼티 삭제 금지</span>
+  <span class="k">delete</span> <span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// 무시</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Choi"}</span>
+
+  <span class="c1">// 프로퍼티 값 갱신 가능</span>
+  <span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kim</span><span class="dl">'</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Kim"}</span>
+
+  <span class="c1">// 프로퍼티 재정의 금지</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">configurable</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+  <span class="c1">// TypeError: Cannot redefine property: name</span>
+</code></pre></div></div>
+
+<h3 id="1653-객체-동결">16.5.3 객체 동결</h3>
+<p>객체 동결이란 프로퍼티 <code class="language-plaintext highlighter-rouge">추가 및 삭제</code>와 프로퍼티 어트리뷰트 <code class="language-plaintext highlighter-rouge">재정의</code> 금지, 프로퍼티 <code class="language-plaintext highlighter-rouge">값 갱신 금지</code>를 의미한다. 동결된 객체는 <code class="language-plaintext highlighter-rouge">읽기만 가능.</code><br />
+Object.isFrozen 메서드로 동결된 객체인지 확인 가능.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span> <span class="p">};</span>
+
+  <span class="c1">// person 객체는 동결된 객체가 아니다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isFrozen</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> <span class="c1">// false</span>
+
+  <span class="c1">// person 객체를 동결</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">freeze</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isFrozen</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> <span class="c1">// true</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptors</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> 
+  <span class="c1">// name: {value: 'Choi', writable: false, enumerable: true, configurable: false}</span>
+
+  <span class="c1">// 프로퍼티 추가 금지</span>
+  <span class="nx">person</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="c1">// 무시</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Choi"}</span>
+
+  <span class="c1">// 프로퍼티 삭제 금지</span>
+  <span class="k">delete</span> <span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// 무시</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Choi"}</span>
+
+  <span class="c1">// 프로퍼티 값 갱신 금지</span>
+  <span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kim</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// 무시</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Choi"}</span>
+
+  <span class="c1">// 프로퍼티 재정의 금지</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">configurable</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+  <span class="c1">// TypeError: Cannot redefine property: name</span>
+</code></pre></div></div>
+
+<h3 id="1654-불변-객체">16.5.4 불변 객체</h3>
+<p>변경 방지 메서드 들은 얕은 변경 방지로 중첩된 객체에는 영향을 주지 못한다. 중첩 객체까지 영향을 주려면 객체를 값으로 갖는 모든 프로퍼티에 대해 재귀적으로 메서드를 호출해야 한다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 객체 동결 재귀적 호출</span>
+  <span class="kd">function</span> <span class="nx">deepFreeze</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 객체이고 동결되지 않은 객체만 동결한다.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">target</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">target</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">object</span><span class="dl">'</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isFrozen</span><span class="p">(</span><span class="nx">target</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nb">Object</span><span class="p">.</span><span class="nx">freeze</span><span class="p">(</span><span class="nx">target</span><span class="p">);</span>
+      <span class="c1">// 모든 프로퍼티를 순회하여 재귀적으로 동결.</span>
+      <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">target</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">key</span> <span class="o">=&gt;</span> <span class="nx">deepFreeze</span><span class="p">(</span><span class="nx">target</span><span class="p">[</span><span class="nx">key</span><span class="p">]));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">target</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">address</span><span class="p">:</span> <span class="p">{</span><span class="na">city</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Seoul</span><span class="dl">'</span><span class="p">}</span>
+  <span class="p">};</span>
+
+  <span class="c1">// 깊은 객체 동결</span>
+  <span class="nx">deepFreeze</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isFrozen</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> <span class="c1">// true</span>
+  <span class="c1">// 중첩된 객체까지 동결</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isFrozen</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">address</span><span class="p">));</span> <span class="c1">// true</span>
+
+  <span class="nx">person</span><span class="p">.</span><span class="nx">address</span><span class="p">.</span><span class="nx">city</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Busan</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// 추가,삭제,재할당,갱신 금지 -&gt; 무시</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: 'Choi', address: {city: 'Seoul'}}</span>
+
+</code></pre></div></div>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 16장 프로퍼티 어트리뷰트 내용 정리]]></summary></entry><entry><title type="html">15장 let, const 키워드와 블록 레벨 스코프</title><link href="http://localhost:4000/js/modernJS15/" rel="alternate" type="text/html" title="15장 let, const 키워드와 블록 레벨 스코프" /><published>2022-04-26T00:00:00+09:00</published><updated>2022-04-26T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS15</id><content type="html" xml:base="http://localhost:4000/js/modernJS15/"><![CDATA[<p><br /></p>
 
 <h1 id="15장-let-const-키워드와-블록-레벨-스코프">15장 let, const 키워드와 블록 레벨 스코프</h1>
 
