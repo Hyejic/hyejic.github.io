@@ -64,4 +64,10 @@ var store = [{
         "tags": ["javascript"],
         "url": "/js/modernJS15/",
         "teaser": null
+      },{
+        "title": "16장 프로퍼티 어트리뷰트",
+        "excerpt":"16장 프로퍼티 어트리뷰트 15.1 var 키워드로 선언한 변수의 문제점 15.1.1 변수 중복 선언 허용 var 키워드로 선언한 변수는 중복 선언이 가능하다. var x = 1; var y = 1; // var 키워드로 선언된 변수는 같은 스코프 내에서 중복 선언을 허용 // 초기화 문이 있는 경우 자바스크립트 엔지에 의해 var 키워드가...","categories": ["js"],
+        "tags": ["javascript"],
+        "url": "/js/modernJS16/",
+        "teaser": null
       }]

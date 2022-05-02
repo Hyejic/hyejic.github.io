@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-04-26T20:19:05+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">공부해서 남주자</title><subtitle>공부한것을 기록하고 공유하는 블로그입니다.</subtitle><author><name>Hyejic</name></author><entry><title type="html">15장 let, const 키워드와 블록 레벨 스코프</title><link href="http://localhost:4000/js/modernJS15/" rel="alternate" type="text/html" title="15장 let, const 키워드와 블록 레벨 스코프" /><published>2022-04-26T00:00:00+09:00</published><updated>2022-04-26T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS15</id><content type="html" xml:base="http://localhost:4000/js/modernJS15/"><![CDATA[<p><br /></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-05-02T15:23:15+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">공부해서 남주자</title><subtitle>공부한것을 기록하고 공유하는 블로그입니다.</subtitle><author><name>Hyejic</name></author><entry><title type="html">16장 프로퍼티 어트리뷰트</title><link href="http://localhost:4000/js/modernJS16/" rel="alternate" type="text/html" title="16장 프로퍼티 어트리뷰트" /><published>2022-05-02T00:00:00+09:00</published><updated>2022-05-02T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS16</id><content type="html" xml:base="http://localhost:4000/js/modernJS16/"><![CDATA[<p><br /></p>
 
-<h1 id="15장-let-const-키워드와-블록-레벨-스코프">15장 let, const 키워드와 블록 레벨 스코프</h1>
+<h1 id="16장-프로퍼티-어트리뷰트">16장 프로퍼티 어트리뷰트</h1>
 
 <h2 id="151-var-키워드로-선언한-변수의-문제점">15.1 var 키워드로 선언한 변수의 문제점</h2>
 <h3 id="1511-변수-중복-선언-허용">15.1.1 변수 중복 선언 허용</h3>
@@ -208,6 +208,216 @@ const 키워드는 재할당을 금지할 뿐 “불변”을 의미하지는 �
       <td>호이스팅이 발생하지 않는 것처럼 동작한다</td>
     </tr>
   </tbody>
+</table>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 16장 프로퍼티 어트리뷰트 내용 정리]]></summary></entry><entry><title type="html">15장 let, const 키워드와 블록 레벨 스코프</title><link href="http://localhost:4000/js/modernJS15/" rel="alternate" type="text/html" title="15장 let, const 키워드와 블록 레벨 스코프" /><published>2022-04-26T00:00:00+09:00</published><updated>2022-04-26T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS15</id><content type="html" xml:base="http://localhost:4000/js/modernJS15/"><![CDATA[<p><br /></p>
+
+<h1 id="15장-let-const-키워드와-블록-레벨-스코프">15장 let, const 키워드와 블록 레벨 스코프</h1>
+
+<h2 id="151-var-키워드로-선언한-변수의-문제점">15.1 var 키워드로 선언한 변수의 문제점</h2>
+<h3 id="1511-변수-중복-선언-허용">15.1.1 변수 중복 선언 허용</h3>
+<p>var 키워드로 선언한 변수는 중복 선언이 가능하다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// var 키워드로 선언된 변수는 같은 스코프 내에서 중복 선언을 허용</span>
+  <span class="c1">// 초기화 문이 있는 경우 자바스크립트 엔지에 의해 var 키워드가 없는 것처럼 동작. 재선언.</span>
+  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+  <span class="c1">// 초기화문이 없는 변수 선언문은 무시된다.</span>
+  <span class="kd">var</span> <span class="nx">y</span><span class="p">;</span> 
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span> <span class="c1">// 100</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">y</span><span class="p">);</span> <span class="c1">// 1</span>
+</code></pre></div></div>
+<p>위 예제와 같이 동일한 이름의 변수를 중복 선언하면서 값까지 할당했다면 의도치 않게 먼저 선언된 변수 값이 변경되는 부작용 발생.</p>
+
+<h3 id="1512-함수-레벨-스코프">15.1.2 함수 레벨 스코프</h3>
+<p>var 키워드로 선언한 변수는 오로지 함수의 코드 블록만을 지역 스코프로 인정한다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// var 키워드로 선언된 변수는 함수의 코드 블록만을 지역스코프로 인정하기 때문에 x 변수가 중복 선언된다.</span>
+    <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="c1">// 10</span>
+</code></pre></div></div>
+
+<h3 id="1513-변수-호이스팅">15.1.3 변수 호이스팅</h3>
+<p>변수 호이스팅에 의해 var 키워드로 선언한 변수는 변수 선언문이 이전에 참조할 수 있다. 단, 할당문 이전에 변수를 참조하면 언제나 undefined를 반환한다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 이 시점에 호이스팅에 의해 foo변수가 선언</span>
+  <span class="c1">// 변수 foo는 undefined로 초기화</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// undefined</span>
+
+  <span class="c1">// 변수에 값을 할당</span>
+  <span class="nx">foo</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">)</span> <span class="c1">// 123</span>
+
+  <span class="c1">// 변수 선언은 런타임 이전에 자바스크립트 엔진에 의해 암묵적으로 실행된다.</span>
+  <span class="kd">var</span> <span class="nx">foo</span><span class="p">;</span>
+</code></pre></div></div>
+<p>변수 선언문 이전에 변수를 참조할 수 있지만 프로그램의 흐름상 맞지 않고 가독성을 떨어뜨리며 오류를 발생시킬 여지를 남긴다.</p>
+
+<h2 id="152-let-키워드">15.2 let 키워드</h2>
+<p>ES6에서 도입</p>
+
+<h3 id="1521-변수-중복-선언-금지">15.2.1 변수 중복 선언 금지</h3>
+<p>let 키워드로 이름이 같은 변수를 중복 선언하면 문법에러가 발생</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">let</span> <span class="nx">bar</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+  
+  <span class="kd">let</span> <span class="nx">bar</span> <span class="o">=</span> <span class="mi">456</span><span class="p">;</span> <span class="c1">// SyntaxError: Identifier 'bar' has already veen declared</span>
+</code></pre></div></div>
+
+<h3 id="1522-블록-레벨-스코프">15.2.2 블록 레벨 스코프</h3>
+<p>let 키워드로 선언한 변수는 모든 코드 블록을 지역 스코프로 인정하는 블록 레벨 스코프를 따른다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">let</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// 전역변수</span>
+  <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// 지역변수</span>
+    <span class="kd">let</span> <span class="nx">bar</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// 지역변수</span>
+  <span class="p">}</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// 1</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">bar</span><span class="p">);</span> <span class="c1">// ReferenceError: bar is not defined -&gt; 전역에서 지역변수를 참조할 수 없다.</span>
+</code></pre></div></div>
+
+<p>함수도 코드 블록이으로 스코프를 따른다. 함수 내의 코드블록은 함수 레벨 스코프에 중첩된다.</p>
+
+<p><img width="343" alt="그림 15-1 블록 레벨 스코프의 중첩" src="https://user-images.githubusercontent.com/44577555/165247412-a00c6168-efa6-4253-ac36-3a15f03ed5ae.png" /></p>
+
+<h3 id="1523-변수-호이스팅">15.2.3 변수 호이스팅</h3>
+<p>let 키워드로 선언한 변수는 변수 호이스팅이 발생하지 않는 것처럼 동작한다. 변수 선언문 이전에 참조하면 ReferenceError 발생.<br />
+let 키워드 변수는 var 키워드 변수와 다르게 <code class="language-plaintext highlighter-rouge">선언 단계</code>와 <code class="language-plaintext highlighter-rouge">초기화 단계</code>가 <code class="language-plaintext highlighter-rouge">분리</code>되어 진행된다. 런타임 이전에 선언 단계가 먼저 실행되지만 초기화 단계는 변수 선언문에 도달했을 때 실행된다. 따라서 초기화 단계가 실행되기 전에 변수에 접근하면 참조에서가 발생한다. 스코프의 시작 지점부터 초기화 시작 지점까지 <code class="language-plaintext highlighter-rouge">변수를 참조할 수 없는 구간을 일시적 사각지대</code>라고 한다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 초기화 이전의 일시적 사각지대에서는 참조할 수 없다. </span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// ReferenceError: foo is not defined</span>
+  
+  <span class="kd">let</span> <span class="nx">foo</span><span class="p">;</span> <span class="c1">// 변수 선언문에서 초기화 단계가 실행</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// undefined</span>
+
+  <span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// 할당문에서 할단 단계 실행</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// 1</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">var 키워드 변수 생명주기</th>
+      <th style="text-align: center">let 키워드 변수 생명주기</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><img width="300" alt="var 키워드 변수 생명주기" src="https://user-images.githubusercontent.com/44577555/165249667-c6cebe00-cd26-406e-9d35-750d03cd8715.png" /></td>
+      <td style="text-align: center"><img width="300" alt="let 키워드 변수 생명주기" src="https://user-images.githubusercontent.com/44577555/165249653-d750aacb-9dd8-4280-bd1c-3038170aa82e.png" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="1524-전역-객체와-let">15.2.4 전역 객체와 let</h3>
+<p>let 키워드로 선언한 전역 변수는 전역 객체의 프로퍼티가 아니다. let 전역 변수는 보이지 않는 개념적인 블록 내에 존재하게 된다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 브라우저 환경에서 실행</span>
+
+  <span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">x</span><span class="p">);</span> <span class="c1">// undefined -&gt; let, const로 선언한 변수는 전역 객체 window의 프로퍼티가 아니다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span> <span class="c1">// 1</span>
+</code></pre></div></div>
+
+<h2 id="153-const-키워드">15.3 const 키워드</h2>
+<p>ES6에서 도입. const 키워드는 let 키워드와 대부분 동일하다.</p>
+
+<h3 id="1531-선언과-초기화">15.3.1 선언과 초기화</h3>
+<p>const 키워드로 선언한 변수는 반드시 선언과 동시에 초기화해야 한다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 선언과 동시에 초기화를 하지 않으면 에러 발생</span>
+  <span class="kd">const</span> <span class="nx">foo</span><span class="p">;</span> <span class="c1">// SyntaxError: Missing initializer in const declaration</span>
+  <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// ReferenceError: Cannot access 'foo' before initialization</span>
+    <span class="kd">const</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// 1</span>
+  <span class="p">}</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// ReferenceError: foo is not defined</span>
+
+</code></pre></div></div>
+
+<h3 id="1532-재할당-금지">15.3.2 재할당 금지</h3>
+<p>var, let 키워드로 선언한 변수는 재할당이 자유롭지만 const 키워드로 선언한 변수는 재할당이 금지된다.</p>
+
+<h3 id="1533-상수">15.3.3 상수</h3>
+<p>const 키워드로 선언한 변수에 원시 값을 할당한 경우 변수 값을 변경할 수 없기때문에 상수를 표현하는 데 사용하기도 한다.<br />
+상수는 재할당이 금지된 변수를 말한다. 상수는 상태 유지와 가독성, 유지보수의 편의를 위해 적극적으로 사용해야 한다. 일반적으로 상수의 이름은 대문자로 사용하고 여러 단어로 이뤄진 경우에는 스네이크 케이스로 표현한다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 세율을 의미하는 0.1은 변경할 수 없는 상수로서 사용될 값</span>
+  <span class="kd">const</span> <span class="nx">TAX_RATE</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">;</span>
+
+  <span class="kd">let</span> <span class="nx">perTaxPrice</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+
+  <span class="kd">let</span> <span class="nx">afterTaxPrice</span> <span class="o">=</span> <span class="nx">perTaxPrice</span> <span class="o">+</span> <span class="p">(</span><span class="nx">perTaxPrice</span> <span class="o">*</span> <span class="nx">TAX_RATE</span><span class="p">);</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">afterTaxPrice</span><span class="p">);</span> <span class="c1">// 110</span>
+</code></pre></div></div>
+
+<h3 id="1534-const-키워드와-객체">15.3.4 const 키워드와 객체</h3>
+<p>const 키워드로 선언된 변수에 객체를 할당한 경우 값을 변경할 수 있다. 이때 객체가 변경되더라도 변수에 할당된 참조 값은 변경되지 않는다.<br />
+const 키워드는 재할당을 금지할 뿐 “불변”을 의미하지는 않는다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span>
+  <span class="p">};</span>
+
+  <span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kim</span><span class="dl">'</span><span class="p">;</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Kim"}</span>
+</code></pre></div></div>
+
+<h2 id="154-var-vs-let-vs-const">15.4 var vs. let vs. const</h2>
+<p>변수 선언에는 기본적으로 const를 사용하고 let은 재할당이 필요한 경우에 한정해 사용하는 것이 좋다.</p>
+<ul>
+  <li>ES6를 사용한다면 var 키워드를 사용하지 않는다.</li>
+  <li>재할당이 필요한 경우에 한정해 let 키워드를 사용한다. 이때 변수의 스코프는 최대한 좁게 만든다.</li>
+  <li>변경이 발생하지 않고 읽기 전용으로 사용하는 원시 값과 객체에는 const 키워드를 사용한다. const 키워드는 재할당을 금지하므로 var, let 키워드보다 안전하다.</li>
+</ul>
+
+<h2 id="변수-키워드-비교">변수 키워드 비교</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:10%" class="text-center">키워드</th>
+      <th style="width:10%" class="text-center">중복선언</th>
+      <th style="width:10%" class="text-center">재할당</th>
+      <th style="width:30%">스코프</th>
+      <th style="width:40%">호이스팅</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="text-center">var</td>
+      <td class="text-center">o</td>
+      <td class="text-center">o</td>
+      <td>함수의 코드 블록</td>
+      <td>변수 선언문 이전에 참조 가능하고 할당문 이전에 참조하면 undefined 반환.</td>
+    </tr>
+    <tr>
+      <td class="text-center">let</td>
+      <td class="text-center">x</td>
+      <td class="text-center">o</td>
+      <td>모든 코드 블록(함수, if문, for문, while 문, try/catch문 등)</td>
+      <td>호이스팅이 발생하지 않는 것처럼 동작한다.<br />선언단계와 초기화 단계가 분리되어 진행. <br />변수 선언 이전에 참조하면 참조 에러발생</td>
+    </tr>
+    <tr>
+      <td class="text-center">const</td>
+      <td class="text-center">x</td>
+      <td class="text-center">x</td>
+      <td>모든 코드 블록(함수, if문, for문, while 문, try/catch문 등)</td>
+      <td>호이스팅이 발생하지 않는 것처럼 동작한다</td>
+    </tr>
+  </tbody>
 </table>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 15장 let, const 키워드와 블록 레벨 스코프 내용 정리]]></summary></entry><entry><title type="html">14장 전역 변수의 문제점</title><link href="http://localhost:4000/js/modernJS14/" rel="alternate" type="text/html" title="14장 전역 변수의 문제점" /><published>2022-04-25T00:00:00+09:00</published><updated>2022-04-25T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS14</id><content type="html" xml:base="http://localhost:4000/js/modernJS14/"><![CDATA[<p><br /></p>
 
 <h1 id="14장-전역-변수의-문제점">14장 전역 변수의 문제점</h1>
@@ -232,7 +442,7 @@ const 키워드는 재할당을 금지할 뿐 “불변”을 의미하지는 �
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span> <span class="c1">// global</span>
 </code></pre></div></div>
 
-<p>위 예제에서 foo 함수 내부에서 선언된 지역 변수 x는 🤔 시점에 이미 선언되었고 undefined로 초기화되어 있다. x변수는 전역 변수 x가 아닌 지역 변수 x를 참조하고 할당문이 실행되기 전까지는 undefined 값을 갖는다. 이처럼 호이스팅은 스코프를 단위로 동장한다.</p>
+<p>위 예제에서 foo 함수 내부에서 선언된 지역 변수 x는 🤔 시점에 이미 선언되었고 undefined로 초기화되어 있다. x변수는 전역 변수 x가 아닌 지역 변수 x를 참조하고 할당문이 실행되기 전까지는 undefined 값을 갖는다. 이처럼 호이스팅은 스코프를 단위로 동작한다.</p>
 <blockquote>
   <p><code class="language-plaintext highlighter-rouge">호이스팅?</code> 변수 선언이 스코프의 선두로 끌어 올려진 것처럼 동작하는 자바스크립트 고유의 특징</p>
 </blockquote>
@@ -259,7 +469,7 @@ var 키워드로 선언한 전역 변수는 전역 객체의 프로퍼티가 된
   </li>
   <li>스코프 체인 상에서 종점에 존재
     <ul>
-      <li>변수를 검색할 때 전역 변수가 가장 마지막에 검색된다. 즉 전역 변수의 검색 속도가 가장 느리다. (검색 시 지역 스코프에서 전역스코프로 올라가기 때문)</li>
+      <li>변수를 검색할 때 전역 변수가 가장 마지막에 검색된다. 즉 전역 변수의 검색 속도가 가장 느리다. (검색 시 지역 스코프에서 전역 스코프로 올라가기 때문)</li>
     </ul>
   </li>
   <li>네임스페이스 오염
@@ -1675,252 +1885,4 @@ undefined는 개발자가 의도적으로 할당하기 위한 값이 아니라 �
   <span class="kd">var</span> <span class="nx">strFirstName</span><span class="p">;</span> <span class="c1">// type + identifier</span>
   <span class="kd">var</span> <span class="nx">$elem</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">myId</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// Dom 노드</span>
   <span class="kd">var</span> <span class="nx">ovservable$</span> <span class="o">=</span> <span class="nx">fromEvent</span><span class="p">(</span><span class="nb">document</span><span class="p">,</span> <span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// RxJS 옵저버블</span>
-</code></pre></div></div>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 04장 변수 내용 정리]]></summary></entry><entry><title type="html">Markdown 기본 문법</title><link href="http://localhost:4000/md/markdown/" rel="alternate" type="text/html" title="Markdown 기본 문법" /><published>2022-04-04T00:00:00+09:00</published><updated>2022-04-04T00:00:00+09:00</updated><id>http://localhost:4000/md/markdown</id><content type="html" xml:base="http://localhost:4000/md/markdown/"><![CDATA[<p><br /></p>
-
-<h2 id="제목header">제목(header)</h2>
-<p>#의 갯수로 제목의 레벨 결정 h1 ~ h6</p>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gh"># 제목 1</span>
-<span class="gu">## 제목 2</span>
-<span class="gu">### 제목 3</span>
-<span class="gu">#### 제목 4</span>
-<span class="gu">##### 제목 5</span>
-<span class="gu">###### 제목 6</span>
-</code></pre></div></div>
-<p><br />
-<br /></p>
-
-<h2 id="문장paragraph">문장(Paragraph)</h2>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>동해물과 백두산이 마르고 닳도록
-하느님이 보우하사 우리나라 만세
-</code></pre></div></div>
-<p>동해물과 백두산이 마르고 닳도록
-하느님이 보우하사 우리나라 만세
-<br />
-<br /></p>
-
-<h2 id="줄바꿈line-breaks">줄바꿈(Line Breaks)</h2>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>동해물과 백두산이 마르고 닳도록  <span class="c">&lt;!--띄어쓰기 2번--&gt;</span>
-하느님이 보우하사 우리나라 만세  
-무궁화 삼천리 화려 강산<span class="nt">&lt;br/&gt;</span>
-대한 사람 대한으로 길이 보전하세  
-</code></pre></div></div>
-<p>동해물과 백두산이 마르고 닳도록<br />
-하느님이 보우하사 우리나라 만세<br />
-무궁화 삼천리 화려 강산<br />
-대한 사람 대한으로 길이 보전하세
-<br />
-<br /></p>
-
-<h2 id="강조emphasis">강조(Emphasis)</h2>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="ge">_이텔릭_</span>  
-<span class="gs">**두껍게**</span>  
-<span class="gs">**_이텔릭 + 두껍게_**</span>  
-~~취소선~~  
-<span class="nt">&lt;u&gt;</span>밑줄<span class="nt">&lt;/u&gt;</span>
-</code></pre></div></div>
-<p><em>이텔릭</em><br />
-<strong>두껍게</strong><br />
-<strong><em>이텔릭 + 두껍게</em></strong><br />
-<del>취소선</del><br />
-<u>밑줄</u>
-<br />
-<br /></p>
-
-<h2 id="목록list">목록(List)</h2>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">1.</span> 순서가 필요한 목록
-<span class="p">1.</span> 순서가 필요한 목록
-<span class="p">    1.</span> 순서가 필요한 목록 
-<span class="p">    1.</span> 순서가 필요한 목록
-<span class="p">    1.</span> 순서가 필요한 목록
-<span class="p">1.</span> 순서가 필요한 목록
-<span class="p">
--</span> 순서가 필요하지 않은 목록
-<span class="p">-</span> 순서가 필요하지 않은 목록
-<span class="p">-</span> 순서가 필요하지 않은 목록
-<span class="p">    -</span> 순서가 필요하지 않은 목록
-<span class="p">    -</span> 순서가 필요하지 않은 목록
-<span class="p">    -</span> 순서가 필요하지 않은 목록
-<span class="p">-</span> 순서가 필요하지 않은 목록
-</code></pre></div></div>
-<ol>
-  <li>순서가 필요한 목록</li>
-  <li>순서가 필요한 목록
-    <ol>
-      <li>순서가 필요한 목록</li>
-      <li>순서가 필요한 목록</li>
-      <li>순서가 필요한 목록</li>
-    </ol>
-  </li>
-  <li>순서가 필요한 목록</li>
-</ol>
-
-<ul>
-  <li>순서가 필요하지 않은 목록</li>
-  <li>순서가 필요하지 않은 목록</li>
-  <li>순서가 필요하지 않은 목록
-    <ul>
-      <li>순서가 필요하지 않은 목록</li>
-      <li>순서가 필요하지 않은 목록</li>
-      <li>순서가 필요하지 않은 목록</li>
-    </ul>
-  </li>
-  <li>순서가 필요하지 않은 목록
-<br />
-<br /></li>
-</ul>
-
-<h2 id="링크links">링크(Links)</h2>
-
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://google.com"</span><span class="nt">&gt;</span>GOOGLE<span class="nt">&lt;/a&gt;</span>
-<span class="p">[</span><span class="nv">GOOGLE</span><span class="p">](</span><span class="sx">https://google.com</span><span class="p">)</span>
-
-<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://naver.com"</span> <span class="na">title=</span><span class="s">"naver로 이동!!!"</span><span class="nt">&gt;</span>naver<span class="nt">&lt;/a&gt;</span>
-<span class="p">[</span><span class="nv">NAVER</span><span class="p">](</span><span class="sx">https://naver.com</span> <span class="nn">"naver로 이동!!!"</span><span class="p">)</span>
-</code></pre></div></div>
-<p><a href="https://google.com">GOOGLE</a>
-<a href="https://google.com">GOOGLE</a></p>
-
-<p><a href="https://naver.com" title="naver로 이동!!!">naver</a>
-<a href="https://naver.com" title="naver로 이동!!!">NAVER</a>
-<br />
-<br /></p>
-
-<h2 id="이미지images">이미지(Images)</h2>
-
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">![](</span><span class="sx">)</span>
-<span class="p">![</span><span class="nv">Hyejic</span><span class="p">](</span><span class="sx">/assets/images/logo.png</span><span class="p">)</span>
-<span class="p">[</span><span class="nv">![Hyejic</span><span class="p">](</span><span class="sx">assets/images/logo.png</span><span class="p">)</span>](https://hyejic.github.io/)
-</code></pre></div></div>
-<p><img src="" alt="" />
-<img src="/assets/images/logo.png" alt="Hyejic" />
-<a href="https://hyejic.github.io/"><img src="/assets/images/logo.png" alt="Hyejic" /></a>
-<br />
-<br /></p>
-
-<h2 id="인용문blockquote">인용문(BlockQuote)</h2>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gt">&gt; 남의 말이나 글에서 직접 또는 간접으로 따온 문장.  </span>
-<span class="gt">&gt; (네이버 국어 사전)</span>
-<span class="gt">
-&gt; 인용문을 작성하세요!</span>
-<span class="gt">&gt;&gt; 중첩</span>
-<span class="gt">&gt;&gt;&gt; 중첩1</span>
-<span class="gt">&gt;&gt;&gt; 중첩2</span>
-<span class="gt">&gt;&gt;&gt; 중첩3</span>
-</code></pre></div></div>
-<blockquote>
-  <p>남의 말이나 글에서 직접 또는 간접으로 따온 문장.<br />
-(네이버 국어 사전)</p>
-</blockquote>
-
-<blockquote>
-  <p>인용문을 작성하세요!</p>
-  <blockquote>
-    <p>중첩</p>
-    <blockquote>
-      <p>중첩1
-중첩2
-중첩3
-<br />
-<br /></p>
-    </blockquote>
-  </blockquote>
-</blockquote>
-
-<h2 id="인라인inline-코드-강조">인라인(Inline) 코드 강조</h2>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>css에서 <span class="sb">`background`</span> 혹은 <span class="sb">`background-image`</span> 속성으로 요소에 배경 이미지를 삽입할 수 있습니다.
-</code></pre></div></div>
-<p>css에서 <code class="language-plaintext highlighter-rouge">background</code> 혹은 <code class="language-plaintext highlighter-rouge">background-image</code> 속성으로 요소에 배경 이미지를 삽입할 수 있습니다.
-<br />
-<br /></p>
-
-<h2 id="블럭block-코드-강조">블럭(Block) 코드 강조</h2>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="p">```</span><span class="nl">html
-</span>  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://google.com"</span><span class="nt">&gt;</span>GOOGLE<span class="nt">&lt;/a&gt;</span>
-  <span class="p">```</span>
-
-  <span class="p">```</span><span class="nl">css
-</span>  <span class="nc">.inner</span> <span class="p">{</span>
-    <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span>
-  <span class="p">}</span>
-  <span class="p">```</span>
-
-  <span class="p">```</span><span class="nl">javascript
-</span>  <span class="kd">function</span> <span class="nx">func</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">AAA;
-    return a;
-  }</span>
-  <span class="p">```</span>
-
-  <span class="p">```</span><span class="nl">bash
-</span>  <span class="nv">$ </span>git commit <span class="nt">-m</span> <span class="s1">'study markdown'</span>
-  <span class="p">```</span>
-
-  <span class="p">```</span><span class="nl">plaintext
-</span>  동해물과 백두산이 
-  <span class="p">```</span>
-</code></pre></div></div>
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://google.com"</span><span class="nt">&gt;</span>GOOGLE<span class="nt">&lt;/a&gt;</span>
-</code></pre></div></div>
-
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.inner</span> <span class="p">{</span>
-  <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">func</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">AAA;
-  return a;
-}
-</span></code></pre></div></div>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git commit <span class="nt">-m</span> <span class="s1">'study markdown'</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>동해물과 백두산이 
-</code></pre></div></div>
-
-<p><br />
-<br /></p>
-
-<h2 id="표table">표(Table)</h2>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>값 | 의미 | 기본값
---|:--:|--:
-static | 기준 없음 | o
-relative | 요소 자신 | x
-absolute | 위치상 부모 요소 | x
-fixed | 뷰포트 | x
-</code></pre></div></div>
-<p>값 | 의미 | 기본값
-–|:–:|–:
-static | 기준 없음 | o
-relative | 요소 자신 | x
-absolute | 위치상 부모 요소 | x
-fixed | 뷰포트 | x
-<br />
-<br /></p>
-
-<h2 id="원시-htmlraw-html">원시 HTML(Raw HTML)</h2>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>동해물과 <span class="nt">&lt;span</span> <span class="na">style=</span><span class="s">"text-decoration: underline"</span><span class="nt">&gt;</span>백두산<span class="nt">&lt;/span&gt;</span>이 마르고 닳도록<span class="nt">&lt;br/&gt;</span>
-하느님이 보우하사 우리나라 만세  
-
-<span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"https://naver.com"</span> <span class="na">title=</span><span class="s">"naver로 이동!!!"</span> <span class="na">target=</span><span class="s">"_blank"</span><span class="nt">&gt;</span>naver<span class="nt">&lt;/a&gt;</span>
-
-<span class="nt">&lt;img</span> <span class="na">width=</span><span class="s">"70"</span> <span class="na">src=</span><span class="s">"/assets/images/logo.png"</span> <span class="na">alt=</span><span class="s">"Startbucks"</span> <span class="nt">/&gt;</span>
-</code></pre></div></div>
-<p>동해물과 <span style="text-decoration: underline">백두산</span>이 마르고 닳도록<br />
-하느님이 보우하사 우리나라 만세</p>
-
-<p><a href="https://naver.com" title="naver로 이동!!!" target="_blank">naver</a></p>
-
-<p><img width="70" src="/assets/images/logo.png" alt="logo" />
-<br />
-<br /></p>
-
-<h2 id="수평선horizontal-rule">수평선(Horizontal Rule)</h2>
-<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">---</span>
-<span class="p">***</span>
-<span class="ge">__</span>_
-</code></pre></div></div>
-<hr />
-<hr />
-<hr />]]></content><author><name>Hyejic</name></author><category term="md" /><category term="Markdown" /><summary type="html"><![CDATA[마크다운 기본 문법 및 레이아웃 정리]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 04장 변수 내용 정리]]></summary></entry></feed>
