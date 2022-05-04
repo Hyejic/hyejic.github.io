@@ -1,0 +1,79 @@
+I"�(<p><br /></p>
+
+<h1 id="17장-생성자-함수에-의한-객체-생성">17장 생성자 함수에 의한 객체 생성</h1>
+
+<h2 id="171-object-생성자-함수">17.1 Object 생성자 함수</h2>
+<p>new 연산자와 함께 Object 생성자 함수를 호출하면 빈 객체를 생성하여 반환한다. 생성자 함수에 의해 생성된 객체를 인스턴스라 한다.
+객체를 생성하는 방법은 객체 리터럴을 사용하는 것이 더 간편하다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 빈 객체의 생성</span>
+  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+  <span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Choi"}</span>
+</code></pre></div></div>
+<p>자바스크립트는 Object 생성자 함수 이외에도 String, Number, Boolean, Function, Array, Date, RegExp, Promise 등의 빌트인 생성자 함수를 제공한다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">strObj</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">String</span><span class="p">(</span><span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">strObj</span><span class="p">);</span> <span class="c1">// object</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">strObj</span><span class="p">);</span> <span class="c1">// String{"Choi"}</span>
+
+  <span class="kd">const</span> <span class="nx">numObj</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Number</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">numObj</span><span class="p">);</span> <span class="c1">// object</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">numObj</span><span class="p">);</span> <span class="c1">// Number{123}</span>
+
+  <span class="kd">const</span> <span class="nx">boolObj</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Boolean</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">boolObj</span><span class="p">);</span> <span class="c1">// object</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">boolObj</span><span class="p">);</span> <span class="c1">// Boolean{true}</span>
+
+  <span class="kd">const</span> <span class="nx">func</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Function</span><span class="p">(</span><span class="dl">'</span><span class="s1">x</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">return x * x</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">func</span><span class="p">);</span> <span class="c1">// function</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="nx">func</span><span class="p">);</span> <span class="c1">// f anonymous(x)</span>
+
+  <span class="kd">const</span> <span class="nx">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">arr</span><span class="p">);</span> <span class="c1">// object</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arr</span><span class="p">);</span> <span class="c1">// [1, 2, 3]</span>
+
+  <span class="c1">// RegExp 객체(정규표현식) 생성</span>
+  <span class="kd">const</span> <span class="nx">regExp</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="sr">/ab+c/i</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">regExp</span><span class="p">);</span> <span class="c1">// object</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">regExp</span><span class="p">);</span> <span class="c1">// /ab+c/i</span>
+
+  <span class="kd">const</span> <span class="nx">date</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">date</span><span class="p">);</span> <span class="c1">// object</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">date</span><span class="p">);</span> <span class="c1">// Wed May 04 2022 14:46:45 GMT+0900 (한국 표준시)</span>
+</code></pre></div></div>
+
+<h3 id="172-생성자-함수">17.2 생성자 함수</h3>
+<h3 id="1721-객체-리터럴에-의한-객체-생성-방식의-문제점">17.2.1 객체 리터럴에 의한 객체 생성 방식의 문제점</h3>
+<p>객체 리터럴에 의한 객체 생성 방식은 단 하나의 객체만 생성한다. 동일한 프로퍼티를 갖는 객체를 여러개 생성해야 하는 경우 매번 같은 프로퍼티를 기술해야 하기 떄문에 비효율적이다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">circle1</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">radius</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="nx">getDiameter</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">radius</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">circle1</span><span class="p">.</span><span class="nx">getDiameter</span><span class="p">());</span> <span class="c1">// 10</span>
+
+  <span class="kd">const</span> <span class="nx">circle2</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">radius</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="nx">getDiameter</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">radius</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">circle2</span><span class="p">.</span><span class="nx">getDiameter</span><span class="p">());</span> <span class="c1">// 20</span>
+</code></pre></div></div>
+<p>위 예제에서 원을 표현한 객체인 circle1 객체와 circle2 객체는 객체 고유의 상태 데이터인 radius는 값이 다르지만, 프로퍼티 구조와 getDiameter 메서드가 동일하다. 이렇게 동일한 내용의 메서드를 가진 객체를 여러개 생성하여 사용하는것은 비효율적이다.</p>
+
+<h3 id="1722-생성자-함수에-의한-객체-생성-방식의-장점">17.2.2 생성자 함수에 의한 객체 생성 방식의 장점</h3>
+<p>프로퍼티 구조가 동일한 객체 여러 개를 간편하게 생성할 수 있다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">function</span> <span class="nx">Circle</span><span class="p">(</span><span class="nx">radius</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">radius</span> <span class="o">=</span> <span class="nx">radius</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">getDimeter</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">radius</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+  <span class="c1">// 인스턴스 생성</span>
+  <span class="kd">const</span> <span class="nx">circle1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Circle</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</code></pre></div></div>
+:ET

@@ -70,4 +70,10 @@ var store = [{
         "tags": ["javascript"],
         "url": "/js/modernJS16/",
         "teaser": null
+      },{
+        "title": "17장 생성자 함수에 의한 객체 생성",
+        "excerpt":"17장 생성자 함수에 의한 객체 생성 17.1 Object 생성자 함수 new 연산자와 함께 Object 생성자 함수를 호출하면 빈 객체를 생성하여 반환한다. 생성자 함수에 의해 생성된 객체를 인스턴스라 한다. 객체를 생성하는 방법은 객체 리터럴을 사용하는 것이 더 간편하다. // 빈 객체의 생성 const person = new Object(); person.name = 'Choi'; console.log(person);...","categories": ["js"],
+        "tags": ["javascript"],
+        "url": "/js/modernJS17/",
+        "teaser": null
       }]

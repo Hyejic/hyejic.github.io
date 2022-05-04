@@ -1,0 +1,431 @@
+I"��<p><br /></p>
+
+<h1 id="17장-생성자-함수에-의한-객체-생성">17장 생성자 함수에 의한 객체 생성</h1>
+
+<h2 id="171-object-생성자-함수">17.1 Object 생성자 함수</h2>
+<p>new 연산자와 함께 Object 생성자 함수를 호출하면 빈 객체를 생성하여 반환한다. 생성자 함수에 의해 생성된 객체를 인스턴스라 한다.
+객체를 생성하는 방법은 객체 리터럴을 사용하는 것이 더 간편하다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 빈 객체의 생성</span>
+  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+  <span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Choi"}</span>
+</code></pre></div></div>
+<p>자바스크립트는 Object 생성자 함수 이외에도 String, Number, Boolean, Function, Array, Date, RegExp, Promise 등의 빌트인 생성자 함수를 제공한다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">strObj</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">String</span><span class="p">(</span><span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">strObj</span><span class="p">);</span> <span class="c1">// object</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">strObj</span><span class="p">);</span> <span class="c1">// String{"Choi"}</span>
+
+  <span class="kd">const</span> <span class="nx">numObj</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Number</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">numObj</span><span class="p">);</span> <span class="c1">// object</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">numObj</span><span class="p">);</span> <span class="c1">// Number{123}</span>
+
+  <span class="kd">const</span> <span class="nx">boolObj</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Boolean</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">boolObj</span><span class="p">);</span> <span class="c1">// object</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">boolObj</span><span class="p">);</span> <span class="c1">// Boolean{true}</span>
+
+  <span class="kd">const</span> <span class="nx">func</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Function</span><span class="p">(</span><span class="dl">'</span><span class="s1">x</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">return x * x</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">func</span><span class="p">);</span> <span class="c1">// function</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="nx">func</span><span class="p">);</span> <span class="c1">// f anonymous(x)</span>
+
+  <span class="kd">const</span> <span class="nx">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">arr</span><span class="p">);</span> <span class="c1">// object</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="nx">arr</span><span class="p">);</span> <span class="c1">// [1, 2, 3]</span>
+
+  <span class="kd">const</span> <span class="nx">regExp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">regExpay</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">regExp</span><span class="p">);</span> <span class="c1">// object</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="nx">regExp</span><span class="p">);</span> <span class="c1">// [1, 2, 3]</span>
+</code></pre></div></div>
+
+<h3 id="162-프로퍼티-어트리뷰트와-프로퍼티-디스크립터-객체">16.2 프로퍼티 어트리뷰트와 프로퍼티 디스크립터 객체</h3>
+<p>자바스크립트 엔진은 프로퍼티를 생성할 때 프로퍼티의 상태를 나타내는 프로퍼티 어트리뷰트를 기본값으로 자동 정의한다.<br />
+프로퍼티 어트리뷰트 -&gt; [[Value]], [[Writable]], [[Enumerable]], [[Configurable]]<br />
+프로퍼티 어트리뷰트는 내부 슬롯이기 때문에 직접 접근이 불가능하고 Object.getOwnPropertyDescriptor 메서드를 사용하여 간접적으로 접근 가능. 존재하지 않는 프로퍼티는 undefined 반환.<br />
+<code class="language-plaintext highlighter-rouge">Object.getOwnPropertyDescriptor</code> 메서드를 호출할 때 매개변수 전달. 첫번째 객체의 참조, 두번째 프로퍼티 키(문자열)<br />
+<code class="language-plaintext highlighter-rouge">Object.getOwnPropertyDescriptors</code> 모든 프로퍼티의 프로퍼티 어트리뷰트 정보 제공.(ES8에서 도입)</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span>
+  <span class="p">};</span>
+  <span class="c1">// 매개변수 전달. 첫번째 객체의 참조, 두번째 프로퍼티 키(문자열)</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">));</span> 
+  <span class="c1">// {value: 'Choi', writable: true, enumerable: true, configurable: true}</span>
+
+  <span class="c1">// 존재하지 않는 프로퍼티</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">age</span><span class="dl">'</span><span class="p">));</span> 
+  <span class="c1">// undefined</span>
+
+  <span class="nx">person</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptors</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> 
+  <span class="c1">// age: {value: 30, writable: true, enumerable: true, configurable: true}</span>
+  <span class="c1">// name: {value: 'Choi', writable: true, enumerable: true, configurable: true}</span>
+
+</code></pre></div></div>
+
+<h2 id="163-데이터-프로퍼티와-접근자-프로퍼티">16.3 데이터 프로퍼티와 접근자 프로퍼티</h2>
+<ul>
+  <li>데이터 프로퍼티<br />
+키와 값으로 구성된 일반적인 프로퍼티다. 지금까지 살펴본 모든 프로퍼티는 데이터 프로퍼티다.</li>
+  <li>접근자 프로퍼티<br />
+자체적으로는 값을 갖지 않고 다른 데이터 프로퍼티의 값을 읽거나 저장할 때 호출되는 접근자 함수로 구성된 프로퍼티다.</li>
+</ul>
+
+<h3 id="1631-데이터-프로퍼티">16.3.1 데이터 프로퍼티</h3>
+<p>자바스크립트 엔진이 프로퍼티를 생성할 때 기본 값으로 자동 정의된다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">프로퍼티<br />어트리뷰트</th>
+      <th style="text-align: center">프로퍼티 디스크립터<br />객체의 프로퍼티</th>
+      <th style="text-align: left">설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">[[Value]]</td>
+      <td style="text-align: center">value</td>
+      <td style="text-align: left">- 프로퍼티 키를 통해 <code class="language-plaintext highlighter-rouge">프로퍼티 값에 접근하면 반환</code>되는 값이다.<br /> - 프로퍼티 키를 통해 프로퍼티 값을 변경하면 [[Value]]에 값을 재할당한다. 이때 프로퍼티가 없으면 프로퍼티를 동적 생성하고 생성된 프로퍼티의 [[Value]]에 값을 저장한다.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">[[Writable]]</td>
+      <td style="text-align: center">writable</td>
+      <td style="text-align: left">- 프로퍼티 <code class="language-plaintext highlighter-rouge">값의 변경 기능 여부</code>를 나타내며 불리언 값을 갖는다. <br /> [[Writable]]의 값이 false인 경우 해당 프로퍼티의 [[Value]]의 값을 변경할 수 없는 읽기 전용 프로퍼티가 된다.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">[[Enumerable]]</td>
+      <td style="text-align: center">enumerable</td>
+      <td style="text-align: left">- 프로퍼티의 <code class="language-plaintext highlighter-rouge">열거 가능 여부</code>를 나타내며 불리언 값을 갖는다. <br /> - [[Enumerable]]의 값이 false인 경우 해당 프로퍼티는 for…in 문이나 Object.keys 메서드 등으로 열거할 수 없다.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">[[Configurable]]</td>
+      <td style="text-align: center">configurable</td>
+      <td style="text-align: left">- 프로퍼티의 <code class="language-plaintext highlighter-rouge">재정의 기능 여부</code>를 나타내며 불리언 값을 갖는다. <br /> - [[Configurable]]의 값이 false인 경우 해당 프로퍼티의 삭제, 프로퍼티 어트리뷰트 값이 변경이 금지된다. 단, [[Writable]]이 true인 경우 [[Value]]의 변경과 [[Writable]]을 false로 변경하는 것은 허용된다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="1632-접근자-프로퍼티">16.3.2 접근자 프로퍼티</h3>
+<p>저채적으로 값을 갖지 않고 다른 데이터 프로퍼티의 값을 읽거나 저장할 때 사용하는 접근자 함수로 구성된 프로퍼티다.<br />
+접근자 함수는 getter/setter 함수라고도 부른다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">프로퍼티<br />어트리뷰트</th>
+      <th style="text-align: center">프로퍼티 디스크립터<br />객체의 프로퍼티</th>
+      <th style="text-align: left">설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">[[Get]]</td>
+      <td style="text-align: center">get</td>
+      <td style="text-align: left">- 접근자 프로퍼티를 통해 데이터 프로퍼티의 <code class="language-plaintext highlighter-rouge">값을 읽을 때</code> 호출되는 접근자 함수다. 즉, 접근자 프로퍼티 키로 프로퍼티 값에 접근하면 프로퍼티 어트리뷰트 [[Get]]의 값, 즉 getter 함수가 호출되고 그 결과가 프로퍼티 값으로 반환된다.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">[[Set]]</td>
+      <td style="text-align: center">set</td>
+      <td style="text-align: left">- 접근자 프로퍼티를 총해 데이터 프로퍼티의 <code class="language-plaintext highlighter-rouge">값을 저장할 때</code> 호출되는 접근다 함수다. 즉, 접근자 프로퍼티 값을 저장하면 프로퍼티 어트리뷰트 [[Set]]의 값, 즉 setter 함수가 호출되고 그 결과가 프로퍼티 값으로 저장된다.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">[[Enumerable]]</td>
+      <td style="text-align: center">enumerable</td>
+      <td style="text-align: left">- 프로퍼티의 <code class="language-plaintext highlighter-rouge">열거 가능 여부</code>를 나타내며 불리언 값을 갖는다. <br /> - [[Enumerable]]의 값이 false인 경우 해당 프로퍼티는 for…in 문이나 Object.keys 메서드 등으로 열거할 수 없다.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">[[Configurable]]</td>
+      <td style="text-align: center">configurable</td>
+      <td style="text-align: left">- 프로퍼티의 <code class="language-plaintext highlighter-rouge">재정의 기능 여부</code>를 나타내며 불리언 값을 갖는다. <br /> - [[Configurable]]의 값이 false인 경우 해당 프로퍼티의 삭제, 프로퍼티 어트리뷰트 값이 변경이 금지된다. 단, [[Writable]]이 true인 경우 [[Value]]의 변경과 [[Writable]]을 false로 변경하는 것은 허용된다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">firstName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hyeji</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">lastName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">,</span>
+  
+    <span class="c1">// getter 함수</span>
+    <span class="kd">get</span> <span class="nx">fullName</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="s2">`</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">firstName</span><span class="p">}</span><span class="s2"> </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">lastName</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+    <span class="p">},</span>
+
+    <span class="c1">// setter 함수</span>
+    <span class="kd">set</span> <span class="nx">fullName</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">firstName</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">lastName</span><span class="p">]</span> <span class="o">=</span> <span class="nx">name</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="dl">'</span><span class="s1"> </span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">firstName</span> <span class="o">+</span> <span class="dl">'</span><span class="s1"> </span><span class="dl">'</span> <span class="o">+</span> <span class="nx">person</span><span class="p">.</span><span class="nx">lastName</span><span class="p">);</span> <span class="c1">// Hyeji Choi</span>
+
+  <span class="c1">// 접근자 프로퍼티 fullName에 값을 저장하면 setter함수가 호출</span>
+  <span class="nx">person</span><span class="p">.</span><span class="nx">fullName</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Hyeji Kim</span><span class="dl">"</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {firstName: 'Hyeji', lastName: 'Kim'}</span>
+
+  <span class="c1">// 접근자 프로퍼티 fullName에 접근하면 getter 함수가 호출된다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">fullName</span><span class="p">);</span> <span class="c1">// Hyeji Kim</span>
+
+  <span class="c1">// firstName은 데이터 프로퍼티다.</span>
+  <span class="kd">let</span> <span class="nx">descriptor</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">firstName</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">descriptor</span><span class="p">);</span> 
+  <span class="c1">// {value: 'Hyeji', writable: true, enumerable: true, configurable: true}</span>
+
+  <span class="c1">// fullName은 접근자 프로퍼티</span>
+  <span class="nx">descriptor</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">fullName</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">descriptor</span><span class="p">);</span> 
+  <span class="c1">// {enumerable: true, configurable: true, get: ƒ, set: ƒ}</span>
+
+</code></pre></div></div>
+
+<p>접근자 프로퍼티 fullName으로 프로퍼티 값에 접근하면 내부적으로 [[Get]] 내부 메서드가 호출되어 다음과 같이 동작한다.</p>
+<ol>
+  <li>프로퍼티 키가 유효한지 확인한다. 프포퍼티 키는 문자열 또는 심벌이어야 한다. 프로퍼티 키 “fullName”은 문자열이므로 유효한 프로퍼티 키다.</li>
+  <li>프로토타입 체인에서 프로퍼티를 검색한다. person 객체에 fullName으로 프로퍼티가 존재한다.</li>
+  <li>검색된 fullName 프로퍼티가 에이터 프로퍼티인지 접근자 프로퍼티인지 확인한다. fullName 프로퍼티는 접근자 프로퍼티다.</li>
+  <li>접근자 프로퍼티 fullName의 프로퍼티 어트리뷰트 [[Get]]의 값, 즉 getter 함수를 호출하여 그 결과를 반환한다. 프로퍼티 fullName의 프로퍼티 어트리뷰트 [[Get]]의 값은 Object.getOwnPropertyDescriptor 메서드가 반환하는 프로퍼티 디스크립터 객체의 get 프로퍼티 값과 같다.</li>
+</ol>
+
+<h2 id="164-프로퍼티-정의">16.4 프로퍼티 정의</h2>
+<p>Object.defineProperty 메서드를 사용하면 프로퍼티의 어트리뷰트를 정의할 수 있다. 인수로는 객체의 참조와 데이터 프로퍼티의 키인 문자열, 프로퍼티 디스크립터 객체를 전달한다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{};</span>
+
+  <span class="c1">// 데이터 프로퍼티 정의</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">firstName</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">value</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hyeji</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">writable</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">enumerable</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">configurable</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">});</span>
+
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">lastName</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">value</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span>
+  <span class="p">});</span>
+
+  <span class="kd">let</span> <span class="nx">descriptor</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">firstName</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">descriptor</span><span class="p">);</span>
+  <span class="c1">// {value: 'Hyeji', writable: true, enumerable: false, configurable: true}</span>
+
+  <span class="c1">// 디스크립터 객체의 프포퍼티를 누락시키면 undefined, false가 기본값이다.</span>
+  <span class="nx">descriptor</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">lastName</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">descriptor</span><span class="p">);</span>
+  <span class="c1">// {value: 'Choi', writable: false, enumerable: false, configurable: false}</span>
+  
+  <span class="c1">// [[Enumerable]]의 값이 false인 경우</span>
+  <span class="c1">// 해당 프로퍼티는 for...in문이나 Object.keys 등으로 열거할 수 없다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">person</span><span class="p">))</span> <span class="c1">// ["firstName"]</span>
+
+  <span class="c1">// [[Writable]]의 값이 false인 경우 해당 프로퍼티의 [[value]]값을 변경할 수 없다.</span>
+  <span class="c1">// 변경할 수 없는 값을 변경하려고 하면 에러는 발생하지 않고 무시된다.</span>
+  <span class="nx">person</span><span class="p">.</span><span class="nx">lastName</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kim</span><span class="dl">'</span><span class="p">;</span>
+
+  <span class="c1">// [[Configurable]]의 값이 false인 경우 해당 프로퍼티를 삭제할 수 없다.</span>
+  <span class="c1">// false인 프로퍼티를 삭제하려고 하면 에러는 발생하지 않고 무시된다.</span>
+  <span class="k">delete</span> <span class="nx">person</span><span class="p">.</span><span class="nx">lastName</span><span class="p">;</span>
+
+  <span class="c1">// [[Configurable]]의 값이 false인 경우 해당 프로퍼티를 재정의 할 수 없다.</span>
+  <span class="c1">// Object.getOwnPropertyDescriptor(person, 'lastName', {enumerable: ture});</span>
+  <span class="c1">// Uncaught TypeError: Cannot redefine property: lastName</span>
+
+  <span class="nx">descriptor</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">lastName</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">descriptor</span><span class="p">);</span>
+  <span class="c1">// {value: 'Choi', writable: false, enumerable: false, configurable: false}</span>
+
+  <span class="c1">// 접근자 프로퍼티</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">fullName</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="c1">// getter</span>
+    <span class="kd">get</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="s2">`</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">firstName</span><span class="p">}</span><span class="s2"> </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">lastName</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+    <span class="p">},</span>
+
+    <span class="c1">// setter 함수</span>
+    <span class="kd">set</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">firstName</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">lastName</span><span class="p">]</span> <span class="o">=</span> <span class="nx">name</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="dl">'</span><span class="s1"> </span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="na">enumerable</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">configurable</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">});</span>
+
+  <span class="nx">descriptor</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptor</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">fullName</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">fullName</span><span class="dl">'</span><span class="p">,</span> <span class="nx">descriptor</span><span class="p">);</span>
+  <span class="c1">// fullName {enumerable: true, configurable: true, get: ƒ, set: ƒ}</span>
+
+  <span class="nx">person</span><span class="p">.</span><span class="nx">fullName</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Hyeji Choi</span><span class="dl">'</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+  <span class="c1">// fullName {enumerable: true, configurable: true, get: ƒ, set: ƒ}</span>
+</code></pre></div></div>
+
+<p>프로퍼티 디스크립터 객체에서 생략된 어트리뷰트는 다음과 같이 기본값이 적용된다.</p>
+<ul>
+  <li>value, get, set -&gt; undefined</li>
+  <li>writable, enumerable, configurable -&gt; false</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">Object.defineProperties</code> 메서드를 사용하면 여러개의 프로퍼티를 한 번에 정의할 수 있다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{};</span>
+
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="p">{</span>
+    <span class="c1">// 데이터 프로퍼티 정의</span>
+    <span class="na">firstName</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">value</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hyeji</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">writable</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="na">enumerable</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="na">configurable</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+    <span class="na">lastName</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">value</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">writable</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="na">enumerable</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="na">configurable</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">},</span>
+    <span class="c1">// 접근자 프로퍼티 정의</span>
+    <span class="na">fullName</span><span class="p">:</span> <span class="p">{</span>
+      <span class="kd">get</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s2">`</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">firstName</span><span class="p">}</span><span class="s2"> </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">lastName</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+      <span class="p">},</span>
+
+      <span class="kd">set</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">firstName</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">lastName</span><span class="p">]</span> <span class="o">=</span> <span class="nx">name</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="dl">'</span><span class="s1"> </span><span class="dl">'</span><span class="p">);</span>
+      <span class="p">},</span>
+      <span class="na">enumerable</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="na">configurable</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+  <span class="nx">person</span><span class="p">.</span><span class="nx">fullName</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Hyeji Choi</span><span class="dl">'</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+  <span class="c1">// {firstName: 'Hyeji', lastName: 'Choi'}</span>
+</code></pre></div></div>
+
+<h2 id="165-객체-변경-방지">16.5 객체 변경 방지</h2>
+<p>자바스크립트는 객체의 변경을 방지하는 다양한 메서드를 제공한다. 객체 변경 방지 메서드들은 객체의 변경을 금지하는 강도가 다르다.
+구분 | 메서드 | 프로퍼티 추가 | 프로퍼티 삭제 | 프로퍼티 값 읽기 | 프로퍼티 값 쓰기 | 프로퍼티 어트리뷰트 재정의
+:–: | :–: | :–: | :–: | :–: | :–: | :–:
+객체 확장 금지 | Object.preventExtensions | X | O | O | O | O
+객체 밀봉 | Object.seal | X | X | O | O | X
+객체 동결 | Object.freeze | X | X | O | X | X</p>
+
+<h3 id="1651-객체-확장-금지">16.5.1 객체 확장 금지</h3>
+<p>Object.preventExtensions 메서드는 객체의 확장을 금지한다. 즉, 확장이 금지된 객체는 프로퍼티 추가가 금지된다.<br />
+Object.isExtensible 메서드로 확장 가능한 객체인지 확인 가능.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span> <span class="p">};</span>
+
+  <span class="c1">// 확장 가능한 객체인지 확인 가능</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isExtensible</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> <span class="c1">// true</span>
+
+  <span class="c1">// person 객체의 확장을 금지 시킴.</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">preventExtensions</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isExtensible</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> <span class="c1">// false -&gt; 확장 금지 상태</span>
+
+  <span class="nx">person</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="c1">// 프로퍼티 추가 금지. 에러 없이 무시된다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Choi"}</span>
+
+  <span class="c1">// 프로퍼티 추가는 금지되지만 삭제는 가능.</span>
+  <span class="k">delete</span> <span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {}</span>
+
+  <span class="c1">// 프로퍼티 정의에 의한 프로퍼티 추가도 금지된다.</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">age</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">value</span><span class="p">:</span> <span class="mi">20</span> <span class="p">});</span>
+  <span class="c1">// TypeError: Cannot define property age, object is not extensible</span>
+</code></pre></div></div>
+
+<h3 id="1652-객체-밀봉">16.5.2 객체 밀봉</h3>
+<p>객체 밀봉이란 프로퍼티 <code class="language-plaintext highlighter-rouge">추가 및 삭제</code>와 프로퍼티 어트리뷰트 <code class="language-plaintext highlighter-rouge">재정의 금지</code>를 의미한다. 밀봉된 객체는 <code class="language-plaintext highlighter-rouge">읽기와 쓰기만 가능</code>하다.<br />
+Object.isSealed 메서드로 밀봉된 객체인지 확인 가능.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span> <span class="p">};</span>
+
+  <span class="c1">// person 객체는 밀봉된 객체가 아니다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isSealed</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> <span class="c1">// false</span>
+
+  <span class="c1">// person 객체를 밀봉</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">seal</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isSealed</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> <span class="c1">// true</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptors</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> 
+  <span class="c1">// name: {value: 'Choi', writable: true, enumerable: true, configurable: false}</span>
+
+  <span class="c1">// 프로퍼티 추가 금지</span>
+  <span class="nx">person</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="c1">// 무시</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Choi"}</span>
+
+  <span class="c1">// 프로퍼티 삭제 금지</span>
+  <span class="k">delete</span> <span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// 무시</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Choi"}</span>
+
+  <span class="c1">// 프로퍼티 값 갱신 가능</span>
+  <span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kim</span><span class="dl">'</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Kim"}</span>
+
+  <span class="c1">// 프로퍼티 재정의 금지</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">configurable</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+  <span class="c1">// TypeError: Cannot redefine property: name</span>
+</code></pre></div></div>
+
+<h3 id="1653-객체-동결">16.5.3 객체 동결</h3>
+<p>객체 동결이란 프로퍼티 <code class="language-plaintext highlighter-rouge">추가 및 삭제</code>와 프로퍼티 어트리뷰트 <code class="language-plaintext highlighter-rouge">재정의</code> 금지, 프로퍼티 <code class="language-plaintext highlighter-rouge">값 갱신 금지</code>를 의미한다. 동결된 객체는 <code class="language-plaintext highlighter-rouge">읽기만 가능.</code><br />
+Object.isFrozen 메서드로 동결된 객체인지 확인 가능.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span> <span class="p">};</span>
+
+  <span class="c1">// person 객체는 동결된 객체가 아니다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isFrozen</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> <span class="c1">// false</span>
+
+  <span class="c1">// person 객체를 동결</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">freeze</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isFrozen</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> <span class="c1">// true</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">getOwnPropertyDescriptors</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> 
+  <span class="c1">// name: {value: 'Choi', writable: false, enumerable: true, configurable: false}</span>
+
+  <span class="c1">// 프로퍼티 추가 금지</span>
+  <span class="nx">person</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="c1">// 무시</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Choi"}</span>
+
+  <span class="c1">// 프로퍼티 삭제 금지</span>
+  <span class="k">delete</span> <span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// 무시</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Choi"}</span>
+
+  <span class="c1">// 프로퍼티 값 갱신 금지</span>
+  <span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kim</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// 무시</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Choi"}</span>
+
+  <span class="c1">// 프로퍼티 재정의 금지</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">configurable</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+  <span class="c1">// TypeError: Cannot redefine property: name</span>
+</code></pre></div></div>
+
+<h3 id="1654-불변-객체">16.5.4 불변 객체</h3>
+<p>변경 방지 메서드 들은 얕은 변경 방지로 중첩된 객체에는 영향을 주지 못한다. 중첩 객체까지 영향을 주려면 객체를 값으로 갖는 모든 프로퍼티에 대해 재귀적으로 메서드를 호출해야 한다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 객체 동결 재귀적 호출</span>
+  <span class="kd">function</span> <span class="nx">deepFreeze</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 객체이고 동결되지 않은 객체만 동결한다.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">target</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">target</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">object</span><span class="dl">'</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isFrozen</span><span class="p">(</span><span class="nx">target</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nb">Object</span><span class="p">.</span><span class="nx">freeze</span><span class="p">(</span><span class="nx">target</span><span class="p">);</span>
+      <span class="c1">// 모든 프로퍼티를 순회하여 재귀적으로 동결.</span>
+      <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">target</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">key</span> <span class="o">=&gt;</span> <span class="nx">deepFreeze</span><span class="p">(</span><span class="nx">target</span><span class="p">[</span><span class="nx">key</span><span class="p">]));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">target</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">address</span><span class="p">:</span> <span class="p">{</span><span class="na">city</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Seoul</span><span class="dl">'</span><span class="p">}</span>
+  <span class="p">};</span>
+
+  <span class="c1">// 깊은 객체 동결</span>
+  <span class="nx">deepFreeze</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isFrozen</span><span class="p">(</span><span class="nx">person</span><span class="p">));</span> <span class="c1">// true</span>
+  <span class="c1">// 중첩된 객체까지 동결</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">isFrozen</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">address</span><span class="p">));</span> <span class="c1">// true</span>
+
+  <span class="nx">person</span><span class="p">.</span><span class="nx">address</span><span class="p">.</span><span class="nx">city</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Busan</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// 추가,삭제,재할당,갱신 금지 -&gt; 무시</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: 'Choi', address: {city: 'Seoul'}}</span>
+
+</code></pre></div></div>
+:ET
