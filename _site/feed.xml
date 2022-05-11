@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-05-11T18:56:49+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">공부해서 남주자</title><subtitle>공부한것을 기록하고 공유하는 블로그입니다.</subtitle><author><name>Hyejic</name></author><entry><title type="html">19장 프로토 타입</title><link href="http://localhost:4000/js/modernJS19/" rel="alternate" type="text/html" title="19장 프로토 타입" /><published>2022-05-09T00:00:00+09:00</published><updated>2022-05-09T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS19</id><content type="html" xml:base="http://localhost:4000/js/modernJS19/"><![CDATA[<p><br /></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-05-11T20:09:55+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">공부해서 남주자</title><subtitle>공부한것을 기록하고 공유하는 블로그입니다.</subtitle><author><name>Hyejic</name></author><entry><title type="html">19장 프로토 타입</title><link href="http://localhost:4000/js/modernJS19/" rel="alternate" type="text/html" title="19장 프로토 타입" /><published>2022-05-09T00:00:00+09:00</published><updated>2022-05-09T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS19</id><content type="html" xml:base="http://localhost:4000/js/modernJS19/"><![CDATA[<p><br /></p>
 
 <h1 id="19장-프로토타입">19장 프로토타입</h1>
 <p>자바스크립트는 클래스 기반 객체지향 프로그래밍 언어보다 효율적이며 더 강력한 객체지향 프로그래밍 능력을 지니고 있는 프로토타입 기반의 객체지향 프로그래밍 언어다. 자바스크립트는 객체 기반의 프로그래밍 언어이며 자바스크립트를 이루고 있는 거의 “모든 것”이 객체다.</p>
@@ -612,7 +612,87 @@ Object.create 메서드의 장점</p>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">));</span> <span class="c1">// true</span>
 </code></pre></div></div>
 
-<h3 id="19112-객체-리터럴-내부에서-__proto__에-의한-직접-상속">19.11.2 객체 리터럴 내부에서 __proto__에 의한 직접 상속</h3>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 19장 프로토 타입 내용 정리]]></summary></entry><entry><title type="html">17장 생성자 함수에 의한 객체 생성</title><link href="http://localhost:4000/js/modernJS17/" rel="alternate" type="text/html" title="17장 생성자 함수에 의한 객체 생성" /><published>2022-05-04T00:00:00+09:00</published><updated>2022-05-04T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS17</id><content type="html" xml:base="http://localhost:4000/js/modernJS17/"><![CDATA[<p><br /></p>
+<h3 id="19112-객체-리터럴-내부에서-__proto__에-의한-직접-상속">19.11.2 객체 리터럴 내부에서 __proto__에 의한 직접 상속</h3>
+<p>ES6에서는 객체 리터럴 내부에서 __proto__ 접근자 프로퍼티를 사용하여 직접 상속을 구현할 수 있다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">myProto</span> <span class="o">=</span> <span class="p">{</span> <span class="na">x</span><span class="p">:</span> <span class="mi">10</span> <span class="p">};</span>
+  <span class="c1">// 객체 리터럴에 의해 객체를 생성하면서 프로토타입을 지정하여 직접 상속받을 수 있다.</span>
+  <span class="kd">const</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">y</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="c1">// 객체를 직접 상속받는다.</span>
+    <span class="c1">// obj -&gt; mwProto -&gt; Object.prototype -&gt; null</span>
+    <span class="na">__proto__</span><span class="p">:</span> <span class="nx">myProto</span>
+  <span class="p">};</span>
+  <span class="cm">/*
+  위 코드는 아래와 동일하다.
+  const obj = Object.create(myProto, {
+    y: {value: 20, writable: ture, enumerable: true, configuable: true}
+  });
+  */</span>
+
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">y</span><span class="p">);</span> <span class="c1">// 10 20</span>
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">getPrototypeOf</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="o">===</span> <span class="nx">myProto</span><span class="p">);</span> <span class="c1">// ture</span>
+</code></pre></div></div>
+
+<h2 id="1912-정적-프로퍼티메서드">19.12 정적 프로퍼티/메서드</h2>
+<p>정적 프로퍼티/메서드는 생성자 함수로 인스턴스를 생성하지 않아도 참조/호출할 수 있는 프로퍼티/메서드를 말한다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 생성자 함수</span>
+  <span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 프로토타입 메서드</span>
+  <span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">sayHello</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Hi! My name is </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="p">}</span>
+  
+  <span class="c1">// 정적 프로퍼티</span>
+  <span class="nx">Person</span><span class="p">.</span><span class="nx">staticProp</span> <span class="o">=</span> <span class="s2">`static prop`</span> <span class="p">;</span>
+
+  <span class="c1">// 정적 메서드</span>
+  <span class="nx">Person</span><span class="p">.</span><span class="nx">staticMethod</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`staticMethod`</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="c1">// 생성자 함수에 추가한 정적 프로퍼티/메서드는 생성자 함수로 참조/호출한다.</span>
+  <span class="nx">Person</span><span class="p">.</span><span class="nx">staticMethod</span><span class="p">();</span> <span class="c1">// staticMethod</span>
+
+  <span class="c1">// 정적 프로퍼티/메서드는 생성자 함수가 생성한 인스턴스로 참조/호출할 수 없다.</span>
+  <span class="c1">// 인스턴스로 참조/호출할 수 있는 프로퍼티/메서드는 프로토타입 체인 상에 존재해야 한다.</span>
+  <span class="nx">me</span><span class="p">.</span><span class="nx">staticMethod</span><span class="p">();</span> <span class="c1">// TypeError: me.staticMethod is not a function</span>
+</code></pre></div></div>
+
+<p>(그림 19-24)<br />
+정적 프로퍼티/메서드는 인스턴스의 프로토타입 체인에 속한 객체의 프로퍼티/메서드가 아니므로 인스턴스로 접근할 수 없다.<br />
+Object.create는 Object 생성자 함수의 정적 메서드이기 때문에 인스턴스, 즉 Object 생성자 함수가 생성한 객체로 호출할 수 없다.
+반면에 Object.prototype.hasOwnProperty 메서드는 Object.prototype의 메서드로 모든 객체의 프로토타입 체인의 종점이기 때문에 모든 객체가 호출할 수 있다.</p>
+
+<p>만약 인스턴스/프로토타입 메서드 내에서 this를 사용하지 않는다면 그 메서드는 정적 메서드로 변경할 수 있다. 메서드 내에서 인스턴스를 참조할 필요가 없다면 정적 메서드로 변경하여도 동작한다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">function</span> <span class="nx">Foo</span><span class="p">()</span> <span class="p">{}</span>
+  
+  <span class="c1">// 프로토타입 메서드</span>
+  <span class="c1">// this를 참조하지 않는 프로토타입 메서드는 정적 메서드로 변경하여도 동일한 효과를 얻을 수 있다.</span>
+  <span class="nx">Foo</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">x</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="kd">const</span> <span class="nx">foo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Foo</span><span class="p">();</span>
+  <span class="c1">// 프로토타입 메서드를 호출하려면 인스턴스를 생성해야 한다.</span>
+  <span class="nx">foo</span><span class="p">.</span><span class="nx">x</span><span class="p">();</span> <span class="c1">// x</span>
+
+  <span class="c1">// 정적 메서드</span>
+  <span class="nx">Foo</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">x</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 정적 메서드는 인스턴스를 생성하지 않아도 호출할 수 있다.</span>
+  <span class="nx">Foo</span><span class="p">.</span><span class="nx">x</span><span class="p">();</span> <span class="c1">// x</span>
+</code></pre></div></div>
+
+<p>MDN 문서를 참고하면 다음과 같이 표기법만드로도 정적 프로퍼티/메서드와 프로토타입 프로퍼티/메서드를 구별할 수 있다.<br />
+(그림 19-25)<br />
+참고로 프로토타입 프로퍼티/메서드를 표기할떄 prototype을 #으로 표기하는 경우도 있다. -&gt; Object#isPrototypeOf</p>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 19장 프로토 타입 내용 정리]]></summary></entry><entry><title type="html">17장 생성자 함수에 의한 객체 생성</title><link href="http://localhost:4000/js/modernJS17/" rel="alternate" type="text/html" title="17장 생성자 함수에 의한 객체 생성" /><published>2022-05-04T00:00:00+09:00</published><updated>2022-05-04T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS17</id><content type="html" xml:base="http://localhost:4000/js/modernJS17/"><![CDATA[<p><br /></p>
 
 <h1 id="17장-생성자-함수에-의한-객체-생성">17장 생성자 함수에 의한 객체 생성</h1>
 
