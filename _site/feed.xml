@@ -1,4 +1,304 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-05-11T20:09:55+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">공부해서 남주자</title><subtitle>공부한것을 기록하고 공유하는 블로그입니다.</subtitle><author><name>Hyejic</name></author><entry><title type="html">19장 프로토 타입</title><link href="http://localhost:4000/js/modernJS19/" rel="alternate" type="text/html" title="19장 프로토 타입" /><published>2022-05-09T00:00:00+09:00</published><updated>2022-05-09T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS19</id><content type="html" xml:base="http://localhost:4000/js/modernJS19/"><![CDATA[<p><br /></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-05-17T15:43:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">공부해서 남주자</title><subtitle>공부한것을 기록하고 공유하는 블로그입니다.</subtitle><author><name>Hyejic</name></author><entry><title type="html">22장 this</title><link href="http://localhost:4000/js/modernJS22/" rel="alternate" type="text/html" title="22장 this" /><published>2022-05-17T00:00:00+09:00</published><updated>2022-05-17T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS22</id><content type="html" xml:base="http://localhost:4000/js/modernJS22/"><![CDATA[<p><br /></p>
+
+<h1 id="22장-this">22장 this</h1>
+
+<h2 id="221-this-키워드">22.1 this 키워드</h2>
+<p>동작을 나타내는 메서드는 자신이 속한 객체의 상태, 즉 프로퍼티를 참조하고 변경할 수 있어야 한다. 이떄 메서드가 자신이 속한 객체의 프로퍼티를 참조하려면 먼저 자신이 속한 객체를 가리키는 식별자를 참조할 수 있어야 한다.<br />
+자신이 속한 객체 또는 자신이 생성할 인스턴스를 카리키는 특수한 식별자가 필요하다. 이를 위해 자바스크립트는 this라는 특수한 식별자를 제공한다.
+<code class="language-plaintext highlighter-rouge">this는 자신이 속한 객체 또는 자신이 생성한 인스턴스를 가리키는 자기 참조 변수다. this를 통해 자신이 속한 객체 또는 자신이 생성할 인스턴스의 프로퍼티나 메서드를 참조할 수 있다.</code><br />
+this 바인딩은 함수 호출 방식에 의해 동적으로 결정된다.</p>
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">this 바인딩</code> 바인딩이한 식별자와 값을 연결하는 과정을 의미한다. 예를 들어, 변수 선언은 변수 이름과 확보된 메모리 공간의 주소를 바인딩하는 것이다. this 바인딩은 this와 this가 가리킬 객체를 바인딩하는 것이다.</p>
+</blockquote>
+
+<h3 id="객체-리터럴-this">객체 리터럴 this</h3>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">circle</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">radius</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="nx">getDiameter</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// this는 메서드를 호출한 객체를 가리킨다.</span>
+      <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">radius</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">circle</span><span class="p">.</span><span class="nx">getDiameter</span><span class="p">());</span> <span class="c1">// 10</span>
+</code></pre></div></div>
+<p>위 예제처럼 객체 리터럴 내부에서의 this는 메서드를 호출한 객체, 즉 circle을 가리킨다.</p>
+
+<h3 id="생성자함수-this">생성자함수 this</h3>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">function</span> <span class="nx">Circle</span><span class="p">(</span><span class="nx">radius</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// this는 생성자 함수가 생성할 인스턴스를 가리킨다.</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">radius</span> <span class="o">=</span> <span class="nx">radius</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">Circle</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getDiameter</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">radius</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="c1">// 인스턴스 생성</span>
+  <span class="kd">const</span> <span class="nx">circle</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Circle</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">circle</span><span class="p">.</span><span class="nx">getDiameter</span><span class="p">());</span> <span class="c1">// 10</span>
+</code></pre></div></div>
+<p>위 예제처럼 생성자 함수 내부에서의 this는 함수가 생성할 인스턴스를 가리킨다.</p>
+
+<h3 id="자바스크립트에서의-this">자바스크립트에서의 this</h3>
+<p>함수가 호출되는 방식에 따라 this에 바인딩될 값, 즉 this 바인딩이 동적으로 결정된다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// this는 어디서든지 참조 가능하다.</span>
+  <span class="c1">// 전역에서 this는 전역 객체 window를 가리킨다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="c1">// window</span>
+
+  <span class="kd">function</span> <span class="nx">square</span><span class="p">(</span><span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 일반 함수 내부에서 this는 전역 객체 window를 가리킨다.</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="c1">// window</span>
+    <span class="k">return</span> <span class="nx">number</span> <span class="o">*</span> <span class="nx">number</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nx">square</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+
+  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Lee</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">getName</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// 메서드 내부에서 this는 메서드를 호출한 객체를 가리킨다.</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="c1">// {name: 'Lee', getName: f}</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">getName</span><span class="p">());</span> <span class="c1">// Lee</span>
+  
+  <span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="c1">// 생성자 함수 내부에서 this는 생성자 함수가 생성할 인스턴스를 가리킨다.</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="c1">// Person {name: "Lee"}</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lee</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="222-함수-호출-방식과-this-바인딩">22.2 함수 호출 방식과 this 바인딩</h2>
+<p>this 바인딩은 함수 호출 방식, 즉 함수가 어떻게 호출되었는지에 따라 동적으로 결정된다.</p>
+
+<h3 id="2221-일반-함수-호출">22.2.1 일반 함수 호출</h3>
+<p>기본적으로 this에는 전역 객체가 바인딩된다.<br />
+일반 함수로 호출하면 함수 내부의 this에는 전역 객체가 바인딩된다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`foo is this: </span><span class="p">${</span><span class="k">this</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span> <span class="c1">// window</span>
+    <span class="kd">function</span> <span class="nx">bar</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`bar is this: </span><span class="p">${</span><span class="k">this</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span> <span class="c1">// window</span>
+    <span class="p">}</span>
+    <span class="nx">bar</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="nx">foo</span><span class="p">();</span>
+</code></pre></div></div>
+<p>어떠한 함수라도 모든 함수(중첩 함수, 콜백 함수)는 일반 함수로 호출되면 내부의 this에는 전역 객체가 바인딩된다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="kd">const</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">value</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`foo is this: </span><span class="p">${</span><span class="k">this</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span> <span class="c1">// {value: 100. foo: f}</span>
+      <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`callback is this: </span><span class="p">${</span><span class="k">this</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span> <span class="c1">// window</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`callback is this.value: </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span> <span class="c1">// 1</span>
+      <span class="p">},</span> <span class="mi">100</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+
+  <span class="nx">obj</span><span class="p">.</span><span class="nx">foo</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h4 id="매서드-내부의-중첩-함수나-콜백-함수의-this-바인딩을-메서드의-this-바인딩과-일치하는-방법">매서드 내부의 중첩 함수나 콜백 함수의 this 바인딩을 메서드의 this 바인딩과 일치하는 방법</h4>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="kd">const</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">value</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// this 바인딩(obj)을 변수 that에 할당한다.</span>
+      <span class="kd">const</span> <span class="nx">that</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+      <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// 100</span>
+      <span class="p">},</span> <span class="mi">100</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+
+  <span class="nx">obj</span><span class="p">.</span><span class="nx">foo</span><span class="p">();</span>
+</code></pre></div></div>
+<p>위 예제와 같은 방법 이외에도 this를 명시적으로 바인딩할 수 있는 Function.prototype.apply, Function.prototype.call, Function.prototype.bind 메서드를 제공한다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="kd">const</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">value</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// 콜백 함수에 명시적으로 this를 바인딩</span>
+      <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// 100</span>
+      <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="mi">100</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+
+  <span class="nx">obj</span><span class="p">.</span><span class="nx">foo</span><span class="p">();</span>
+</code></pre></div></div>
+<p>또는 화살표 함수를 사용해서 this 바인딩을 할 수 있다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="kd">const</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">value</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// 화삻표 함수 내부의 this는 상위 스코프의 this를 가리킨다.</span>
+      <span class="nx">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// 100</span>
+      <span class="p">},</span> <span class="mi">100</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+
+  <span class="nx">obj</span><span class="p">.</span><span class="nx">foo</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h3 id="2222-메서드-호출">22.2.2 메서드 호출</h3>
+<p>매서드 내부의 this에는 메서드를 호출한 객체, 즉 메서드를 호출할 때 메서드 이름 앞의 마침표(.) 연산자 앞에 기술한 객체가 바인딩 된다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Lee</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">getName</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// 메서드 내부의 this는 메서드를 호출한 객체에 바인딩된다.</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+
+  <span class="c1">// 메서드 getName을 호출한 객체는 person이다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">getName</span><span class="p">());</span> <span class="c1">// Lee</span>
+</code></pre></div></div>
+<p>위 예제의 person객체의 getName 프로퍼티가 가리키는 함수 객체는 person 객체에 포함된 것이 아니라 <code class="language-plaintext highlighter-rouge">독립적으로 존재하는 별도의 객체</code>다. getName 프로퍼티가 함수 객체를 가리키고 있을 뿐이다.<br />
+(그림 22-1)<br />
+프로토타입 메서드 내부에서 사용된 this도 일반 메서드와 마찬가지로 해당 메서드를 호출한 객체에 바인딩된다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getName</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lee</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="c1">// getName 메서드를 호출한 객체는 me다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">getName</span><span class="p">());</span> <span class="c1">// Lee  1</span>
+
+  <span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Kim</span><span class="dl">'</span><span class="p">;</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getName</span><span class="p">());</span> <span class="c1">// Kim   2</span>
+</code></pre></div></div>
+<p>1의 경우 getName 메서드 내부의 this는 me를 가리키며 this.name은 ‘Lee’다.
+2의 경우 Person.prototype도 객체이므로 직접 메서드 호출이 가능하다. getName 메서드 내부의 this는 Person.prototype을 가리키며 this.name은 ‘Kim’이다.<br />
+(그림 22-3)</p>
+
+<h3 id="2223-생성자-함수-호출">22.2.3 생성자 함수 호출</h3>
+<p>생성자 함수 내부의 this에는 생성자 함수가 생성할 인스턴스가 바인딩된다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">function</span> <span class="nx">Circle</span><span class="p">(</span><span class="nx">radius</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">radius</span> <span class="o">=</span> <span class="nx">radius</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">getDiameter</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">radius</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">circle1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Circle</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">circle2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Circle</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+  
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">circle1</span><span class="p">.</span><span class="nx">getDiameter</span><span class="p">());</span> <span class="c1">// 10</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">circle2</span><span class="p">.</span><span class="nx">getDiameter</span><span class="p">());</span> <span class="c1">// 20</span>
+
+  <span class="c1">// new 연산자 없이 호출하면 생성자 함수로 동작하지 않는다. 일반 함수 호출</span>
+  <span class="kd">const</span> <span class="nx">circle3</span> <span class="o">=</span> <span class="nx">Circle</span><span class="p">(</span><span class="mi">15</span><span class="p">);</span>
+
+  <span class="c1">// 일반 함수로 호출된 Circle에는 반환문이 없으므로 암묵적으로 undefined가 반환</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">circle3</span><span class="p">);</span> <span class="c1">// undefined</span>
+
+  <span class="c1">// 일반 함수로 호출된 Circle 내부의 this는 전역 객체를 가리킨다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">radius</span><span class="p">);</span> <span class="c1">// 15</span>
+</code></pre></div></div>
+
+<h3 id="2224-functionprototypeapplycallbind-메서드에-의한-간접-호출">22.2.4 Function.prototype.apply/call/bind 메서드에 의한 간접 호출</h3>
+<p>apply, call, bind 메서드는 Function.prototype의 메서드다. 즉, 이들 메서드는 모든 함수가 상속받아 사용할 수 있다.</p>
+
+<h4 id="functionprototypeapplyfunctionprototypecall">Function.prototype.apply/Function.prototype.call</h4>
+<p>this로 사용할 객체과 인수 리스트를 인수로 전달받아 함수를 호출한다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="cm">/**
+   * apply 사용법
+   * 주어진 this 바인딩과 인수 리스트 배열을 사용하여 함수를 호출한다.
+   * @param thisArg - this로 사용할 객체
+   * @param argsArray - 함수에게 전달할 인수 리스트의 배열 또는 유사 배열 객체
+   * @returns 호출된 함수의 반환값
+  */</span>
+  <span class="c1">// Function.prototype.apply(thisArg[, argsArray])</span>
+  <span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">thisArg</span><span class="p">,</span> <span class="p">[</span><span class="nx">argsArray</span><span class="p">])</span>
+  
+  <span class="cm">/**
+   * call 사용법
+   * 주어진 this 바인딩과 ,로 구분된 인수 리스트를 사용하여 함수를 호출한다.
+   * @param thisArg - this로 사용할 객체
+   * @param arg1, arg2, ... - 함수에게 전달할 인수 리스트
+   * @returns 호출된 함수의 반환값
+  */</span>
+  <span class="c1">// Function.prototype.call(thisArg[, arg1[, arg2[, ...]]])</span>
+  <span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">thisArg</span><span class="p">,</span> <span class="nx">arg1</span><span class="p">,</span> <span class="nx">arg2</span><span class="p">,</span> <span class="p">...)</span>
+</code></pre></div></div>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">function</span> <span class="nx">getThisBinding</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// this로 사용할 객체</span>
+  <span class="kd">const</span> <span class="nx">thisArg</span> <span class="o">=</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span> <span class="p">};</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">getThisBinding</span><span class="p">());</span> <span class="c1">// window</span>
+
+  <span class="c1">// getThisBinding 함수를 호출하면서 인수로 전달한 객체를 getThisBinding 함수의 this에 바인딩한다.</span>
+  <span class="c1">// apply 메서드는 호출할 함수의 인수를 배열로 묶어 전달한다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">getThisBinding</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">thisArg</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]));</span> 
+  <span class="c1">// Arguments(3) [1, 2, 3, callee: ƒ, Symbol(Symbol.iterator): ƒ]</span>
+  <span class="c1">//{ a: 1 }</span>
+
+  <span class="c1">// call 메서드는 호출할 함수의 인수를 쉼표로 구분한 리스트 형식으로 전달한다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">getThisBinding</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">thisArg</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">));</span> 
+  <span class="c1">// Arguments(3) [1, 2, 3, callee: ƒ, Symbol(Symbol.iterator): ƒ]</span>
+  <span class="c1">//{ a: 1 }</span>
+</code></pre></div></div>
+<p>apply와 call 메서드의 본질적인 기능은 함수를 호출하는 것이다. 인수를 전달하는 방식만 다를 뿐 동일하게 동작한다.</p>
+
+<h4 id="functionprototypebind">Function.prototype.bind</h4>
+<p>apply, call 메서드와 달리 함수를 호출하지 않는다. 다만 첫 번째 인수로 전달한 값으로 this 바인딩이 교체된 함수를 새롭게 생성해 반환한다.
+bind 메서드는 메서드의 this와 메서드 내부의 중첩 함수 또는 콜백 함수의 this가 불일치하는 문제를 해결하기 위해 유용하게 사용된다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">function</span> <span class="nx">getThisBinding</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// this로 사용할 객체</span>
+  <span class="kd">const</span> <span class="nx">thisArg</span> <span class="o">=</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span> <span class="p">};</span>
+
+  <span class="c1">// bind 메서드는 첫 번쨰 인수로 전달한 thisArg로 this 바인딩이 교체된</span>
+  <span class="c1">// getThisBinding 함수를 새롭게 생성해 반환한다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">getThisBinding</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">thisArg</span><span class="p">));</span> <span class="c1">// getThisBinding</span>
+  <span class="c1">// bind 메서드는 함수를 호출하지는 않으므로 명시적으로 호출해야 한다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">getThisBinding</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">thisArg</span><span class="p">()));</span> <span class="c1">//{ a: 1 }</span>
+
+  <span class="c1">// 콜백 함수의 this가 불일치하는 문제를 해결 </span>
+  <span class="kd">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">foo</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// bind 메서드로 callback 함수 내부의 this 바인딩을 전달</span>
+      <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">callback</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="mi">100</span><span class="p">);</span> 
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+<span class="nx">person</span><span class="p">.</span><span class="nx">foo</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`my name is </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2">.`</span><span class="p">);</span> <span class="c1">// my name is Choi.</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h2 id="this-바인딩-동적-결정-정리">this 바인딩 동적 결정 정리</h2>
+<p>함수 호출 방식 | this 바인딩
+–|–
+일반 함수 호출 | 전역 객체
+메서드 호출 | 메서드를 호출한 객체
+생성자 함수 호출 | 생성자 함수가 생성할 인스턴스
+Function.prototype.apply/call/bind 메서드에 의한 간접 호출 | Function.prototype.apply/call/bind 메서드의 첫번째 인수로 전달한 객체</p>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 22장 this 내용 정리]]></summary></entry><entry><title type="html">19장 프로토 타입</title><link href="http://localhost:4000/js/modernJS19/" rel="alternate" type="text/html" title="19장 프로토 타입" /><published>2022-05-09T00:00:00+09:00</published><updated>2022-05-09T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS19</id><content type="html" xml:base="http://localhost:4000/js/modernJS19/"><![CDATA[<p><br /></p>
 
 <h1 id="19장-프로토타입">19장 프로토타입</h1>
 <p>자바스크립트는 클래스 기반 객체지향 프로그래밍 언어보다 효율적이며 더 강력한 객체지향 프로그래밍 능력을 지니고 있는 프로토타입 기반의 객체지향 프로그래밍 언어다. 자바스크립트는 객체 기반의 프로그래밍 언어이며 자바스크립트를 이루고 있는 거의 “모든 것”이 객체다.</p>
@@ -692,7 +992,29 @@ Object.create는 Object 생성자 함수의 정적 메서드이기 때문에 인
 
 <p>MDN 문서를 참고하면 다음과 같이 표기법만드로도 정적 프로퍼티/메서드와 프로토타입 프로퍼티/메서드를 구별할 수 있다.<br />
 (그림 19-25)<br />
-참고로 프로토타입 프로퍼티/메서드를 표기할떄 prototype을 #으로 표기하는 경우도 있다. -&gt; Object#isPrototypeOf</p>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 19장 프로토 타입 내용 정리]]></summary></entry><entry><title type="html">17장 생성자 함수에 의한 객체 생성</title><link href="http://localhost:4000/js/modernJS17/" rel="alternate" type="text/html" title="17장 생성자 함수에 의한 객체 생성" /><published>2022-05-04T00:00:00+09:00</published><updated>2022-05-04T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS17</id><content type="html" xml:base="http://localhost:4000/js/modernJS17/"><![CDATA[<p><br /></p>
+참고로 프로토타입 프로퍼티/메서드를 표기할떄 prototype을 #으로 표기하는 경우도 있다. -&gt; Object#isPrototypeOf</p>
+
+<h2 id="1913-프로퍼티-존재-확인">19.13 프로퍼티 존재 확인</h2>
+<h3 id="19131-in-연산자">19.13.1 in 연산자</h3>
+<p>in 연산자는 객체 내에 특정 프로퍼티가 존재하는지 여부를 확인한다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="cm">/**
+   * key: 프로퍼티 키를 나타내는 문자열
+   * object: 객체로 평가되는 표현식
+  */</span>
+  <span class="nx">key</span> <span class="k">in</span> <span class="nx">object</span>
+</code></pre></div></div>
+<p>in 연산자 대신 ES6에서 도입된 Reflect.has 메서드를 사용할 수도 있다.</p>
+<h3 id="objectprototypehasownproperty-메서드">Object.prototype.hasOwnProperty 메서드</h3>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 19장 프로토 타입 내용 정리]]></summary></entry><entry><title type="html">18장 함수와 일급 객체</title><link href="http://localhost:4000/js/modernJS18/" rel="alternate" type="text/html" title="18장 함수와 일급 객체" /><published>2022-05-08T00:00:00+09:00</published><updated>2022-05-08T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS18</id><content type="html" xml:base="http://localhost:4000/js/modernJS18/"><![CDATA[<p><br /></p>
+
+<h1 id="18장-함수와-일급-객체">18장 함수와 일급 객체</h1>
+<h2 id="181-일급-객체">18.1 일급 객체</h2>
+<p>다음과 같은 조건을 만족하는 객체를 일급 객체라 한다.</p>
+<ol>
+  <li>무명의 리터럴로 생성할 수 있다. 즉 런타임에 생성이 가능</li>
+  <li>변수나 자료구조에 저장할 수 있다.</li>
+  <li>함수의 매개변수에 전달할 수 있다.</li>
+  <li>함수의 반환값으로 사용할 수 있다.</li>
+</ol>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 18장 함수와 일급 객체 내용 정리]]></summary></entry><entry><title type="html">17장 생성자 함수에 의한 객체 생성</title><link href="http://localhost:4000/js/modernJS17/" rel="alternate" type="text/html" title="17장 생성자 함수에 의한 객체 생성" /><published>2022-05-04T00:00:00+09:00</published><updated>2022-05-04T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS17</id><content type="html" xml:base="http://localhost:4000/js/modernJS17/"><![CDATA[<p><br /></p>
 
 <h1 id="17장-생성자-함수에-의한-객체-생성">17장 생성자 함수에 의한 객체 생성</h1>
 
@@ -2406,455 +2728,4 @@ score 변수와 copy 변수의 값은 80으로 동일하지만, 각 변수의 �
 
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person1</span> <span class="o">===</span> <span class="nx">person2</span><span class="p">);</span> <span class="c1">// false -&gt; 각 변수가 참조하는 값은 전혀 다른 값이다.</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person1</span><span class="p">.</span><span class="nx">name</span> <span class="o">===</span> <span class="nx">person2</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// true -&gt; 각 변수에 저장된 name의 값은 같다.</span>
-</code></pre></div></div>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 11장 원시 값과 객체의 비교 내용 정리]]></summary></entry><entry><title type="html">10장 객체 리터럴</title><link href="http://localhost:4000/js/modernJS10/" rel="alternate" type="text/html" title="10장 객체 리터럴" /><published>2022-04-12T00:00:00+09:00</published><updated>2022-04-12T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS10</id><content type="html" xml:base="http://localhost:4000/js/modernJS10/"><![CDATA[<p><br /></p>
-
-<h1 id="10장-객체-리터럴">10장 객체 리터럴</h1>
-
-<h2 id="101-객체란">10.1 객체란?</h2>
-<p>자바스크립트는 객체 기방의 프로그래밍 언어이며, 자바스크립트를 구성하는 거ㅣ “모든 것”이 객체다. 다양한 타입의 값을 하나의 단위로 구성한 복합적인 자료구조다.<br />
-객체는 프로퍼티와 메서드로 구성된 집합체다.</p>
-<ul>
-  <li>프로퍼티 : 객체의 상태를 나타내는 값(data)</li>
-  <li>메서드 : 프로퍼티상태 데이터를 참조하고 조작할 수 있는 동작(behavior)</li>
-</ul>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">counter</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">num</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">// 프로퍼티</span>
-    <span class="na">increase</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 메서드</span>
-      <span class="k">this</span><span class="p">.</span><span class="nx">num</span><span class="o">++</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-</code></pre></div></div>
-
-<h2 id="102-객체-리터럴에-의한-객체-생성">10.2 객체 리터럴에 의한 객체 생성</h2>
-<h3 id="자바스크립트의-객체-생성-방법">자바스크립트의 객체 생성 방법</h3>
-<ul>
-  <li>객체 리터럴</li>
-  <li>Object 생성자 함수</li>
-  <li>생성자 함수</li>
-  <li>Object.create 메서드</li>
-  <li>클래스(ES6)</li>
-</ul>
-
-<p>객체 생성 방법들중 가장 일반적이고 간단한 방법은 객체 리터럴이다.</p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Lee</span><span class="dl">'</span><span class="p">,</span>
-    <span class="na">sayHello</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Hello: My name is </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2">.`</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">};</span>
-
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">person</span><span class="p">);</span> <span class="c1">// object</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {name: "Lee", sayHello: f}</span>
-</code></pre></div></div>
-
-<h2 id="103-프로퍼티">10.3 프로퍼티</h2>
-<p>객체는 프로퍼티의 집합이며, 프로퍼티는 키와 값으로 구성된다.</p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="c1">// 프로퍼티 키는 name, 프로퍼티 값은 'Lee'</span>
-    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Lee</span><span class="dl">'</span><span class="p">,</span>
-    <span class="c1">// 프로퍼티 키는 age, 프로퍼티 값은 20</span>
-    <span class="na">age</span><span class="p">:</span> <span class="mi">20</span>
-  <span class="p">};</span>
-</code></pre></div></div>
-<ul>
-  <li>프로퍼티 키: 빈 문자열을 포함하는 모든 문자열 또는 심벌 값</li>
-  <li>프로퍼티 값: 자바스크립트에서 사용할 수 있는 모든 값</li>
-</ul>
-
-<p>프로퍼티 키는 가급적 네이밍 규칙을 준수하여 사용하는 것을 권장한다.</p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">firstName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hye-ji</span><span class="dl">'</span><span class="p">,</span> <span class="c1">// 네이밍 규직 준수</span>
-    <span class="dl">'</span><span class="s1">last-name</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span> <span class="c1">// 네이밍 규직 준수하지 않음 (반드시 따옴표 사용)</span>
-  <span class="p">};</span>
-
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">);</span> <span class="c1">// {firstName: 'Hye-ji', last-name: 'Choi'}</span>
-</code></pre></div></div>
-
-<p>문자열 또는 문자열로 평가할 수 있는 표현식을 사용해 프로퍼티 키를 동적으로 생성할 수 있다.</p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{};</span>
-  <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">hello</span><span class="dl">'</span><span class="p">;</span>
-
-  <span class="c1">//ES5</span>
-  <span class="nx">obj</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">world</span><span class="dl">'</span><span class="p">;</span>
-  
-  <span class="c1">//ES6</span>
-  <span class="c1">// var obj = {[key]: 'world'};</span>
-
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span> <span class="c1">// {hello: "world"}</span>
-</code></pre></div></div>
-
-<p>빈 문자열이나 var, function과 같은 예약어를 프로퍼티 키로 사용해도 에러가 발생하지 않는다. 하지만 예상치 못한 에러가 발생할 여지가 있으므로 권장하지 않는다. 이미 존재하는 <code class="language-plaintext highlighter-rouge">프로퍼티 키를 중복</code>으로 선언하면 나중에 선언한 프로퍼티가 기존 프로퍼티를 <code class="language-plaintext highlighter-rouge">덮어쓴다</code>.</p>
-
-<h2 id="104-메서드">10.4 메서드</h2>
-<p>프로퍼티 값이 함수일 경우 일반 함수와 구분하기 위해 메서드라 부른다. 즉 메서드는 <code class="language-plaintext highlighter-rouge">객체에 묶여있는 함수</code>다.</p>
-
-<h2 id="105-프로퍼티-접근">10.5 프로퍼티 접근</h2>
-<h3 id="프로퍼티-접근-방법">프로퍼티 접근 방법</h3>
-<ul>
-  <li>마침표 프로퍼티 접근 연사자(.)를 사용하는 <code class="language-plaintext highlighter-rouge">마침표 표기법</code></li>
-  <li>대괄호 프로퍼티 접근 연산자([…])를 사용하는 <code class="language-plaintext highlighter-rouge">대괄호 표기법</code></li>
-</ul>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Lee</span><span class="dl">'</span>
-  <span class="p">};</span>
-
-  <span class="c1">// 마침표 표기법</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// "Lee"</span>
-  <span class="c1">// 대괄호 표기법</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">[</span><span class="dl">'</span><span class="s1">name</span><span class="dl">'</span><span class="p">]);</span> <span class="c1">// "Lee"</span>
-</code></pre></div></div>
-<p><code class="language-plaintext highlighter-rouge">대괄호 표기법</code>을 사용하는 경우 <code class="language-plaintext highlighter-rouge">프로퍼티 키는 반드시 따옴표</code>로 감싼 문자열이어야 한다. <code class="language-plaintext highlighter-rouge">존재하지 않는 프로퍼티</code>에 접근하면 <code class="language-plaintext highlighter-rouge">undefined를 반환</code>한다. 프로퍼티 키가 식별자 네이밍 규칙을 준수하지 않는 이름이면 반드시 대괄호 표기법을 사용해야 한다.</p>
-
-<h2 id="106-프로퍼티-값-갱신">10.6 프로퍼티 값 갱신</h2>
-<p>이미 존재하는 프로퍼티에 값을 할당하면 프로퍼티 값이 갱신된다.</p>
-
-<h2 id="107-프로퍼티-동적-생성">10.7 프로퍼티 동적 생성</h2>
-<p>존재하지 않는 프로퍼티에 값을 할당하면 프로퍼티가 동적으로 생성되어 추가된다.</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span>
-  <span class="p">};</span>
-
-  <span class="nx">person</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
-
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">)</span> <span class="c1">// {name: 'Choi', age: 30}</span>
-</code></pre></div></div>
-
-<h2 id="108-프로퍼티-삭제">10.8 프로퍼티 삭제</h2>
-<p>delete 연산사는 객체의 프로퍼티를 삭제한다. 만약 존재하지 않는 프로퍼티를 삭제하면 아무런 에러 없이 무시된다.</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span>
-  <span class="p">};</span>
-
-  <span class="nx">person</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
-
-  <span class="k">delete</span> <span class="nx">person</span><span class="p">.</span><span class="nx">age</span><span class="p">;</span> <span class="c1">// 동적으로 생성된 age 프로퍼티 삭제</span>
-  <span class="k">delete</span> <span class="nx">person</span><span class="p">.</span><span class="nx">address</span><span class="p">;</span>  <span class="c1">// 존재하지 않는 프로퍼티 라서 무시된다</span>
-
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">)</span> <span class="c1">// {name: 'Choi'}</span>
-</code></pre></div></div>
-
-<h2 id="109-es6에서-추가된-객체-리터럴의-확장-기능">10.9 ES6에서 추가된 객체 리터럴의 확장 기능</h2>
-<h3 id="1091-프로퍼티-축약-표현">10.9.1 프로퍼티 축약 표현</h3>
-<p>프로퍼티 값으로 변수를 사용하는 경우 변수 이름과 프로퍼티 키가 동일한 이름일 때 프로퍼티 키를 생략할 수 있다.</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">//ES6</span>
-  <span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-  
-  <span class="kd">const</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="p">};</span> <span class="c1">// { x: x, y: y}</span>
-
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="c1">// {x: 1, y: 2}</span>
-</code></pre></div></div>
-
-<h3 id="1092-계산된-프로퍼티-이름">10.9.2 계산된 프로퍼티 이름</h3>
-<p>문자열 또는 문자열로 타입 변환할 수 있는 값으로 평가되는 표현식을 사용해 프로퍼티 키를 동적으로 생성 할 수도 있다. 단, 프로퍼티 키로 사용할 표현식을 대괄호([…])로 묶어야 한다.</p>
-
-<h4 id="es5">ES5</h4>
-<p>객체 리터럴 외부에서 대괄호 표기법 사용([…])</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">prefix</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">prop</span><span class="dl">'</span><span class="p">;</span>
-  <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-
-  <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{};</span>
-
-  <span class="nx">obj</span><span class="p">[</span><span class="nx">prefix</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">-</span><span class="dl">'</span> <span class="o">+</span> <span class="o">++</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span>
-  <span class="nx">obj</span><span class="p">[</span><span class="nx">prefix</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">-</span><span class="dl">'</span> <span class="o">+</span> <span class="o">++</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span>
-  <span class="nx">obj</span><span class="p">[</span><span class="nx">prefix</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">-</span><span class="dl">'</span> <span class="o">+</span> <span class="o">++</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span>
-
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="c1">// {prop-1: 1, prop-2: 2, prop-3: 3}</span>
-</code></pre></div></div>
-
-<h4 id="es6">ES6</h4>
-<p>객체 리터럴 내부에서 동적 생성</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">prefix</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">prop</span><span class="dl">'</span><span class="p">;</span>
-  <span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-
-  <span class="kd">const</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="p">[</span><span class="s2">`</span><span class="p">${</span><span class="nx">prefix</span><span class="p">}</span><span class="s2">-</span><span class="p">${</span><span class="o">++</span><span class="nx">i</span><span class="p">}</span><span class="s2">`</span><span class="p">]:</span> <span class="nx">i</span><span class="p">,</span>
-    <span class="p">[</span><span class="s2">`</span><span class="p">${</span><span class="nx">prefix</span><span class="p">}</span><span class="s2">-</span><span class="p">${</span><span class="o">++</span><span class="nx">i</span><span class="p">}</span><span class="s2">`</span><span class="p">]:</span> <span class="nx">i</span><span class="p">,</span>
-    <span class="p">[</span><span class="s2">`</span><span class="p">${</span><span class="nx">prefix</span><span class="p">}</span><span class="s2">-</span><span class="p">${</span><span class="o">++</span><span class="nx">i</span><span class="p">}</span><span class="s2">`</span><span class="p">]:</span> <span class="nx">i</span>
-  <span class="p">};</span>
-
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="c1">// {prop-1: 1, prop-2: 2, prop-3: 3}</span>
-</code></pre></div></div>
-
-<h3 id="1093-메서드-축약-표현">10.9.3 메서드 축약 표현</h3>
-<h4 id="es5-1">ES5</h4>
-<p>프로퍼티 값으로 함수를 할당</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">,</span>
-    <span class="na">sayHi</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hi </span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">};</span>
-
-  <span class="nx">obj</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">();</span> <span class="c1">// Hi Choi</span>
-</code></pre></div></div>
-
-<h4 id="es6-1">ES6</h4>
-<p>function 키워드를 생략</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">,</span>
-    <span class="nx">sayHi</span><span class="p">()</span> <span class="p">{</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Hi </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">};</span>
-
-  <span class="nx">obj</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">();</span> <span class="c1">// Hi Choi</span>
-</code></pre></div></div>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 10장 객체 리터럴 내용 정리]]></summary></entry><entry><title type="html">09장 타입 변환과 단축 평가</title><link href="http://localhost:4000/js/modernJS09/" rel="alternate" type="text/html" title="09장 타입 변환과 단축 평가" /><published>2022-04-07T00:00:00+09:00</published><updated>2022-04-07T00:00:00+09:00</updated><id>http://localhost:4000/js/modernJS09</id><content type="html" xml:base="http://localhost:4000/js/modernJS09/"><![CDATA[<p><br /></p>
-
-<h1 id="09장-타입-변환과-단축-평가">09장 타입 변환과 단축 평가</h1>
-
-<h2 id="91-타입-변환이란">9.1 타입 변환이란?</h2>
-<p>개발자가 의도적으로 값의 타입을 변환하는 것을 <code class="language-plaintext highlighter-rouge">명시적 타입 변환</code> 또는 <code class="language-plaintext highlighter-rouge">타입 캐스팅</code>이라 한다.</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-
-  <span class="c1">// 의도적으로 x의 값의 타입을 string으로 변경</span>
-  <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span> 
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">str</span><span class="p">,</span> <span class="nx">str</span><span class="p">)</span> <span class="c1">// string 10</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">x</span><span class="p">)</span> <span class="c1">// number 10</span>
-</code></pre></div></div>
-
-<p>개발자의 의도와는 상관없이 자바스크립트 엔진에 의해 암묵적으로 타입이 자동 변환되는 것을 <code class="language-plaintext highlighter-rouge">암묵적 타입 변환</code> 또는 <code class="language-plaintext highlighter-rouge">타입 강제 변환</code> 이라 한다.</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-
-  <span class="c1">// 문자열 연결 연산자는 숫자 타입 x의 값을 바탕으로 새로운 문자열을 생성한다.</span>
-  <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="nx">x</span> <span class="o">+</span> <span class="dl">''</span><span class="p">;</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">str</span><span class="p">,</span> <span class="nx">str</span><span class="p">)</span> <span class="c1">// string 10</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">x</span><span class="p">)</span> <span class="c1">// number 10</span>
-  
-</code></pre></div></div>
-
-<h2 id="92-암묵적-타입-변환">9.2 암묵적 타입 변환</h2>
-<p>암묵적 타입 변환이 발생하면 문자열, 숫자, 불리언과 같은 원시 타입 중 하나로 타일을 자동 변환한다.</p>
-
-<h3 id="921-문자열-타입으로-변환">9.2.1 문자열 타입으로 변환</h3>
-<p>(+)연산자는 피연산자 중 하나 이상이 문자열이면 문자열 연결 연산자로 동작한다.</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="mi">1</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">2</span><span class="dl">'</span> <span class="c1">// "12"</span>
-  <span class="mi">0</span> <span class="o">+</span> <span class="dl">''</span> <span class="c1">//  "0"</span>
-  <span class="kc">true</span> <span class="o">+</span> <span class="dl">''</span> <span class="c1">// "true"</span>
-  <span class="kc">undefined</span> <span class="o">+</span> <span class="dl">''</span> <span class="c1">// "undefined"</span>
-  <span class="p">(</span><span class="nb">Symbol</span><span class="p">())</span> <span class="o">+</span> <span class="dl">''</span> <span class="c1">// typeError : Cannot conver a Symbol value to a string</span>
-  <span class="p">({})</span> <span class="o">+</span> <span class="dl">''</span> <span class="c1">// "[object Object]"</span>
-  <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">]</span> <span class="o">+</span> <span class="dl">''</span> <span class="c1">// "10,20"</span>
-  <span class="p">(</span><span class="kd">function</span><span class="p">(){})</span> <span class="c1">// "function(){}"</span>
-</code></pre></div></div>
-
-<h3 id="922-숫자-타입으로-변환">9.2.2 숫자 타입으로 변환</h3>
-<p>산술 연산자의 피연산자 중에서 숫자 타입이 아닌 피연산자를 숫자 타입으로 암묵적 타입 변환한다. <code class="language-plaintext highlighter-rouge">피연산자를 숫자 타입으로 변환할 수 없는 경우</code>는 산술 연산을 수행할 수 없으므로 표현식의 <code class="language-plaintext highlighter-rouge">평가 결과는 NaN</code>이 된다.</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="mi">1</span> <span class="o">-</span> <span class="dl">'</span><span class="s1">1</span><span class="dl">'</span> <span class="c1">// 0</span>
-  <span class="mi">1</span> <span class="o">*</span> <span class="dl">'</span><span class="s1">10</span><span class="dl">'</span> <span class="c1">// 10</span>
-  <span class="mi">1</span> <span class="o">/</span> <span class="dl">'</span><span class="s1">one</span><span class="dl">'</span> <span class="c1">// NaN</span>
-  <span class="dl">'</span><span class="s1">1</span><span class="dl">'</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="c1">// true</span>
-  <span class="o">+</span><span class="dl">''</span> <span class="c1">// 0</span>
-  <span class="o">+</span><span class="dl">'</span><span class="s1">0</span><span class="dl">'</span> <span class="c1">// 0</span>
-  <span class="o">+</span><span class="dl">'</span><span class="s1">1</span><span class="dl">'</span> <span class="c1">// 1</span>
-  <span class="o">+</span><span class="dl">'</span><span class="s1">string</span><span class="dl">'</span> <span class="c1">// NaN</span>
-  <span class="o">+</span><span class="kc">true</span> <span class="c1">// 1</span>
-  <span class="o">+</span><span class="kc">false</span> <span class="c1">// 0</span>
-  <span class="o">+</span><span class="kc">null</span> <span class="c1">// 0</span>
-  <span class="o">+</span><span class="kc">undefined</span> <span class="c1">// NaN</span>
-</code></pre></div></div>
-
-<h3 id="923-불리언-타입으로-변환">9.2.3 불리언 타입으로 변환</h3>
-<p>자바스크립트 엔진은 조건식의 평가 결과를 불리언 타입으로 암묵적 타입 변환한다. 이때 자바스크립트 엔진은 <code class="language-plaintext highlighter-rouge">불리언 타입이 아닌 값을 Truthy값 또는 Falsy 값으로 구분</code>한다.</p>
-
-<h4 id="false-값으로-평가되는-falsy값">false 값으로 평가되는 Falsy값</h4>
-<ul>
-  <li>false</li>
-  <li>undefined</li>
-  <li>null</li>
-  <li>0, -0</li>
-  <li>NaN</li>
-  <li>’‘(빈문자열)</li>
-</ul>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">if</span><span class="p">(</span><span class="dl">''</span><span class="p">)</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">1</span><span class="dl">'</span><span class="p">);</span>
-  <span class="k">if</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">2</span><span class="dl">'</span><span class="p">);</span>
-  <span class="k">if</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">3</span><span class="dl">'</span><span class="p">);</span>
-  <span class="k">if</span><span class="p">(</span><span class="dl">'</span><span class="s1">str</span><span class="dl">'</span><span class="p">)</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">4</span><span class="dl">'</span><span class="p">);</span>
-  <span class="k">if</span><span class="p">(</span><span class="kc">null</span><span class="p">)</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">5</span><span class="dl">'</span><span class="p">);</span>
-
-  <span class="c1">// 2 4</span>
-</code></pre></div></div>
-
-<h2 id="93-명시적-타입-변환">9.3 명시적 타입 변환</h2>
-<p>개발자의 의도에 따라 타입을 변경.</p>
-
-<h3 id="931-문자열-타입으로-변환">9.3.1 문자열 타입으로 변환</h3>
-<ol>
-  <li>String 생성자 함수를 new 연산자 없이 호출</li>
-  <li>Object.prototype.toString 메서드 사용</li>
-  <li>문자열 연결 연산자 이용</li>
-</ol>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 1. String 생성자 함수</span>
-  <span class="nb">String</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// "1"</span>
-  <span class="nb">String</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span> <span class="c1">// "true"</span>
-
-  <span class="c1">// 2. toString 메서드</span>
-  <span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span> <span class="c1">// "1"</span>
-  <span class="p">(</span><span class="kc">NaN</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span> <span class="c1">// "NaN"</span>
-  <span class="p">(</span><span class="kc">false</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span> <span class="c1">// "false"</span>
-
-  <span class="c1">// 3. 문자열 연결 연산자</span>
-  <span class="mi">1</span> <span class="o">+</span> <span class="dl">''</span><span class="p">;</span> <span class="c1">// "1"</span>
-  <span class="kc">Infinity</span> <span class="o">+</span> <span class="dl">''</span><span class="p">;</span> <span class="c1">// "Infinity"</span>
-  <span class="kc">true</span> <span class="o">+</span> <span class="dl">''</span><span class="p">;</span> <span class="c1">// "true"</span>
-</code></pre></div></div>
-
-<h3 id="932-숫자타입으로-변환">9.3.2 숫자타입으로 변환</h3>
-<ol>
-  <li>Number 생성자 함수를 new 연산자 없이 호출</li>
-  <li>parseInt, parseFloat 함수 사용(문자열만 숫자 타입으로 변환 가능)</li>
-  <li>단항 산술 연산자 이용 (+)</li>
-  <li>산술 연산자 이용 (*)</li>
-</ol>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 1. Number 생성자 함수</span>
-  <span class="nb">Number</span><span class="p">(</span><span class="dl">'</span><span class="s1">0</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// 0</span>
-  <span class="nb">Number</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span> <span class="c1">// 1</span>
-
-  <span class="c1">// 2. parseInt, parseFloat 함수</span>
-  <span class="nb">parseInt</span><span class="p">(</span><span class="dl">'</span><span class="s1">0</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// "1"</span>
-  <span class="nb">parseFloat</span><span class="p">(</span><span class="dl">'</span><span class="s1">10.53</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// 10.53</span>
-
-  <span class="c1">// 3. + 단항 산술 연산자</span>
-  <span class="o">+</span><span class="dl">'</span><span class="s1">0</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// 0</span>
-  <span class="o">+</span><span class="dl">'</span><span class="s1">-1</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// -1</span>
-  <span class="o">+</span><span class="kc">false</span><span class="p">;</span> <span class="c1">// 0</span>
-
-  <span class="c1">// 3. * 산술 연산자</span>
-  <span class="dl">'</span><span class="s1">0</span><span class="dl">'</span> <span class="o">*</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// 0</span>
-  <span class="dl">'</span><span class="s1">-1</span><span class="dl">'</span> <span class="o">*</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// -1</span>
-  <span class="kc">true</span> <span class="o">*</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// 1</span>
-  
-</code></pre></div></div>
-<h3 id="933-불리언-타입으로-변환">9.3.3 불리언 타입으로 변환</h3>
-<ol>
-  <li>Boolean 생성자 함수를 new 연산자 없이 호출</li>
-  <li>! 부정 논리 연산자를 두 번 사용</li>
-</ol>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 1. Boolean 생성자 함수</span>
-  <span class="nb">Boolean</span><span class="p">(</span><span class="dl">'</span><span class="s1">x</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// true</span>
-  <span class="nb">Boolean</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span> <span class="c1">// false</span>
-  <span class="nb">Boolean</span><span class="p">(</span><span class="dl">'</span><span class="s1">false</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// true</span>
-  <span class="nb">Boolean</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="c1">// false</span>
-  <span class="nb">Boolean</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// true</span>
-  <span class="nb">Boolean</span><span class="p">(</span><span class="kc">NaN</span><span class="p">);</span> <span class="c1">// false</span>
-  <span class="nb">Boolean</span><span class="p">({});</span> <span class="c1">// true</span>
-  <span class="nb">Boolean</span><span class="p">([]);</span> <span class="c1">// true</span>
-
-  <span class="c1">// 2. 부정 논리 연산자를 두 번</span>
-  <span class="o">!!</span><span class="dl">'</span><span class="s1">x</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// true</span>
-  <span class="o">!!</span><span class="dl">''</span><span class="p">;</span> <span class="c1">// false</span>
-  <span class="o">!!</span><span class="dl">'</span><span class="s1">false</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// true</span>
-  <span class="o">!!</span><span class="mi">0</span><span class="p">;</span> <span class="c1">// false</span>
-  <span class="o">!!</span><span class="kc">NaN</span><span class="p">;</span> <span class="c1">// false</span>
-  <span class="o">!!</span><span class="kc">undefined</span><span class="p">;</span> <span class="c1">// false</span>
-  <span class="o">!!</span><span class="p">{};</span> <span class="c1">//true</span>
-  <span class="o">!!</span><span class="p">[];</span> <span class="c1">//true</span>
-</code></pre></div></div>
-
-<h2 id="94-단축-평가">9.4 단축 평가</h2>
-<h3 id="941-논리-연산자를-사용한-단축-평가">9.4.1 논리 연산자를 사용한 단축 평가</h3>
-<h4 id="논리합-논리곱">논리합(||) 논리곱(&amp;&amp;)</h4>
-<p><code class="language-plaintext highlighter-rouge">논리곱(&amp;&amp;)</code> 연산자는 두 개의 피연산자가 <code class="language-plaintext highlighter-rouge">모두 true로 평가될 때 true를 반환</code>한다. 논리곱 연산자는 논리 연산의 결과를 결정하는 두 번째 피연산자를 그대로 반환한다.</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="dl">'</span><span class="s1">Cat</span><span class="dl">'</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">Dog</span><span class="dl">'</span> <span class="c1">// "Dog"</span>
-</code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">논리합(||)</code> 연산자는 두 개의 피연산자 중 <code class="language-plaintext highlighter-rouge">하나만 true로 평가되어도 true를 반환</code>한다. 논리합 연산자는 논리 연산의 결과를 첫 번째 피 연산자가 결정한다.</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="dl">'</span><span class="s1">Cat</span><span class="dl">'</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">Dog</span><span class="dl">'</span> <span class="c1">// "Cat"</span>
-</code></pre></div></div>
-
-<p>논리 연산의 결과를 결정하는 피연산자를 타입 변환하지 않고 그대로 반환한다. 이를 단축 평가라 한다. 단축평가는 표현식을 평가하는 도중에 평가가 확정된 경우 나머지 평가 과정을 생략한다.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>단축 평가 표현식</th>
-      <th>평가 결과</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>true || anything</td>
-      <td>true</td>
-    </tr>
-    <tr>
-      <td>false || anything</td>
-      <td>anything</td>
-    </tr>
-    <tr>
-      <td>true &amp;&amp; anything</td>
-      <td>anything</td>
-    </tr>
-    <tr>
-      <td>false &amp;&amp; anything</td>
-      <td>false</td>
-    </tr>
-  </tbody>
-</table>
-
-<h4 id="if문-대체">if문 대체</h4>
-<p>어떤 조건이 Truthy 값일 때 무언가를 해야 한다면 논리곱(&amp;&amp;) 연산자 표현식으로 if문을 대체할 수 있다.</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">done</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-  <span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
-  
-  <span class="c1">// if문 사용</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="nx">message</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">완료</span><span class="dl">'</span><span class="p">;</span>
-
-  <span class="c1">// 논리곱 연산자 표현</span>
-  <span class="nx">message</span> <span class="o">=</span> <span class="nx">done</span> <span class="o">&amp;&amp;</span> <span class="dl">'</span><span class="s1">완료</span><span class="dl">'</span><span class="p">;</span>
-
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span> <span class="c1">// 완료</span>
-</code></pre></div></div>
-<p>어떤 조건이 Falsy 값일 때 무언가를 해야 한다면 논리합(||) 연산자 표현식으로 if문을 대체할 수 있다.</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">done</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-  <span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
-  
-  <span class="c1">// if문 사용</span>
-  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">done</span><span class="p">)</span> <span class="nx">message</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">미완료</span><span class="dl">'</span><span class="p">;</span>
-
-  <span class="c1">// 논리곱 연산자 표현</span>
-  <span class="nx">message</span> <span class="o">=</span> <span class="nx">done</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">미완료</span><span class="dl">'</span><span class="p">;</span>
-
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span> <span class="c1">// 미완료</span>
-</code></pre></div></div>
-
-<h3 id="942-옵셔널-체이닝-연산자">9.4.2 옵셔널 체이닝 연산자</h3>
-<p>ES11에서 도입된 <code class="language-plaintext highlighter-rouge">옵셔널 체이닝 연산자 ?.는 좌항의 피연산자가 null 또는 undefined인 경우 undefined를 반환</code>하고, 그렇지 않으면 우항의 프로퍼티 참조를 이어간다. 객체를 가리키기를 기대하는 변수가 null 또는 undefined가 아닌지 확인하고 프로퍼티를 참조할 때 유용하다.</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">elem</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-  <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">elem</span><span class="p">?.</span><span class="nx">value</span><span class="p">;</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span> <span class="c1">// undefined </span>
-</code></pre></div></div>
-
-<p>좌항 피연산자가 false로 평가되는 Falsy 값이라도 null 또는 undefined가 아니면 우항의 프로퍼티 참조를 이어간다.</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
-  <span class="kd">var</span> <span class="nx">length</span> <span class="o">=</span> <span class="nx">str</span><span class="p">?.</span><span class="nx">length</span><span class="p">;</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">length</span><span class="p">);</span> <span class="c1">// 0</span>
-</code></pre></div></div>
-
-<h3 id="943-null-병합-연산자">9.4.3 null 병합 연산자</h3>
-<p>ES11에서 도입된 null 병합 연산자 ??는 좌항의 피연산자가 null 또는 undefined인 경우 우항의 피연산자를 반환하고, 그렇지 않으면 좌항의 피연산자를 반환한다. 변수에 기본값을 설정할 때 유용하다.</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kc">null</span> <span class="p">??</span> <span class="dl">'</span><span class="s1">default string</span><span class="dl">'</span><span class="p">;</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// "default string"</span>
-</code></pre></div></div>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 09장 타입 변환과 단축 평가 내용 정리]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name>Hyejic</name></author><category term="js" /><category term="javascript" /><summary type="html"><![CDATA[모던 자바스크립트 Deep Dive 11장 원시 값과 객체의 비교 내용 정리]]></summary></entry></feed>
