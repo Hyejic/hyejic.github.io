@@ -94,4 +94,10 @@ var store = [{
         "tags": ["javascript"],
         "url": "/js/modernJS22/",
         "teaser": null
+      },{
+        "title": "23장 실행 컨텍스트",
+        "excerpt":"23장 실행 컨텍스트 실행 컨텍스트는 자바스크립트의 동작 원리를 담고 있는 핵심 개념이다. 23.1 소스코드의 타입 ECMAScript 사양은 소스코드를 4가지 타입으로 구분한다. 소스코드 타입에 따라 실행 컨텍스트를 생성하는 과정과 관리 내용이 다르다. 전역 코드 전역 변수를 관리하기 위해 최상위 스코프인 전역 스코프를 생성해야한다. var 키워드로 선언된 전역 변수와 함수 선언문으로 정의된...","categories": ["js"],
+        "tags": ["javascript"],
+        "url": "/js/modernJS23/",
+        "teaser": null
       }]
