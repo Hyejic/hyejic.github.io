@@ -100,4 +100,10 @@ var store = [{
         "tags": ["javascript"],
         "url": "/js/modernJS23/",
         "teaser": null
+      },{
+        "title": "24장 클로저",
+        "excerpt":"24장 클로저 클로저는 자바스크립트 고유의 개념이 아니다. 함수를 일급 객체로 취급하는 함수형 프로그래밍 언어등에서 사용되는 중요한 특성이다. MDN에서는 클로저 대해 다음과 같이 정의하고 있다. 클로저는 함수와 그 함수가 선언된 렉시컬 환경과의 조합이다. 정의에서 먼저 이해해야 할 핵심 키워드는 “함수가 선언된 렉시컬 환경”이다. const x = 1; function outerFunc() { const...","categories": ["js"],
+        "tags": ["javascript"],
+        "url": "/js/modernJS24/",
+        "teaser": null
       }]
