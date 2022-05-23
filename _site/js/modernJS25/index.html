@@ -341,7 +341,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          1 분 소요
+          3 분 소요
         
       </span>
     
@@ -356,7 +356,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 25장 클래스</h4></header>
-              <ul class="toc__menu"><li><a href="#25장-클래스">25장 클래스</a><ul><li><a href="#251-클래스는-프로토타입의-문법적-설탕인가">25.1 클래스는 프로토타입의 문법적 설탕인가?</a><ul><li><a href="#클래스와-생성자-함수-차이점">클래스와 생성자 함수 차이점</a></li></ul></li><li><a href="#252-클래스의-정의">25.2 클래스의 정의</a></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#25장-클래스">25장 클래스</a><ul><li><a href="#251-클래스는-프로토타입의-문법적-설탕인가">25.1 클래스는 프로토타입의 문법적 설탕인가?</a><ul><li><a href="#클래스와-생성자-함수-차이점">클래스와 생성자 함수 차이점</a></li></ul></li><li><a href="#252-클래스의-정의">25.2 클래스의 정의</a><ul><li><a href="#클래스와-생성자-함수의-정의-방식-비교">클래스와 생성자 함수의 정의 방식 비교</a></li></ul></li><li><a href="#253-클래스-호이스팅">25.3 클래스 호이스팅</a></li><li><a href="#254-인스턴스-생성">25.4 인스턴스 생성</a></li></ul></li></ul>
 
             </nav>
           </aside>
@@ -382,7 +382,105 @@
 
 <h2 id="252-클래스의-정의">25.2 클래스의 정의</h2>
 <p>클래스는 class 키워드를 사용하여 정의한다. 클래스 이름은 파스칼 케이스를 사용하는것이 일반적.</p>
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 클래스 선언문</span>
+  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{}</span>
+</code></pre></div></div>
+<p>일반적이지는 않지만 함수와 마찬가지로 표현식으로 클래스를 정의할 수도 있다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 익명 클래스 표현식</span>
+  <span class="kd">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">class</span> <span class="p">{};</span>
+
+  <span class="c1">// 기명 클래스 표현식</span>
+  <span class="kd">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">class</span> <span class="nx">MyClass</span> <span class="p">();</span>
+</code></pre></div></div>
+
+<p>클래스는 함수다. 따라서 클래스는 값처럼 사용할 수 있는 일급 객체로서 다음과 같은 특징을 갖는다.</p>
+<ul>
+  <li>무명의 리터럴로 생성할 수 있따. 즉, 런타임에 생성이 가능하다.</li>
+  <li>변수나 자료구조(객체, 배열 등)에 저장할 수 있다.</li>
+  <li>함수의 매개변수에게 전달할 수 있다.</li>
+  <li>함수의 반환값으로 사용할 수 있다.</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 클래스 선언문</span>
+  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="c1">// 생성자</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 인스턴스 생성 및 초기화</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span> <span class="c1">// name 프로퍼티는 public하다.</span>
+    <span class="p">}</span>
+    <span class="c1">// 프로토타입 메서드</span>
+    <span class="nx">sayHi</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Hi! My name is </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// 정적 메서드</span>
+    <span class="kd">static</span> <span class="nx">sayHello</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 인스턴스 생성</span>
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="c1">// 인스턴스의 프로퍼티 참조</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// Choi</span>
+  <span class="c1">// 프로토타입 메서드 호출</span>
+  <span class="nx">me</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">();</span> <span class="c1">// Hi! My name is Choui</span>
+  <span class="c1">// 정적 메서드 호출</span>
+  <span class="nx">Person</span><span class="p">.</span><span class="nx">sayHello</span><span class="p">();</span> <span class="c1">// Hello!</span>
+</code></pre></div></div>
+
+<h3 id="클래스와-생성자-함수의-정의-방식-비교">클래스와 생성자 함수의 정의 방식 비교</h3>
+<p><img width="551" alt="그림25-1" src="https://user-images.githubusercontent.com/44577555/169783238-5771091a-021b-42ec-b625-e00895874b23.png" /></p>
+
+<h2 id="253-클래스-호이스팅">25.3 클래스 호이스팅</h2>
+<p>클래스는 함수로 평가된다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 클래스 선언문</span>
+  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{}</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">Person</span><span class="p">);</span> <span class="c1">// function</span>
+</code></pre></div></div>
+<p>클래스 선언문으로 정의한 클래스는 함수 선언문과 같이 런타임 이전(소스코드 평가 과정)에 먼저 평가되어 함수 객체를 생성한다. 이때 클래스가 평가되어 생성된 함수 객체는 생성자 함수로서 호출할 수 있는 함수, 즉 constructor다. 함수 정의가 평가되어 함수 객체를 생성하는 시점에 프로토타입도 더불어 생성된다.(프로토타입과 생성자 함수는 언제나 쌍으로 존재하기 때문)<br />
+단, 클래스는 클래스 정의 이전에 참조할 수 없다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Person</span><span class="p">);</span>
+  <span class="c1">// ReferenceError: Cannot access 'Person' before initialization</span>
+
+  <span class="c1">// 클래스 선언문</span>
+  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{}</span>
+</code></pre></div></div>
+
+<p>클래스 선언문은 let, const 키워드로 선언한 변수처럼 호이스팅 된다. 따라서 클래스 선언문 이전에 일시적 사각지대에 빠지기 떄문에 호이스팅이 발생하지 않는것 처럼 동작한다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+
+  <span class="p">{</span>
+    <span class="c1">// 호이스팅이 발생하지 않는다면 ''이 출력되어야 한다.</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Person</span><span class="p">);</span>
+    <span class="c1">// ReferenceError: Cannot access 'Person' before initialization</span>
+
+    <span class="c1">// 클래스 선언문</span>
+    <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{}</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="254-인스턴스-생성">25.4 인스턴스 생성</h2>
+<p>클래스는 생성자 함수이며 new 연산자와 함께 호출되어 인스턴스를 생성한다.
+함수와는 다르게 클래스는 반드시 new 연산자와 함께 호출해야 한다.
+(함수 - new 연산자 사용 여부에 따라 일반함수 또는 생성자 함수가 된다.)</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{}</span>
+
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="nx">Person</span><span class="p">();</span>
+  <span class="c1">// TypeError: Class constructor Foo cannot be invoked without 'new'</span>
+</code></pre></div></div>
+<p>클래스 표현식으로 정의된 클래스의 경우 클래스를 가리키는 식별자를 사용해 인스턴스를 생성하지 ㅇ낳고 기명 클래스 표현식의 클래스 이름을 사용해 인스턴스를 생성하면 에러가 발생한다. 이는 기명 함수 표현식과 마찬가지로 클래스 표현식에서 사용한 클래스 이름은 외부 코드에서 접근 불가능하기 때문이다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">class</span> <span class="nx">MyClass</span> <span class="p">{};</span>
+
+  <span class="c1">// 함수 표현식과 마찬가지로 클래스를 가리키는 식별자로 인스턴스를 생성해야 한다.</span>
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+
+  <span class="c1">// 클래스 이름 MyClass는 함수와 동일하게 클래스 몸체 내부에서만 유효한 식별자다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">MyClass</span><span class="p">);</span> <span class="c1">// ReferenceError: MyClass is not defined</span>
+
+  <span class="kd">const</span> <span class="nx">you</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span> <span class="c1">// ReferenceError: MyClass is not defined</span>
+</code></pre></div></div>
 
         
       </section>
