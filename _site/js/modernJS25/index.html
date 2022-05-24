@@ -341,7 +341,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          6 분 소요
+          9 분 소요
         
       </span>
     
@@ -356,7 +356,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 25장 클래스</h4></header>
-              <ul class="toc__menu"><li><a href="#25장-클래스">25장 클래스</a><ul><li><a href="#251-클래스는-프로토타입의-문법적-설탕인가">25.1 클래스는 프로토타입의 문법적 설탕인가?</a><ul><li><a href="#클래스와-생성자-함수-차이점">클래스와 생성자 함수 차이점</a></li></ul></li><li><a href="#252-클래스의-정의">25.2 클래스의 정의</a><ul><li><a href="#클래스와-생성자-함수의-정의-방식-비교">클래스와 생성자 함수의 정의 방식 비교</a></li></ul></li><li><a href="#253-클래스-호이스팅">25.3 클래스 호이스팅</a></li><li><a href="#254-인스턴스-생성">25.4 인스턴스 생성</a></li><li><a href="#255-메서드">25.5 메서드</a><ul><li><a href="#2551-constructor">25.5.1 constructor</a><ul><li><a href="#클래스의-constructor와-생성자-함수의-차이점">클래스의 constructor와 생성자 함수의 차이점</a></li></ul></li><li><a href="#2552-프로토타입-메서드">25.5.2 프로토타입 메서드</a></li><li><a href="#2553-정적-메서드">25.5.3 정적 메서드</a></li></ul></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#25장-클래스">25장 클래스</a><ul><li><a href="#251-클래스는-프로토타입의-문법적-설탕인가">25.1 클래스는 프로토타입의 문법적 설탕인가?</a><ul><li><a href="#클래스와-생성자-함수-차이점">클래스와 생성자 함수 차이점</a></li></ul></li><li><a href="#252-클래스의-정의">25.2 클래스의 정의</a><ul><li><a href="#클래스와-생성자-함수의-정의-방식-비교">클래스와 생성자 함수의 정의 방식 비교</a></li></ul></li><li><a href="#253-클래스-호이스팅">25.3 클래스 호이스팅</a></li><li><a href="#254-인스턴스-생성">25.4 인스턴스 생성</a></li><li><a href="#255-메서드">25.5 메서드</a><ul><li><a href="#2551-constructor">25.5.1 constructor</a><ul><li><a href="#클래스의-constructor와-생성자-함수의-차이점">클래스의 constructor와 생성자 함수의 차이점</a></li></ul></li><li><a href="#2552-프로토타입-메서드">25.5.2 프로토타입 메서드</a></li><li><a href="#2553-정적-메서드">25.5.3 정적 메서드</a><ul><li><a href="#생성자-함수-정적-메서드">생성자 함수 정적 메서드</a></li><li><a href="#클래스-정적-메서드">클래스 정적 메서드</a></li></ul></li><li><a href="#2554-정적-메서드와-프로토타입-메서드의-차이">25.5.4 정적 메서드와 프로토타입 메서드의 차이</a></li><li><a href="#2555-클래스에서-정의한-메서드의-특징">25.5.5 클래스에서 정의한 메서드의 특징</a></li></ul></li></ul></li></ul>
 
             </nav>
           </aside>
@@ -655,6 +655,109 @@
 클래스는 생성자 함수와 마찬가지로 프로토타입 기반의 객체 생성 매커니즘이다.</p>
 
 <h3 id="2553-정적-메서드">25.5.3 정적 메서드</h3>
+<p>정적 메서드는 인스턴스를 생성하지 않아도 호출할수 있는 메서드를 말한다.</p>
+<h4 id="생성자-함수-정적-메서드">생성자 함수 정적 메서드</h4>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 생성자 함수</span>
+  <span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 정적 메서드 </span>
+  <span class="nx">Person</span><span class="p">.</span><span class="nx">sayHi</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hi!</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 정적 메서드 호출</span>
+  <span class="nx">Person</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">();</span> <span class="c1">// Hi!</span>
+</code></pre></div></div>
+
+<h4 id="클래스-정적-메서드">클래스 정적 메서드</h4>
+<p>클래스에서는 메서드에 static 키워드를 붙이면 정적 메서드가 된다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="c1">// 생성자</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 인스턴스 생성 및 초기화</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 정적 메서드</span>
+    <span class="kd">static</span> <span class="nx">sayHi</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hi</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+<p>위 예제의 Person 클래스의 프로토타입 체인<br />
+<img width="433" alt="그림25-5" src="https://user-images.githubusercontent.com/44577555/169973407-a8d85ec3-03ad-4d7f-834b-5e65a3445f32.png" />
+이처럼 정적 메서드는 클래스에 바인딩된 메서드가 된다. 클래스는 함수 객체로 평가되므로 프로퍼티나/메서드를 소유할 수 있고 클래스 정의가 평가되는 시점에 함수 객체가 되므로 인스턴스와 달리 별다른 생성 과정이 필요 없다. 따라서 정적 메서드는 클래스 정의 이후 인스턴스를 생성하지 않아도 호출할 수 있다.</p>
+
+<p>정적 메서드는 프로토타입 메서드처럼 인스턴스로 호출하지 않고 클래스로 호출한다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 정적 메서드는 클래스로 호출한다.</span>
+  <span class="c1">// 정적 메서드는 인스턴스 없이도 호출할 수 있다.</span>
+  <span class="nx">Person</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">();</span> <span class="c1">// Hi</span>
+</code></pre></div></div>
+<p>정적 메서드는 인스턴스로 호출할 수 없다. 정적 메세드가 바인딩된 클래스는 인스턴스의 프로토타입 체인상에 존재하지 않기 때문이다.<br />
+다시 말해, 인스턴스의 프로토타입 체인 상에는 클래스가 존재하지 않기 때문에 인스턴스로 클래스의 메서드를 상속받을 수 없다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 인스턴스 생성</span>
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lee</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">me</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">();</span> <span class="c1">// TypeError: me.sayHi is not a function</span>
+</code></pre></div></div>
+
+<h3 id="2554-정적-메서드와-프로토타입-메서드의-차이">25.5.4 정적 메서드와 프로토타입 메서드의 차이</h3>
+<ol>
+  <li>정적 메서드와 프로토타입 메서드는 자신이 속해 있는 프로토타입 체인이 다르다.</li>
+  <li>정적 메서드는 클래스로 호출하고 프로토타입 메서드는 인스턴스로 호출한다.</li>
+  <li>정적 메서드는 인스턴스 프로퍼티를 참조할 수 없지만 프로토타입 메서드는 인스턴스 프로퍼티를 참조할 수 있다.</li>
+</ol>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Square</span> <span class="p">{</span>
+    <span class="c1">// 정적 메서드</span>
+    <span class="kd">static</span> <span class="nx">area</span><span class="p">(</span><span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">width</span> <span class="o">*</span> <span class="nx">height</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Square</span><span class="p">.</span><span class="nx">area</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">));</span> <span class="c1">// 100</span>
+</code></pre></div></div>
+<p>위 예제에서 정적 메서드 area는 인스턴스 프로퍼티를 참조하지 않는다. 만약 인스턴스 프로퍼티를 참조해야 한다면 정적 메서드 대신 프로토타입 메서드를 사용해야 한다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Square</span> <span class="p">{</span>
+    <span class="c1">// 인스턴스</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 인스턴스 프로퍼티 초기화</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">width</span><span class="p">;</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">height</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 프로토타입 메서드</span>
+    <span class="nx">area</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">width</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="kd">const</span> <span class="nx">square</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Square</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">square</span><span class="p">.</span><span class="nx">area</span><span class="p">());</span> <span class="c1">// 100</span>
+</code></pre></div></div>
+<p>메서드 내부의 this는 메서드를 소유한 객체가 아니라 메서드를 호출한 객체, 즉 메서드 이름 앞의 마침표 연산자 앞에 기술한 객체에 바인딩 된다.
+위의 예제의 경우 square 객체로 프로토타입 메서드 area를 호출했기 때문에 area 내부의 this는 square 객체를 가리킨다.<br />
+정적 메서드는 클래스로 호출해야 하므로 정적 메서드 내부의 this는 인스턴스가 아닌 클래스를 가리킨다. 즉, 프로토타입 메서드와 정적 메서드 내부의 this 바인딩이 다르다.<br />
+따라서 메서드 내부에서 인스턴스 프로퍼티를 참조하려면 this를 사용해야 하며, 이러한 경우 프로토타입 메서드로 정의해야 한다.<br />
+표준 빌트인 객체인 Math, Number, JSON, Object, Reflect 등은 다양한 정적 메서드를 가지고 있다. 이들 정적 메서드는 애플리케이션 전역에서 사용할 유틸리티 함수다. 예를들어 전달받은 인수 중에서 가장 큰 수를 반환하는 Math.max는 인스턴스와 상관없이 애플리케이션 전역에서 사용할 유틸리티 함수다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">//</span>
+  <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span> <span class="c1">//  3</span>
+  <span class="nb">Number</span><span class="p">.</span><span class="nb">isNaN</span><span class="p">(</span><span class="kc">NaN</span><span class="p">);</span> <span class="c1">// true</span>
+  <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="na">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">});</span> <span class="c1">// "{"a": 1}"</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">is</span><span class="p">({},</span> <span class="p">{});</span> <span class="c1">// false</span>
+  <span class="nb">Reflect</span><span class="p">.</span><span class="nx">has</span><span class="p">({</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span> <span class="p">},</span> <span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// true</span>
+</code></pre></div></div>
+<p>이처럼 클래스 또는 생성자 함수를 하나의 네임스페이스로 사용하여 정적 메서드를 모아 놓으면 이름 충돌 가능성을 줄여 주고 관련 함수들을 구조화할 수 있는 효과가 있다. 이같은 이유로 정적 메서드는 애플리케이션 전역에서 사용할 유틸리티 함수를 전역 함수로 정의하지 않고 메서드로 구조화할 때 유용하다.</p>
+
+<h3 id="2555-클래스에서-정의한-메서드의-특징">25.5.5 클래스에서 정의한 메서드의 특징</h3>
+<ol>
+  <li>function 키워드를 생략한 메서드 축약 표현을 사용한다.</li>
+  <li>객체 리터럴과는 다르게 클래스에서 메서드를 정의할 때는 콤마가 필요 없다.</li>
+  <li>암묵적으로 strict mode로 실행된다.</li>
+  <li>for …in 문이나 Object.keys 메서드 등으로 열거할 수 없다. 즉, 프로퍼티의 열거 가능 여부를 나타내며, 불리언 값을 갖는 프로퍼티 어트리뷰트[[Enumerable]]의 값이 false다.</li>
+  <li>내부 메서드 [[Construct]]를 갖지 않는 non-constructor다. 따라서 new 연산자와함께 호출할 수 없다.</li>
+</ol>
+
 
         
       </section>
