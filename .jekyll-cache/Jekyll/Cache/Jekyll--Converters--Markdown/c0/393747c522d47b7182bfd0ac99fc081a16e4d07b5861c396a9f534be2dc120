@@ -1,0 +1,588 @@
+I"��<p><br /></p>
+
+<h1 id="25장-클래스">25장 클래스</h1>
+<h2 id="251-클래스는-프로토타입의-문법적-설탕인가">25.1 클래스는 프로토타입의 문법적 설탕인가?</h2>
+<p>클래스는 함수이며 기존 프로토타입 기반 패턴을 클래스 기반 패턴처럼 사용할 ㅅ 있도록 하는 문법적 설탕이라고 볼 수도 있다.<br />
+단, 클래스와 생성자 함수는 모두 프로토타입 기반의 인스턴스를 생성하지만 정확히 동일하게 동작하지는 않는다. 클래스는 함수보다 엄격하고 생성자 함수에서는 제공하지 않는 기능도 제공한다.</p>
+<h3 id="클래스와-생성자-함수-차이점">클래스와 생성자 함수 차이점</h3>
+<ul>
+  <li>클래스를 new 연산자 없이 호출하면 에러가 발생한다. 하지만 생성자 함수를 new 연산자 없이 호출하면 일반 함수로서 호출된다.</li>
+  <li>클래스는 상속을 지원하는 extends와 super 키워드를 제공한다. 하지만 생성자 함수는 extends와 super 키워드를 지원하지 않는다.</li>
+  <li>클래스는 호이스팅이 발생하지 않는 것처럼 동작한다. 하지만 함수 선언문으로 정의된 생성자 함수는 함수 호이스팅이, 함수 표현식으로 정의한 생성자 함수는 변수 호이스팅이 발생한다.<br />
+(클래스는 호이스팅 안되는것처럼. 함수 선언문 - 함수 호이스팅. 함수 표현식 - 변수 호이스팅)</li>
+  <li>클래스 내의 모든 코드에는 암묵적으로 strict mode가 저장되어 실행되며 strict mode를 해제할 수 없다. 하지만 생성자 함수는 암묵적으로 strict mode가 지정되지 않는다.</li>
+  <li>클래스의 constructor, 프로토타입 메서드, 정적 메서드는 모두 프로퍼티 어트리뷰트 [[Enumerable]]의 값이 false다. 다시 말해, 열거되지 않는다.</li>
+</ul>
+
+<p>클래스는 생성자 함수 기반의 객체 생성 방식보다 견고하고 명료하다. 특히 클래스의 extends와 super 키워드는 상속 관계 구현을 더욱 간결하고 명료하게 한다.<br />
+따라서 클래스를 프로토타입 기반 객체 생성 패턴의 단순한 문법적 설탕이라고 보기보다는 새로운 객체 생성 매커니즘으로 보는 것이 좀 더 합당하다.</p>
+
+<h2 id="252-클래스의-정의">25.2 클래스의 정의</h2>
+<p>클래스는 class 키워드를 사용하여 정의한다. 클래스 이름은 파스칼 케이스를 사용하는것이 일반적.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 클래스 선언문</span>
+  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{}</span>
+</code></pre></div></div>
+<p>일반적이지는 않지만 함수와 마찬가지로 표현식으로 클래스를 정의할 수도 있다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 익명 클래스 표현식</span>
+  <span class="kd">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">class</span> <span class="p">{};</span>
+
+  <span class="c1">// 기명 클래스 표현식</span>
+  <span class="kd">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">class</span> <span class="nx">MyClass</span> <span class="p">();</span>
+</code></pre></div></div>
+
+<p>클래스는 함수다. 따라서 클래스는 값처럼 사용할 수 있는 일급 객체로서 다음과 같은 특징을 갖는다.</p>
+<ul>
+  <li>무명의 리터럴로 생성할 수 있따. 즉, 런타임에 생성이 가능하다.</li>
+  <li>변수나 자료구조(객체, 배열 등)에 저장할 수 있다.</li>
+  <li>함수의 매개변수에게 전달할 수 있다.</li>
+  <li>함수의 반환값으로 사용할 수 있다.</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 클래스 선언문</span>
+  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="c1">// 생성자</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 인스턴스 생성 및 초기화</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span> <span class="c1">// name 프로퍼티는 public하다.</span>
+    <span class="p">}</span>
+    <span class="c1">// 프로토타입 메서드</span>
+    <span class="nx">sayHi</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Hi! My name is </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// 정적 메서드</span>
+    <span class="kd">static</span> <span class="nx">sayHello</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 인스턴스 생성</span>
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="c1">// 인스턴스의 프로퍼티 참조</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// Choi</span>
+  <span class="c1">// 프로토타입 메서드 호출</span>
+  <span class="nx">me</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">();</span> <span class="c1">// Hi! My name is Choui</span>
+  <span class="c1">// 정적 메서드 호출</span>
+  <span class="nx">Person</span><span class="p">.</span><span class="nx">sayHello</span><span class="p">();</span> <span class="c1">// Hello!</span>
+</code></pre></div></div>
+
+<h3 id="클래스와-생성자-함수의-정의-방식-비교">클래스와 생성자 함수의 정의 방식 비교</h3>
+<p><img width="551" alt="그림25-1" src="https://user-images.githubusercontent.com/44577555/169783238-5771091a-021b-42ec-b625-e00895874b23.png" /></p>
+
+<h2 id="253-클래스-호이스팅">25.3 클래스 호이스팅</h2>
+<p>클래스는 함수로 평가된다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 클래스 선언문</span>
+  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{}</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">Person</span><span class="p">);</span> <span class="c1">// function</span>
+</code></pre></div></div>
+<p>클래스 선언문으로 정의한 클래스는 함수 선언문과 같이 런타임 이전(소스코드 평가 과정)에 먼저 평가되어 함수 객체를 생성한다. 이때 클래스가 평가되어 생성된 함수 객체는 생성자 함수로서 호출할 수 있는 함수, 즉 constructor다. 함수 정의가 평가되어 함수 객체를 생성하는 시점에 프로토타입도 더불어 생성된다.(프로토타입과 생성자 함수는 언제나 쌍으로 존재하기 때문)<br />
+단, 클래스는 클래스 정의 이전에 참조할 수 없다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Person</span><span class="p">);</span>
+  <span class="c1">// ReferenceError: Cannot access 'Person' before initialization</span>
+
+  <span class="c1">// 클래스 선언문</span>
+  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{}</span>
+</code></pre></div></div>
+
+<p>클래스 선언문은 let, const 키워드로 선언한 변수처럼 호이스팅 된다. 따라서 클래스 선언문 이전에 일시적 사각지대에 빠지기 떄문에 호이스팅이 발생하지 않는것 처럼 동작한다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+
+  <span class="p">{</span>
+    <span class="c1">// 호이스팅이 발생하지 않는다면 ''이 출력되어야 한다.</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Person</span><span class="p">);</span>
+    <span class="c1">// ReferenceError: Cannot access 'Person' before initialization</span>
+
+    <span class="c1">// 클래스 선언문</span>
+    <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{}</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="254-인스턴스-생성">25.4 인스턴스 생성</h2>
+<p>클래스는 생성자 함수이며 new 연산자와 함께 호출되어 인스턴스를 생성한다.
+함수와는 다르게 클래스는 반드시 new 연산자와 함께 호출해야 한다.
+(함수 - new 연산자 사용 여부에 따라 일반함수 또는 생성자 함수가 된다.)</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{}</span>
+
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="nx">Person</span><span class="p">();</span>
+  <span class="c1">// TypeError: Class constructor Foo cannot be invoked without 'new'</span>
+</code></pre></div></div>
+<p>클래스 표현식으로 정의된 클래스의 경우 클래스를 가리키는 식별자를 사용해 인스턴스를 생성하지 ㅇ낳고 기명 클래스 표현식의 클래스 이름을 사용해 인스턴스를 생성하면 에러가 발생한다. 이는 기명 함수 표현식과 마찬가지로 클래스 표현식에서 사용한 클래스 이름은 외부 코드에서 접근 불가능하기 때문이다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="kd">class</span> <span class="nx">MyClass</span> <span class="p">{};</span>
+
+  <span class="c1">// 함수 표현식과 마찬가지로 클래스를 가리키는 식별자로 인스턴스를 생성해야 한다.</span>
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+
+  <span class="c1">// 클래스 이름 MyClass는 함수와 동일하게 클래스 몸체 내부에서만 유효한 식별자다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">MyClass</span><span class="p">);</span> <span class="c1">// ReferenceError: MyClass is not defined</span>
+
+  <span class="kd">const</span> <span class="nx">you</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span> <span class="c1">// ReferenceError: MyClass is not defined</span>
+</code></pre></div></div>
+
+<h2 id="255-메서드">25.5 메서드</h2>
+<p>클래스 몸체에서 정의할 수 있는 메서드는 constructor(생성자), 프로토타입 메서드, 정적 메서드의 세 가지가 있다.</p>
+<h3 id="2551-constructor">25.5.1 constructor</h3>
+<p>constructor는 인스턴스를 생성하고 초기화하기 위한 특수한 메서드다. 
+클래스는 인스턴스를 생성하기 위한 생성자 함수다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="c1">// 생성자</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 인스턴스 생성 및 초기화</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 클래스는 함수다</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">Person</span><span class="p">);</span> <span class="c1">// function</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">dir</span><span class="p">(</span><span class="nx">Person</span><span class="p">);</span> <span class="c1">// class Person</span>
+</code></pre></div></div>
+<p><img width="235" alt="console.dir" src="https://user-images.githubusercontent.com/44577555/169851947-d40a643c-b649-459d-a879-37567be392f9.png" /></p>
+
+<p>이처럼 클래스는 평가되어 함수 객체가 된다. 함수와 동일하게 프로퍼티와 연결되어 있으며 자신의 스코프체인을 구성한다.<br />
+모든 함수 객체가 가지고 있는 prototype 프로퍼티가 가리키는 프로토타입 객체의 constructor 프로퍼티는 클래스 자신을 가리키고 있다. 이는 클래스가 인스턴스를 생성하는 생성자 함수라는 것을 의미한다. 즉, new 연산자와 함께 클래스를 호출하면 클래스는 인스턴스를 생성한다.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="c1">// 생성자</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 인스턴스 생성 및 초기화</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">me</span><span class="p">);</span>
+</code></pre></div></div>
+<p><img width="391" alt="image" src="https://user-images.githubusercontent.com/44577555/169854114-342a4a03-a7e5-4af1-b86a-85a2c3a13830.png" /></p>
+
+<p>Person 클래스의 constructor 내부에서 this에 추가한 name 프로퍼티가 클래스가 생성한 인스턴스의 프로퍼티로 추가된 것을 확인할 수 있다. 즉, 생성자 함수와 마찬가지로 constructor 내부에서 this에 추가한 프로퍼티는 인스턴스 프로퍼티가 된다. constructor 내부의 this는 생성자 함수와 마찬가지로 클래스가 생성한 인스턴스를 가리킨다.<br />
+클래스 몸체에 정의한 constructor는 단순한 메서드로 해석되는 것이 아니라 클래스가 평가되어 생성한 함수 객체 코드의 일부가 된다. 다시 말해, 클래스 정의가 평가되면 constructor의 기술된 동작을 하는 함수 객체가 생성된다.</p>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">클래스의 constructor 메서드와 프로토타입의 constructor 프로퍼티</code><br />
+클래스의 constructor 메서드와 프로토타입의 constructor 프로퍼티는 이름이 같아 혼동하기 쉽지만 직접적인 관련이 없다. 프로토타입의 constructor 프로퍼티는 모든 프로토타입이 가지고 있는 프로퍼티이며, 생성자 함수를 가리킨다.</p>
+</blockquote>
+
+<h4 id="클래스의-constructor와-생성자-함수의-차이점">클래스의 constructor와 생성자 함수의 차이점</h4>
+
+<ul>
+  <li>
+    <p>constructor는 클래스 내에 최대 한 개만 존재할 수 있다.</p>
+  </li>
+  <li>constructor는 생략할 수 있다. 생략하면 클래스에 빈 consructor가 암묵적으로 정의된다. 따라서 constructor를 생략한 클래스는 빈 constructor에 의해서 빈 객체를 생성한다.
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="c1">// 암묵적으로 constructor 생성</span>
+    <span class="kd">constructor</span><span class="p">()</span> <span class="p">{}</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">me</span><span class="p">);</span> <span class="c1">// Person {}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>프로퍼티가 추가되어 초기화된 인스턴스를 생성하려면 constructor 내부에서 this에 인스턴스 프로퍼티를 추가한다.
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// 고정값 인스턴스 초기화</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">;</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">address</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Seoul</span><span class="dl">'</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 인스턴스 프로퍼티가 추가된다.</span>
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">me</span><span class="p">);</span> <span class="c1">// Person {name: "Choi", address: "Seoul"}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>외부에서 인스턴스 프로퍼티의 초기값을 전달하려면 constructor에 매개변수를 선언하고 인스턴스를 생성할 때 초기값을 전달한다. 이때 초기값은 constructor의 매개변수에게 전달된다.
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">address</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">address</span> <span class="o">=</span> <span class="nx">address</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 인스턴스 프로퍼티가 추가된다.</span>
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Seoul</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">me</span><span class="p">);</span> <span class="c1">// Person {name: "Choi", address: "Seoul"}</span>
+</code></pre></div>    </div>
+    <p>인스턴스를 초기화 하려면 constructor를 생략해서는 안 된다.</p>
+  </li>
+  <li>constructor는 별도의 반환문을 갖지 않아야 한다. new 연산자와 함께 클래스가 호출되면 생성자함수와 동일하게 암묵적으로 this, 즉 인스턴스를 반환하기 때문이다. 만약 this가 아닌 다른 객체를 명시적으로 반환하면 this, 즉 인스턴스가 반환되지 못하고 return 문에 명시한 객체가 반환된다.
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+        
+      <span class="c1">// 명시적으로 객체를 반환하면 암묵적인 this 반환이 무시된다.</span>
+      <span class="k">return</span> <span class="p">{};</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// constructor에서 명시적으로 반환한 빈 객체가 반환된다.</span>
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">me</span><span class="p">);</span> <span class="c1">// {}</span>
+</code></pre></div>    </div>
+    <p>명시적으로 원시값을 반환하면 원시값 반환은 무시되고 암묵적으로 this가 반환된다.</p>
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+        
+      <span class="c1">// 명시적으로 원시값을 반환하면 원시값 반환은 무시되고 암묵적으로 this가 반환된다.</span>
+      <span class="k">return</span> <span class="mi">100</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">me</span><span class="p">);</span> <span class="c1">// Person {name: "Choi"}</span>
+</code></pre></div>    </div>
+    <p>이처럼 constructor 내부에서 명시적으로 this가 아닌 다른 값을 반환하는 것은 클래스의 기본 동작을 훼손하는 것이므로 constructor 내부에서 return 문은 반드시 생략해야 한다.</p>
+  </li>
+</ul>
+
+<h3 id="2552-프로토타입-메서드">25.5.2 프로토타입 메서드</h3>
+<p>셍성자 함수를 사용하여 인스턴스를 생성하는 경우 프로토타입 메서드를 생성하기 위해서는 다음과 같이 명시적으로 프로토타입에 메서드를 추가해야 한다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 생성자 함수</span>
+  <span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// ⭐️ 생성자 함수 프로토타입 메서드</span>
+  <span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">sayHi</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Hi my name is </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Peroson</span><span class="p">(</span><span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">me</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">();</span> <span class="c1">// Hi my name is Choi</span>
+</code></pre></div></div>
+
+<p>클래스 몸체에서 정의한 메서드는 생성자 함수에 의한 객체 생성 방식과는 다르게 클래스의 prototype 프로퍼티에 메서드를 추가하지 않아도 기본적으로 프로토타입 메서드가 된다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="c1">// 생성자</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 인스턴스 생성 및 초기화</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// ⭐️ 클래스 프로토타입 메서드</span>
+  <span class="nx">sayHi</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Hi my name is </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Peroson</span><span class="p">(</span><span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">me</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">();</span> <span class="c1">// Hi my name is Choi</span>
+</code></pre></div></div>
+
+<p>생성자 함수와 마찬가지로 클래스가 생성한 인스턴스는 프로토타입 체인의 일원이 된다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// me 객체의 프로토타입은 Person.prototype이다.</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">getPrototypeOf</span><span class="p">(</span><span class="nx">me</span><span class="p">)</span> <span class="o">===</span> <span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span> <span class="c1">// true</span>
+  <span class="nx">me</span> <span class="k">instanceof</span> <span class="nx">Person</span><span class="p">;</span> <span class="c1">// true</span>
+
+  <span class="c1">// Person.prototype의 프로토타입은 Object.prototype이다.</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">getPrototypeOf</span><span class="p">(</span><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">)</span> <span class="o">===</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span> <span class="c1">// true</span>
+  <span class="nx">me</span> <span class="k">instanceof</span> <span class="nx">Obejct</span><span class="p">;</span> <span class="c1">// true</span>
+
+  <span class="c1">// me 객체의 constructor는 Person 클래스다.</span>
+  <span class="nx">me</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">===</span> <span class="nx">Person</span><span class="p">;</span> <span class="c1">// true</span>
+</code></pre></div></div>
+<p><img width="465" alt="그림 25-4" src="https://user-images.githubusercontent.com/44577555/169862852-3b6e26ca-8166-4e0d-9af1-6562d85d20c0.png" /></p>
+
+<p>클래스 몸체에서 정의한 메서드는 인스턴스의 프로토타입에 존재하는 프로토타입 메서드가 된다.<br />
+인스턴스는 프로토타입 메서드를 상속받아 사용할 수 있다.<br />
+프로토타입 체인은 기존의 모든 객체 생성 방식(객체 리터럴, 생성자 함수, Object.create 메서드 등)뿐만아니라 클래스에 의해 생성된 인스턴스에도 동일하게 적용된다.<br />
+결국 클래스는 생성자 함수와 같이 인스턴스를 생성하는 생성자 함수라고 볼 수 있다.<br />
+클래스는 생성자 함수와 마찬가지로 프로토타입 기반의 객체 생성 매커니즘이다.</p>
+
+<h3 id="2553-정적-메서드">25.5.3 정적 메서드</h3>
+<p>정적 메서드는 인스턴스를 생성하지 않아도 호출할수 있는 메서드를 말한다.</p>
+<h4 id="생성자-함수-정적-메서드">생성자 함수 정적 메서드</h4>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 생성자 함수</span>
+  <span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 정적 메서드 </span>
+  <span class="nx">Person</span><span class="p">.</span><span class="nx">sayHi</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hi!</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 정적 메서드 호출</span>
+  <span class="nx">Person</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">();</span> <span class="c1">// Hi!</span>
+</code></pre></div></div>
+
+<h4 id="클래스-정적-메서드">클래스 정적 메서드</h4>
+<p>클래스에서는 메서드에 static 키워드를 붙이면 정적 메서드가 된다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="c1">// 생성자</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 인스턴스 생성 및 초기화</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 정적 메서드</span>
+    <span class="kd">static</span> <span class="nx">sayHi</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hi</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+<p>위 예제의 Person 클래스의 프로토타입 체인<br />
+<img width="433" alt="그림25-5" src="https://user-images.githubusercontent.com/44577555/169973407-a8d85ec3-03ad-4d7f-834b-5e65a3445f32.png" />
+이처럼 정적 메서드는 클래스에 바인딩된 메서드가 된다. 클래스는 함수 객체로 평가되므로 프로퍼티나/메서드를 소유할 수 있고 클래스 정의가 평가되는 시점에 함수 객체가 되므로 인스턴스와 달리 별다른 생성 과정이 필요 없다. 따라서 정적 메서드는 클래스 정의 이후 인스턴스를 생성하지 않아도 호출할 수 있다.</p>
+
+<p>정적 메서드는 프로토타입 메서드처럼 인스턴스로 호출하지 않고 클래스로 호출한다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 정적 메서드는 클래스로 호출한다.</span>
+  <span class="c1">// 정적 메서드는 인스턴스 없이도 호출할 수 있다.</span>
+  <span class="nx">Person</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">();</span> <span class="c1">// Hi</span>
+</code></pre></div></div>
+<p>정적 메서드는 인스턴스로 호출할 수 없다. 정적 메세드가 바인딩된 클래스는 인스턴스의 프로토타입 체인상에 존재하지 않기 때문이다.<br />
+다시 말해, 인스턴스의 프로토타입 체인 상에는 클래스가 존재하지 않기 때문에 인스턴스로 클래스의 메서드를 상속받을 수 없다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 인스턴스 생성</span>
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lee</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">me</span><span class="p">.</span><span class="nx">sayHi</span><span class="p">();</span> <span class="c1">// TypeError: me.sayHi is not a function</span>
+</code></pre></div></div>
+
+<h3 id="2554-정적-메서드와-프로토타입-메서드의-차이">25.5.4 정적 메서드와 프로토타입 메서드의 차이</h3>
+<ol>
+  <li>정적 메서드와 프로토타입 메서드는 자신이 속해 있는 프로토타입 체인이 다르다.</li>
+  <li>정적 메서드는 클래스로 호출하고 프로토타입 메서드는 인스턴스로 호출한다.</li>
+  <li>정적 메서드는 인스턴스 프로퍼티를 참조할 수 없지만 프로토타입 메서드는 인스턴스 프로퍼티를 참조할 수 있다.</li>
+</ol>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Square</span> <span class="p">{</span>
+    <span class="c1">// 정적 메서드</span>
+    <span class="kd">static</span> <span class="nx">area</span><span class="p">(</span><span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">width</span> <span class="o">*</span> <span class="nx">height</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Square</span><span class="p">.</span><span class="nx">area</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">));</span> <span class="c1">// 100</span>
+</code></pre></div></div>
+<p>위 예제에서 정적 메서드 area는 인스턴스 프로퍼티를 참조하지 않는다. 만약 인스턴스 프로퍼티를 참조해야 한다면 정적 메서드 대신 프로토타입 메서드를 사용해야 한다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Square</span> <span class="p">{</span>
+    <span class="c1">// 인스턴스</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 인스턴스 프로퍼티 초기화</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">width</span><span class="p">;</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">height</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 프로토타입 메서드</span>
+    <span class="nx">area</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">width</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="kd">const</span> <span class="nx">square</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Square</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">square</span><span class="p">.</span><span class="nx">area</span><span class="p">());</span> <span class="c1">// 100</span>
+</code></pre></div></div>
+<p>메서드 내부의 this는 메서드를 소유한 객체가 아니라 메서드를 호출한 객체, 즉 메서드 이름 앞의 마침표 연산자 앞에 기술한 객체에 바인딩 된다.
+위의 예제의 경우 square 객체로 프로토타입 메서드 area를 호출했기 때문에 area 내부의 this는 square 객체를 가리킨다.<br />
+정적 메서드는 클래스로 호출해야 하므로 정적 메서드 내부의 this는 인스턴스가 아닌 클래스를 가리킨다. 즉, 프로토타입 메서드와 정적 메서드 내부의 this 바인딩이 다르다.<br />
+따라서 메서드 내부에서 인스턴스 프로퍼티를 참조하려면 this를 사용해야 하며, 이러한 경우 프로토타입 메서드로 정의해야 한다.<br />
+표준 빌트인 객체인 Math, Number, JSON, Object, Reflect 등은 다양한 정적 메서드를 가지고 있다. 이들 정적 메서드는 애플리케이션 전역에서 사용할 유틸리티 함수다. 예를들어 전달받은 인수 중에서 가장 큰 수를 반환하는 Math.max는 인스턴스와 상관없이 애플리케이션 전역에서 사용할 유틸리티 함수다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">//</span>
+  <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span> <span class="c1">//  3</span>
+  <span class="nb">Number</span><span class="p">.</span><span class="nb">isNaN</span><span class="p">(</span><span class="kc">NaN</span><span class="p">);</span> <span class="c1">// true</span>
+  <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="na">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">});</span> <span class="c1">// "{"a": 1}"</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">is</span><span class="p">({},</span> <span class="p">{});</span> <span class="c1">// false</span>
+  <span class="nb">Reflect</span><span class="p">.</span><span class="nx">has</span><span class="p">({</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span> <span class="p">},</span> <span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// true</span>
+</code></pre></div></div>
+<p>이처럼 클래스 또는 생성자 함수를 하나의 네임스페이스로 사용하여 정적 메서드를 모아 놓으면 이름 충돌 가능성을 줄여 주고 관련 함수들을 구조화할 수 있는 효과가 있다. 이같은 이유로 정적 메서드는 애플리케이션 전역에서 사용할 유틸리티 함수를 전역 함수로 정의하지 않고 메서드로 구조화할 때 유용하다.</p>
+
+<h3 id="2555-클래스에서-정의한-메서드의-특징">25.5.5 클래스에서 정의한 메서드의 특징</h3>
+<ol>
+  <li>function 키워드를 생략한 메서드 축약 표현을 사용한다.</li>
+  <li>객체 리터럴과는 다르게 클래스에서 메서드를 정의할 때는 콤마가 필요 없다.</li>
+  <li>암묵적으로 strict mode로 실행된다.</li>
+  <li>for …in 문이나 Object.keys 메서드 등으로 열거할 수 없다. 즉, 프로퍼티의 열거 가능 여부를 나타내며, 불리언 값을 갖는 프로퍼티 어트리뷰트[[Enumerable]]의 값이 false다.</li>
+  <li>내부 메서드 [[Construct]]를 갖지 않는 non-constructor다. 따라서 new 연산자와함께 호출할 수 없다.</li>
+</ol>
+
+<h2 id="256-클래스의-인스턴스-생성-과정">25.6 클래스의 인스턴스 생성 과정</h2>
+<p>new 연산자와 함께 클래스를 호출하면 생성자 함수와 마찬가지로 클래스 내부 메서드 [[Construct]]가 호출된다. 클래스는 new 연산자 없이 호출할 수 없다.<br />
+생성자 함수의 인스턴스 생성 과정과 유사한 과정을 거쳐 인스턴스가 생성된다.</p>
+<ol>
+  <li>인스턴스 생성과 this 바인딩<br />
+new 연산자와 함께 클래서를 호출하면 constructor의 내부 코드가 실행되기에 앞서 암묵적으로 빈 객체가 생성된다. 이 빈 객체가 바로 클래스가 생성한 인스턴스다. 이때 클래스가 생성한 인스턴스의 프로토타입으로 클래스의 prototype 프로퍼티가 가리키는 객체가 설정된다. 그리고 암묵적으로 생성된 빈객체, 즉 인스턴스는 this에 바인딩된다. 따라서 constructor 내부의 this는 클래스가 생성한 인스턴스를 가리킨다.</li>
+  <li>인스턴스 초기화
+constructor의 내부 코드가 실행되어 this에 바인딩되어 있는 인스턴스를 초기화한다. 즉, this에 바인딩 되어 있는 인스턴스에 프로퍼티를 추가하고 constructor가 인수로 전달받은 초기값으로 인스턴스의 프로퍼티 값을 초기화한다. 만약 constructor가 생략 되었다면 이 과정도 생략된다.</li>
+  <li>인스턴스의 반환
+클래스의 모든처리가 끝나면 완성된 인스턴스가 바인딩된 this가 암묵적으로 반환된다.</li>
+</ol>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="c1">// 생성자</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 1. 암묵적으로 인스턴스가 생성되고 this에 바인딩된다.</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="c1">// Person {}</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">getPrototypeOf</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="o">===</span> <span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span> <span class="c1">// true</span>
+
+      <span class="c1">// 2. this에 바인딩되어 있는 인스턴스를 초기화한다.</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+
+      <span class="c1">// 3. 완선된 인스턴스가 바인딩된 this가 암묵적으로 반환된다.</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="257-프로퍼티">25.7 프로퍼티</h2>
+<h3 id="2571-인스턴스-프로퍼티">25.7.1 인스턴스 프로퍼티</h3>
+<p>인스턴스 프로퍼니티는 constructor 내부에서 정의해야 한다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 인스턴스 프로퍼티</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span> <span class="c1">// name 프로퍼티는 public하다.</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">me</span><span class="p">);</span> <span class="c1">// Person {name: "Choi"}</span>
+  <span class="c1">// name은 public하다.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">me</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// Choi</span>
+</code></pre></div></div>
+<p>생성자 함수에서 생성자 함수가 생성할 인스턴스의 프로퍼티를 정의하는 것과 마찬가지로 constructor 내부에서 this에 인스턴스 프로퍼티를 추가한다. 이로써 클래스가 암묵적으로 생성한 빈 객체, 즉 인스턴스에 프로퍼티가 추가되어 인스턴스가 초기화된다.<br />
+constructor 내부에서 this에 추가한 프로퍼티는 언제나 클래스가 생성한 인스턴스의 프로퍼티가 된다.</p>
+
+<h3 id="2572-접근자-프로퍼티">25.7.2 접근자 프로퍼티</h3>
+<p>접근자 프로퍼티는 자체적으로는 값을 갖지 않고 다른 데이터 프로퍼티의 값을 읽거나 저장할 때 사용하는 접근자 함수로 구성된 프로퍼티다.</p>
+<div style="display:flex; justify-content:space-between;">
+<div style="width:49%;">
+
+  ```javascript
+    const person = {
+      // 데이터 프로퍼티
+      firstName: 'Hyeji',
+      lastName: 'Choi',
+
+      // fullName은 접근자 함수로 구성된 접근자 프로퍼티다.
+      // getter 함수
+      get fullName() {
+        return `${this.firstName} ${this.lastName}`;
+      },
+      // setter 함수
+      set fullName(name) {
+        // 배열 디스트럭처링 할당
+        [this.firstName, this.lastName] = name.split(' ');
+      }
+    };
+
+    // 데이터 프로퍼티를 통한 프로퍼티 값의 참조.
+    console.log(`${person.firstName} ${person.lastName}`); // Hyeji Choi
+
+    // 접근자 프로퍼티를 통한 프로퍼티 값의 저장
+    // 접근자 프로퍼티 fullName에 값을 저장하면 setter함수가 호출된다.
+    person.fullName = `Hihi Choi`;
+    console.log(person); // {firstName: 'Hihi', lastName: 'Choi'}
+
+    // 접근자 프로퍼티를 통한 프로퍼티 값의 참조
+    // 접근자 프로퍼티 fullName에 접근하면 getter 함수가 호출된다.
+    console.log(person.fullName); // Hihi Choi
+
+    // fullName은 접근자 프로퍼티다.
+    // 접근자 프로퍼티는 get, set, enumeravle, configurable 프로퍼티 어트리뷰트를 갖는다.
+    console.log(Object.getOwnPropertyDescriptor(person, 'fullName')); 
+    // {enumerable: true, configurable: true, get: ƒ, set: ƒ}
+  ``` 
+</div>
+<div style="width:49%;">
+
+```javascript
+  class Person {
+    constructor(firstName, lastName) {
+      this.firstName = firstName;
+      this.lastName = lastName;
+    }
+    // fullName은 접근자 함수로 구성된 접근자 프로퍼티다.
+    // getter 함수
+    get fullName() {
+      return `${this.firstName} ${this.lastName}`;
+    },
+    // setter 함수
+    set fullName(name) {
+      // 배열 디스트럭처링 할당
+      [this.firstName, this.lastName] = name.split(' ');
+    }
+  }
+  
+  const me = new Person('Hyeji', 'Choi');
+
+  // 데이터 프로퍼티를 통한 프로퍼티 값의 참조.
+  console.log(`${person.firstName} ${person.lastName}`); // Hyeji Choi
+
+  // 접근자 프로퍼티를 통한 프로퍼티 값의 저장
+  // 접근자 프로퍼티 fullName에 값을 저장하면 setter함수가 호출된다.
+  person.fullName = `Hihi Choi`;
+  console.log(person); // {firstName: 'Hihi', lastName: 'Choi'}
+
+  // 접근자 프로퍼티를 통한 프로퍼티 값의 참조
+  // 접근자 프로퍼티 fullName에 접근하면 getter 함수가 호출된다.
+  console.log(person.fullName); // Hihi Choi
+
+  // fullName은 접근자 프로퍼티다.
+  // 접근자 프로퍼티는 get, set, enumeravle, configurable 프로퍼티 어트리뷰트를 갖는다.
+  console.log(Object.getOwnPropertyDescriptor(person, 'fullName')); 
+  // {enumerable: true, configurable: true, get: ƒ, set: ƒ}
+``` 
+</div>
+</div>
+
+<p>접근자 프로퍼티는 자체적으로 값을 갖지 않고 다른 데이터 프로퍼티의 값을 읽거나 저장할 때 사용하는 접근자 함수, 즉 getter 함수와 setter 함수로 구성되어있다.</p>
+
+<ul>
+  <li>getter<br />
+<code class="language-plaintext highlighter-rouge">인스턴스 프로퍼티에 접근할 때마다</code> 프로퍼티 값을 조작하거나 별도의 행위가 필요할 때 사용.<br />
+반드시 무언가를 반환해야한다.</li>
+  <li>setter<br />
+<code class="language-plaintext highlighter-rouge">인스턴스 프로퍼티에 값을 할당할 때마다</code> 프로퍼티 값을 조작하거나 별도의 행위가 필요할 때 사용.<br />
+할당해야 할 때 사용하므로 반드시 매개변수가 있어야 한다. 단 하나의 값만 할당받기 때문에 단 하나의 매개변수만 선언할 수 있다.</li>
+</ul>
+
+<p>클래스의 메서드는 기본적으로 프로토타입 메서드가 된다.</p>
+
+<p><img width="549" alt="image" src="https://user-images.githubusercontent.com/44577555/170073274-3bee1e74-4874-46ee-b9ad-0c24f8da2fbf.png" /></p>
+
+<h3 id="2573-클래스-필드-정의-제안">25.7.3 클래스 필드 정의 제안</h3>
+<p>클래스 필드는 클래스 기반 객체지향 언어에서 클래스가 생성할 인스턴스의 프로퍼티를 가리키는 용어다.<br />
+자바의 클래스 필드는 마치 클래스 내부에서 변수처럼 사용된다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1">// 자바의 클래스 정의</span>
+  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
+    <span class="c1">// 1. 클래스 필드 정의</span>
+    <span class="c1">// 클래스 필드는 클래스 몸체에 this 없이 tjsdjsgodi gksek.</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">firstName</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">lastName</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+
+    <span class="c1">// 생성자</span>
+    <span class="nc">Person</span><span class="o">(</span><span class="nc">String</span> <span class="n">firstName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">lastName</span><span class="o">)</span> <span class="o">{</span>
+      <span class="c1">// 3. this는 언제나 클래스가 생성할 인스턴스를 가리킨다.</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">firstName</span> <span class="o">=</span> <span class="n">firstName</span><span class="o">;</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">lastName</span> <span class="o">=</span> <span class="n">lastName</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getFullName</span><span class="o">()</span> <span class="o">{</span>
+      <span class="c1">// 2. 클래스 필드 참조</span>
+      <span class="c1">// this 없이도 클래스 필드를 참조할 수 있다.</span>
+      <span class="k">return</span> <span class="n">firstName</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">lastName</span><span class="o">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+</code></pre></div></div>
+<h4 id="자바의-클래스-특징">자바의 클래스 특징</h4>
+<ol>
+  <li>예제의 1과 같이 클래스 필드를 마치 변수처럼 클래스 몸체에 this없이 선언한다.<br />
+  자바스크립트 클래스는 인스턴스 프로퍼티를 선언하고 초기화 하려면 반드시 constructor 내부에서 this에 프로퍼티를 추가해야 한다.</li>
+  <li>예제의 2과 같이 this를 생략해도 클래스 필드를 참조할 수 있다.<br />
+  자바스크립트 클래스에서 인스턴스 프로퍼티를 참조하려면 반드시 this를 사용하여 참조해야 한다.</li>
+  <li>예제의 3과 같이 this는 주로 클래스 필드가 생성자 또는 메서드의 매개변수 이름과 동일할 때 클래스 필드임을 명확히 하기위해 사용한다.<br />
+  클래스 기반 객체지향 언어의 this는 언제나 클래스가 생성할 인스턴스를 가리킨다.</li>
+</ol>
+
+<p>자바스크립트의 클래스 몸체에는 메서드만 선언할 수 있다. 따라서 클래스 몸체에서 자바와 유사하게 클래스 필드를 선언하면 문법에러가 발생한다. 
+하지만 최신 브라우저 또는 최신 Node.js에서 실행하면 문법 에러가 발생하지 않고 정상 동작한다.<br />
+자바스크립트에서도 인스턴스 프로퍼티를 마치 클래스 기반 객체지향 언어의 클래스 필드처럼 정의할수 있는 새로운 표준 사양인 “Class field declarations”가 2021년 1월 TC39 프로세스의 stage3에 제안되어 있다.<br />
+클래스 몸체에서 클래스 필드를 정의할 수 있는 클래스 필드 정의 제안은 아직 ECMAScript의 정식 표준 양으로 승급되지 않았다. 하지만 최신 브라우저(Chrome 72)와 최신 Node.js(버전 12 이상)는 표준 사양으로 승급이 확실시 되는 이 제안을 선제적으로 미리 구현해 놓아서 클래스 필드를 클래스 몸체에 정의할 수 있다. 또는 Babel과 같은 build 시스템을 사용한다면 기능을 사용할 수 있다.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+    <span class="c1">// 클래스 필드 정의</span>
+    <span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="kd">const</span> <span class="nx">me</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">'</span><span class="s1">Choi</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">me</span><span class="p">);</span> <span class="c1">// Person {name: 'Choi'}</span>
+</code></pre></div></div>
+
+:ET
